@@ -1,6 +1,7 @@
 import os
 import shutil
 from dotenv import load_dotenv
+from tqdm import tqdm
 
 NOT_LANDMARKS = {}
 def load_not_landmarks(filename):
@@ -19,18 +20,18 @@ def is_not_landmark(name):
 
 def main():
     global NOT_LANDMARKS
+
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
     path = os.environ['DATASET']
-    dirnames = os.listdir(path)
     NOT_LANDMARKS = load_not_landmarks(os.environ['FILENAME'])
+    
+    dirnames = os.listdir(path)
     dlt_dirnames = list(filter(is_not_landmark, dirnames))
-    print('=' * 100)
-    # print(set(dirnames) - set(dlt_dirnames))
-    print(len(dirnames))
-    for dlt_dirname in dlt_dirnames:
+    for dlt_dirname in tqdm(dlt_dirnames):
         dir_path = path + dlt_dirname
         if os.path.exists(dir_path):
             shutil.rmtree(dir_path)
+    print(len(os.listdir(path)))
 
 if __name__ == '__main__':
     main()
