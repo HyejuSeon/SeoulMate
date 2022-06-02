@@ -3,7 +3,7 @@ import Style from 'styled-components'
 function Footer(){
     return (
         <FooterDiv>
-            <p>Copyrightⓒ2022 by 7 ai. All Page content is property of </p>
+            <p>Copyrightⓒ2022 by team-ai-project. All Page content is property of 상원 해요</p>
         </FooterDiv>
     )
 }
