@@ -1,18 +1,16 @@
-import Style from 'styled-components'
+import React from 'react';
 
-function Footer(){
-    return (
-        <FooterDiv>
-            <p>Copyrightⓒ2022 by team-ai-project. All Page content is property of 상원 해요</p>
-        </FooterDiv>
-    )
+import { Container } from '../styledCompo/footerStyle/FooterStyle';
+
+function Footer() {
+  return (
+    <>
+      <Container>
+        Copyrightⓒ{new Date().getFullYear()} by team-ai-project. All Page content is property of
+        상원 해요
+      </Container>
+    </>
+  );
 }
 
-export default Footer
-
-const FooterDiv = Style.div`
-    padding: 20px;
-    text-align: center;
-    margin-top: auto;
-    background-color: #E4E4E4;
-`;
+export default Footer;

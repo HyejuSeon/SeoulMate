@@ -1,4 +1,4 @@
-import style from 'styled-components'
+import style from 'styled-components';
 
 export const MainWrapper = style.div`
     min-height: 100vh;
