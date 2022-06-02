@@ -24,8 +24,8 @@ def main():
     dirnames = os.listdir(path)
     NOT_LANDMARKS = load_not_landmarks(os.environ['FILENAME'])
     dlt_dirnames = list(filter(is_not_landmark, dirnames))
-    print('=' * 00)
-    print(set(dirnames) - set(dlt_dirnames))
+    print('=' * 100)
+    # print(set(dirnames) - set(dlt_dirnames))
     print(len(dirnames))
     for dlt_dirname in dlt_dirnames:
         dir_path = path + dlt_dirname
