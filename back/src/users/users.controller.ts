@@ -2,14 +2,14 @@ import {
     Body,
     Controller,
     HttpStatus,
-    Param,
     Patch,
     Post,
-    Req,
     Res,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { createUserDto } from './dto/create-user.dto';
+import { insertUserDto } from './dto/insert.user.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('users')
@@ -18,11 +18,12 @@ export class UsersController {
     constructor(private readonly userService: UsersService) {}
 
     @Post('registration')
-    @ApiBody({ type: createUserDto })
+    @UsePipes(ValidationPipe)
+    @ApiBody({ type: insertUserDto })
     @ApiResponse({ status: 200, description: 'user created' })
     async createUser(
         @Res() res: any,
-        @Body() userDto: createUserDto,
+        @Body() userDto: insertUserDto,
     ): Promise<void> {
         //   사용자 회원가입
         const user = await this.userService.create(userDto);
