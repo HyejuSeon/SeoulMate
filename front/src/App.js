@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import * as Api from "./api"
 import { loginReducer } from "./reducer"
 
-import Home from "./temp/Home"
+import Home from "./components/Home"
 import Footer from "./components/Footer"
-import { GlobalStyles } from "./srcAssets/style/GlobalStyle"
-import { MainWrapper } from "./srcAssets/style/MainWrapper"
+import { GlobalStyles } from "./styledCompo/GlobalStyle"
+import { MainWrapper } from "./styledCompo/style/MainWrapper"
 
 
-import Login from "./temp/Login"
+import Login from "./components/user/Login"
 
 
 export const UserStateContext = createContext(null)

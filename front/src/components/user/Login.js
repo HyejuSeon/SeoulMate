@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import {Box} from '@mui/material';
 import { Link , useNavigate } from "react-router-dom";
-import * as Api from '../api';
-import { DispatchContext } from "../App.js";
-import {ROUTES} from '../Route'
+import * as Api from '../../api';
+import { DispatchContext } from "../../App.js";
+import {ROUTES} from '../../Route'
 import styled from 'styled-components';
-import style from "../srcAssets/style/Login.moudule.css";
-import CssTextField from "../components/user/CssTextField";
+import style from "../../styledCompo/Login.moudule.css"
+import CssTextField from "./CssTextField";
 import { visuallyHidden } from "@mui/utils";
 
 
@@ -119,9 +119,4 @@ const LoginTitle2 = styled.div`
     font-size: 18px;
     font-weight: 600;
     padding-top: 4px;
-`;
-
-const LogoImg = styled.img`
-    width: 60px;
-    cursor: pointer;
 `;
