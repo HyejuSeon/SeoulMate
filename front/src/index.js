@@ -4,6 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { RecoilRoot } from 'recoil';
 
+import 'swiper/css/bundle';
+import './components/home/Home.css';
+
 import Footer from '../src/components/Footer';
 import Header from './components/Header';
 
@@ -12,7 +15,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <RecoilRoot>
-        <Header />
+        {/* <Header /> */}
         <App />
         {/* <Footer /> */}
       </RecoilRoot>
