@@ -5,13 +5,17 @@ import { User } from './users.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @Inject('USERS_REPOSITORY')
-    private userRepository: Repository<User>,
-  ) {}
+    constructor(
+        @Inject('USERS_REPOSITORY')
+        private userRepository: Repository<User>,
+    ) {}
 
-  async create(userDto: createUserDto): Promise<User> {
-    const user = this.userRepository.create({ ...userDto });
-    return user;
-  }
+    async create(userDto: createUserDto): Promise<User> {
+        try {
+            const user = this.userRepository.create({ ...userDto });
+            return user;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
