@@ -1,25 +1,25 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  landmark_id: string;
+export class Landmark {
+    @PrimaryColumn()
+    landmark_id: string;
 
-  @Column()
-  name: string;
+    @Column()
+    name: string;
 
-  @Column()
-  supercategory: string;
+    @Column()
+    category: string;
 
-  @Column()
-  description: string;
+    @Column()
+    description: string;
 
-  @Column()
-  add: string;
+    @Column()
+    add: string;
 
-  @Column()
-  location: string;
+    @Column()
+    location: string;
 
-  @Column()
-  location_sub: string;
+    @Column()
+    location_sub: string;
 }
