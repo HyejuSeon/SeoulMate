@@ -2,7 +2,7 @@ import os
 import shutil
 from dotenv import load_dotenv
 from tqdm import tqdm
-
+# 50개
 NOT_LANDMARKS = {}
 def load_not_landmarks(filename):
     res = set()
