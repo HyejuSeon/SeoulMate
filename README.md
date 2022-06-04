@@ -13,11 +13,11 @@
 
 # 기술 스택
 
-| Position                | Languages & Tools     |
-| ----------------------- | --------------------- |
-| Frontend                | ReactJS<br>Typescript |
-| Backend                 | NestJS<br>MySQL       |
-| Artificial intelligence | Python<br>Tensorflow  |
+| Position                | Languages & Tools    |
+| ----------------------- | -------------------- |
+| Frontend                | ReactJS              |
+| Backend                 | NestJS<br>MySQL      |
+| Artificial intelligence | Python<br>Tensorflow |
 
 # 협업 도구
 
@@ -36,9 +36,7 @@
 
 코로나 19의 완화로 국외 여행길이 열리면서 외국인 관광객이 증가할 것으로 예상됩니다. 단순히 여행객들이 랜드마크에서 사진만 찍고 끝나는 것이 아닌 랜드마크의 정보를 제공하고, 랜드마크 방문 시 스탬프를 찍어 여행을 게임처럼 재밌게 느낄 수 있는 경험을 제공합니다.
 
-[서비스 이름]은 한국의 랜드마크를 방문, 스탬프를 얻어 여행 레벨을 높일 수 있습니다. 게임의 퀘스트를 진행하는 느낌을 주며, 다양한 랜드마크에 방문할 수 있는 기회를 제공합니다.
-
-[서비스 이름]은
+Seoul Mate는 한국의 랜드마크를 방문, 스탬프를 얻어 여행 레벨을 높일 수 있습니다. 게임의 퀘스트를 진행하는 느낌을 주며, 다양한 랜드마크에 방문할 수 있는 기회를 제공합니다.
 
 [[연합뉴스] "다시 한국으로"...끊어진 외국인 관광객 유치 총력전](https://www.yna.co.kr/view/MYH20220525016900641)
 
