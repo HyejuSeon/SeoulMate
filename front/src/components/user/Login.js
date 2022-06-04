@@ -5,9 +5,8 @@ import * as Api from '../../api';
 import { DispatchContext } from "../../App.js";
 import {ROUTES} from '../../Route'
 import styled from 'styled-components';
-import style from "../../styledCompo/Login.moudule.css"
+import style from "../../styledCompo/LoginStyle/Login.moudule.css"
 import CssTextField from "./CssTextField";
-import { visuallyHidden } from "@mui/utils";
 
 
 
@@ -94,7 +93,9 @@ function Login(){
 
             <div style={{display: "flex", flexDirection: "column", alignItems: "center", marginTop:"5vh"}}>
                 <button type='submit' style={{width: "30vw", borderRadius: "50px", border: "none", backgroundColor: "#BBD6FF", color: "white", padding: "5px", fontSize:"x-large" , cursor: "pointer" }}>LOG IN</button>
-
+                <Box class={style.otherButtonbox}>
+                    <Link to={ROUTES.SIGN_IN.link} class={style.createaccountButton}>Create Account</Link>
+                </Box>
             </div>
             
         </LoginBody>

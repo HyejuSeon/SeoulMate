@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import { GlobalStyles } from './styledCompo/GlobalStyle';
 
 import Login from './components/user/Login';
+import { ROUTES } from './Route';
+import Signin from './components/user/Signin';
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -66,6 +68,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
 
                 <Route path="*" element={<Home />} />
+
+                <Route path="/signin" element={<Signin />} />
             </Routes>
         </>
     );
