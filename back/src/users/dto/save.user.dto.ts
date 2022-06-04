@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNumber, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsString, MinLength } from 'class-validator';
 
 export class saveUserDto {
     @ApiProperty()
@@ -18,16 +18,4 @@ export class saveUserDto {
     @IsString()
     @MinLength(4)
     password: string;
-
-    @ApiProperty()
-    @IsString()
-    profile_image: string;
-
-    @ApiProperty()
-    @IsNumber()
-    rank: number;
-
-    @ApiProperty()
-    @IsNumber()
-    exp: number;
 }

@@ -5,10 +5,12 @@ import {
     Patch,
     Post,
     Res,
+    UseFilters,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 import { insertUserDto } from './dto/insert.user.dto';
 import { UsersService } from './users.service';
 
@@ -17,9 +19,10 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private readonly userService: UsersService) {}
 
-    @Post('registration')
-    @UsePipes(ValidationPipe)
-    @ApiBody({ type: insertUserDto })
+    @UseFilters(HttpExceptionFilter) //error handle
+    @Post('registration') // http method
+    @UsePipes(ValidationPipe) // validation pipe
+    @ApiBody({ type: insertUserDto }) // swagger body
     @ApiResponse({ status: 200, description: 'user created' })
     async createUser(
         @Res() res: any,

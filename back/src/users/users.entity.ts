@@ -2,36 +2,34 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class Users {
     @PrimaryGeneratedColumn('increment')
-    @ApiProperty()
     id: number;
 
     @Column()
-    @ApiProperty({ description: 'user id' })
     user_id: string;
 
     @Column()
-    @ApiProperty()
     name: string;
 
     @Column()
-    @ApiProperty()
     email: string;
 
     @Column()
-    @ApiProperty()
     password: string;
 
-    @Column()
-    @ApiProperty()
+    @Column({
+        default: 'profile image url',
+    })
     profile_image: string;
 
-    @Column()
-    @ApiProperty()
+    @Column({
+        default: 0,
+    })
     rank: number;
 
-    @Column()
-    @ApiProperty()
+    @Column({
+        default: 0,
+    })
     exp: number;
 }
