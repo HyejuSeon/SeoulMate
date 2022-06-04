@@ -4,10 +4,6 @@ import { IsEmail, IsString, MinLength } from 'class-validator';
 export class insertUserDto {
     @ApiProperty()
     @IsString()
-    user_id: string;
-
-    @ApiProperty()
-    @IsString()
     name: string;
 
     @ApiProperty()
