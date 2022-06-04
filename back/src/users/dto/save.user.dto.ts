@@ -1,37 +1,33 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsEmail, IsNumber, IsString, MinLength } from 'class-validator';
 
-@Entity()
-export class User {
-    @PrimaryGeneratedColumn('increment')
+export class saveUserDto {
     @ApiProperty()
-    id: number;
-
-    @Column()
-    @ApiProperty({ description: 'user id' })
+    @IsString()
     user_id: string;
 
-    @Column()
     @ApiProperty()
+    @IsString()
     name: string;
 
-    @Column()
     @ApiProperty()
+    @IsEmail()
     email: string;
 
-    @Column()
     @ApiProperty()
+    @IsString()
+    @MinLength(4)
     password: string;
 
-    @Column()
     @ApiProperty()
+    @IsString()
     profile_image: string;
 
-    @Column()
     @ApiProperty()
+    @IsNumber()
     rank: number;
 
-    @Column()
     @ApiProperty()
+    @IsNumber()
     exp: number;
 }
