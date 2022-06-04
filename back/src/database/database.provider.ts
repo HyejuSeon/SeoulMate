@@ -1,15 +1,12 @@
-import { Sequelize } from 'sequelize-typescript';
-import { local } from 'typeormconfig';
-import { User } from '../users/users.entity';
+import { DataSource } from 'typeorm';
+import { typeormLocal } from 'typeormconfig';
 
-export const databaseProvider = [
-  {
-    provide: 'SEQUELIZE',
-    useFactory: async () => {
-      const sequelize = new Sequelize(local);
-      sequelize.addModels([User]);
-      await sequelize.sync();
-      return sequelize;
+export const databaseProviders = [
+    {
+        provide: 'DATA_SOURCE',
+        useFactory: async () => {
+            const dataSource = new DataSource(typeormLocal);
+            return dataSource.initialize();
+        },
     },
-  },
 ];
