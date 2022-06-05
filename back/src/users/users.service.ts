@@ -13,6 +13,7 @@ export class UsersService {
     ) {}
 
     async create(userDto: insertUserDto): Promise<Users> {
+        // 사용자 등록 register
         const user_id = uuid();
         const newUser: saveUserDto = {
             user_id: user_id,

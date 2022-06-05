@@ -1,9 +1,12 @@
 import {
     Body,
     Controller,
+    Get,
     HttpStatus,
+    Param,
     Patch,
     Post,
+    Headers,
     Res,
     UseFilters,
     UsePipes,
@@ -12,6 +15,7 @@ import {
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 import { insertUserDto } from './dto/insert.user.dto';
+import { Users } from './users.entity';
 import { UsersService } from './users.service';
 
 @ApiTags('users')
