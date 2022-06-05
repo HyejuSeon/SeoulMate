@@ -1,8 +1,10 @@
 import 'dotenv/config';
 import { DataSourceOptions } from 'typeorm';
-import config from 'config';
+import * as config from 'config';
 
-const dbConfig = config.get('db');
+const dbConfig = config.get('db'); // db config
+// config.get('db.host') 와 같은 방식으로 접근 가능
+// dbConfig.host는 안된다
 
 export const typeormLocal: DataSourceOptions = {
     type: 'mysql',

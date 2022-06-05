@@ -3,13 +3,13 @@ import { AppModule } from './app.module';
 import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
-import config from 'config';
+import * as config from 'config';
 
 async function bootstrap() {
     const logger = new Logger();
     const app = await NestFactory.create(AppModule);
 
-    const port = config.get<number>('server.port');
+    const port = config.get<number>('server.port'); // port config
 
     const swaggerConfig = new DocumentBuilder()
         .setTitle('users api test')
