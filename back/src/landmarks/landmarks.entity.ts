@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 @Entity()
 export class Landmark {
     @PrimaryColumn()
-    landmark_id: string;
+    landmark_id: number;
 
     @Column()
     name: string;
@@ -11,7 +11,7 @@ export class Landmark {
     @Column()
     category: string;
 
-    @Column()
+    @Column({ type: 'longtext' })
     description: string;
 
     @Column()

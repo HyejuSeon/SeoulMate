@@ -1,7 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import fs from 'fs';
 import { Repository } from 'typeorm';
 import { Landmark } from './landmarks.entity';
+const fs = require('fs');
+const path = require('path');
+
+const filePath = '/Users/hongjiun/Downloads/007/라벨링데이터/서울특별시';
 
 @Injectable()
 export class LandmarksService {
@@ -10,16 +13,19 @@ export class LandmarksService {
         private landmarksRepository: Repository<Landmark>,
     ) {}
 
-    async getLandmarks(): Promise<Landmark> {
-        const filePath =
-            '/Users/hongjiun/Downloads/007/라벨링데이터/서울특별시';
+    async init(): Promise<Landmark> {
         try {
-            fs.readdir(filePath, (err, files) => {
-                files.forEach((file) => console.log(file));
-            });
-            return;
-        } catch (err) {
-            console.log(err);
+            const data = fs.readFileSync(
+                path.join(filePath, 'data.json'),
+                'utf8',
+            );
+            const array = JSON.parse(data);
+            array.forEach((landmark) =>
+                this.landmarksRepository.save({ ...landmark }),
+            );
+            return array;
+        } catch (error) {
+            console.log(error);
         }
     }
 }
