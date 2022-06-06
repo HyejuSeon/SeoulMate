@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
-import { throttle } from 'lodash';
+import Burger from './Burger';
+import Menu from './Menu';
+
+const useOnClickOutside = (ref, handler) => {
+    useEffect(() => {
+        const listener = (event) => {
+            if (!ref.current || ref.current.contains(event.target)) return;
+            handler(event);
+        };
+        document.addEventListener('mousedown', listener);
+
+        return () => {
+            document.removeEventListener('mousedown', listener);
+        };
+    }, [ref, handler]);
+};
 
 const Header = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const updateScroll = () => {
-    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
-  };
-  useEffect(() => {
-    window.addEventListener('scroll', throttle(updateScroll, 300));
-    return () => {
-      window.removeEventListener('scroll', throttle(updateScroll, 300));
-    };
-  }, []);
-
-  return <div>zipWith</div>;
+    const [open, setOpen] = React.useState(false);
+    const node = React.useRef();
+    useOnClickOutside(node, () => setOpen(false));
+    return (
+        <div ref={node}>
+            <Burger open={open} setOpen={setOpen} />
+            <Menu open={open} setOpen={setOpen} />
+        </div>
+    );
 };
 
 export default Header;
