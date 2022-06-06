@@ -13,6 +13,7 @@ import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcryptjs';
 import { signIn } from './dto/signin.dto';
 import { JwtService } from 'src/auth/jwt.service';
+import { compare, hash } from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -21,6 +22,16 @@ export class UsersService {
         private userRepository: Repository<Users>,
         private readonly jwtService: JwtService,
     ) {}
+
+    async setCurrentRefreshToken(refreshToken: string, userId: string) {
+        const currentHashedRefreshToken = await hash(refreshToken, 10);
+        const userInfo = await this.userRepository.findOneBy({
+            user_id: userId,
+        });
+        userInfo.hashedRefreshToken = currentHashedRefreshToken;
+        await this.userRepository.save(userInfo);
+    }
+    // ---------요청에 대한 동작--------------
 
     async create(userDto: insertUserDto): Promise<Users> {
         const findUser = await this.userRepository.findOne({
@@ -47,7 +58,7 @@ export class UsersService {
         return user;
     }
 
-    async login(userDto: signIn): Promise<string> {
+    async login(userDto: signIn): Promise<object> {
         const { email, password } = userDto;
 
         const user = await this.userRepository.findOne({ where: { email } });
@@ -63,8 +74,20 @@ export class UsersService {
 
         // 비밀번호 맞으면 access token 생성
         const token = await this.jwtService.sign(user.user_id);
-        console.log(token);
+        const refresh = await this.jwtService.refresh();
 
-        return 'login 성공';
+        await this.setCurrentRefreshToken(refresh, user.user_id);
+
+        const loggedIn = {
+            userId: user.user_id,
+            email: user.email,
+            name: user.name,
+            accessToken: token,
+            profileImage: user.profile_image,
+            rank: user.rating,
+            exp: user.exp,
+        };
+
+        return loggedIn;
     }
 }

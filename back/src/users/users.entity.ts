@@ -26,7 +26,7 @@ export class Users {
     @Column({
         default: 0,
     })
-    rank: number;
+    rating: number;
 
     @Column({
         default: 0,
