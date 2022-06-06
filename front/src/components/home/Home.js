@@ -53,6 +53,8 @@ import img_2 from '../../img/landMark2.jpg';
 import img_3 from '../../img/landMark3.jpg';
 import img_4 from '../../img/landMark4.jpg';
 
+import Logo from '../../img/logo.png';
+
 const Home = () => {
     const navigate = useNavigate();
 

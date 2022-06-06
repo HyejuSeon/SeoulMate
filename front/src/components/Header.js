@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Burger from './Burger';
 import Menu from './Menu';
 
+import Logo from '../img/logo.png';
+
 const useOnClickOutside = (ref, handler) => {
     useEffect(() => {
         const listener = (event) => {

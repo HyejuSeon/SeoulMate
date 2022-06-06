@@ -8,7 +8,7 @@ const StyledMenu = styled.nav`
     justify-content: center;
     background: #ffff;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-    width: 30%;
+    width: 15%;
     height: 40%;
     text-align: left;
     padding: 2rem;
