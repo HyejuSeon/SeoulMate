@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { initLandmarkDto } from './dto/init-landmark.dto';
 import { Landmark } from './landmarks.entity';
 const fs = require('fs');
 const path = require('path');
 
-const filePath = '/Users/hongjiun/Downloads/007/라벨링데이터/서울특별시';
+const filePath = '../../data';
 
 @Injectable()
 export class LandmarksService {
@@ -20,7 +21,7 @@ export class LandmarksService {
                 'utf8',
             );
             const array = JSON.parse(data);
-            array.forEach((landmark) =>
+            array.forEach((landmark: initLandmarkDto) =>
                 this.landmarksRepository.save({ ...landmark }),
             );
             return array;
