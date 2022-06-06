@@ -14,6 +14,7 @@ import * as bcrypt from 'bcryptjs';
 import { signIn } from './dto/signin.dto';
 import { JwtService } from 'src/auth/jwt.service';
 import { compare, hash } from 'bcryptjs';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class UsersService {
@@ -21,17 +22,8 @@ export class UsersService {
         @Inject('USERS_REPOSITORY')
         private userRepository: Repository<Users>,
         private readonly jwtService: JwtService,
+        private readonly authService: AuthService,
     ) {}
-
-    async setCurrentRefreshToken(refreshToken: string, userId: string) {
-        const currentHashedRefreshToken = await hash(refreshToken, 10);
-        const userInfo = await this.userRepository.findOneBy({
-            user_id: userId,
-        });
-        userInfo.hashedRefreshToken = currentHashedRefreshToken;
-        await this.userRepository.save(userInfo);
-    }
-    // ---------요청에 대한 동작--------------
 
     async create(userDto: insertUserDto): Promise<Users> {
         const findUser = await this.userRepository.findOne({
@@ -59,6 +51,7 @@ export class UsersService {
     }
 
     async login(userDto: signIn): Promise<object> {
+        // login
         const { email, password } = userDto;
 
         const user = await this.userRepository.findOne({ where: { email } });
@@ -76,7 +69,8 @@ export class UsersService {
         const token = await this.jwtService.sign(user.user_id);
         const refresh = await this.jwtService.refresh();
 
-        await this.setCurrentRefreshToken(refresh, user.user_id);
+        // refresh token 해쉬화해서 db에 저장
+        await this.authService.setCurrentRefreshToken(refresh, user.user_id);
 
         const loggedIn = {
             userId: user.user_id,
@@ -89,5 +83,9 @@ export class UsersService {
         };
 
         return loggedIn;
+    }
+
+    async logout(userId: string) {
+        // logout 시 refresh tonen null로 저장
     }
 }
