@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class createLandmarkDto {
+export class initLandmarkDto {
     @ApiProperty()
     landmark_id: number;
 
