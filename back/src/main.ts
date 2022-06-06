@@ -4,10 +4,13 @@ import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import * as config from 'config';
+import { GlobalExceptionFilter } from './exception/globalexception..filter';
 
 async function bootstrap() {
     const logger = new Logger();
     const app = await NestFactory.create(AppModule);
+
+    app.useGlobalFilters(new GlobalExceptionFilter());
 
     const port = config.get<number>('server.port'); // port config
 
