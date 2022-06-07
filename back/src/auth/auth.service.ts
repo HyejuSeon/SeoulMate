@@ -5,6 +5,7 @@ import {
     Inject,
     Injectable,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { Users } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from './jwt.service';
@@ -20,6 +21,13 @@ export class AuthService {
         private userRepository: Repository<Users>,
         private readonly jwtService: JwtService,
     ) {}
+
+    async getUserId(req: Request) {
+        // current user id 받아오기
+        const token = req.headers.authorization.split(' ')[1];
+        const { id } = this.jwtService.verity(token);
+        return id;
+    }
 
     async register(user: insertUserDto): Promise<saveUserDto> {
         // 사용자 등록 시 사용자 정보 생성
