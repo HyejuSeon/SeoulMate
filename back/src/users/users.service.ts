@@ -26,27 +26,9 @@ export class UsersService {
     ) {}
 
     async create(userDto: insertUserDto): Promise<Users> {
-        const findUser = await this.userRepository.findOne({
-            where: { email: userDto.email },
-        });
-
-        // email은 고유해야 함
-        if (findUser) {
-            throw new ConflictException('User already exist');
-        }
-        // 사용자 등록 register
-        const user_id = uuid();
-
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(userDto.password, salt);
-
-        const newUser: saveUserDto = {
-            user_id: user_id,
-            name: userDto.name,
-            email: userDto.email,
-            password: hashedPassword,
-        };
-        const user = this.userRepository.save({ ...newUser });
+        // 사용자 등록
+        const newUser = await this.authService.register(userDto);
+        const user = this.userRepository.save(newUser);
         return user;
     }
 
