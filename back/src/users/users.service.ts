@@ -1,19 +1,9 @@
-import {
-    ConflictException,
-    Inject,
-    Injectable,
-    NotAcceptableException,
-    NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { insertUserDto } from './dto/insert.user.dto';
-import { saveUserDto } from './dto/save.user.dto';
 import { Users } from './users.entity';
-import { v4 as uuid } from 'uuid';
-import * as bcrypt from 'bcryptjs';
 import { signIn } from './dto/signin.dto';
 import { JwtService } from 'src/auth/jwt.service';
-import { compare, hash } from 'bcryptjs';
 import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()

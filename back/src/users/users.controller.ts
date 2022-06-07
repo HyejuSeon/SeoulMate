@@ -3,16 +3,13 @@ import {
     Controller,
     Get,
     HttpStatus,
-    Headers,
     Patch,
     Post,
-    Req,
     Res,
     UseFilters,
     UseGuards,
     UsePipes,
     ValidationPipe,
-    Param,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -21,7 +18,7 @@ import { insertUserDto } from './dto/insert.user.dto';
 import { signIn } from './dto/signin.dto';
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/auth/get-user.decorator';
+import { getUserId } from 'src/auth/getUserId.decorator';
 import { Users } from './users.entity';
 
 @ApiTags('users')
@@ -60,9 +57,8 @@ export class UsersController {
     @Get('getalluser')
     @UseGuards(AuthGuard())
     @ApiBearerAuth()
-    async getUsers(@Res() res: Response, @GetUser() user: Users) {
-        const { user_id } = { ...user };
-        console.log(user_id);
+    async getUsers(@Res() res: Response, @getUserId() user: Users) {
+        const currentUserId = user; // 현재 사용자의 userId를 받아온다
 
         const users = await this.userService.getAllUsers();
         res.status(HttpStatus.OK).json(users);
