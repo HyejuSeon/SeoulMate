@@ -1,15 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, MinLength } from 'class-validator';
 
-export class saveUserDto {
-    @ApiProperty()
-    @IsString()
-    user_id: string;
-
-    @ApiProperty()
-    @IsString()
-    name: string;
-
+export class signIn {
     @ApiProperty()
     @IsEmail()
     email: string;
