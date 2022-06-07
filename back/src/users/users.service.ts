@@ -35,17 +35,7 @@ export class UsersService {
     async login(userDto: signIn): Promise<object> {
         // login
         const { email, password } = userDto;
-
-        const user = await this.userRepository.findOne({ where: { email } });
-
-        if (!user) {
-            throw new NotFoundException();
-        }
-        const isMatchPassword = await bcrypt.compare(password, user.password);
-
-        if (!isMatchPassword) {
-            throw new NotAcceptableException();
-        }
+        const user = await this.authService.validateUser(email, password);
 
         // 비밀번호 맞으면 access token 생성
         const token = await this.jwtService.sign(user.user_id);

@@ -54,7 +54,7 @@ export class AuthService {
             return result;
         } catch (error) {
             throw new HttpException(
-                '비밀번호가 다릅니다.',
+                '비밀번호가 다르거나 사용자가 존재하지 않습니다.',
                 HttpStatus.BAD_REQUEST,
             );
         }
