@@ -38,8 +38,8 @@ export class UsersService {
         const user = await this.authService.validateUser(email, password);
 
         // 비밀번호 맞으면 access token 생성
-        const token = await this.jwtService.sign(user.user_id);
-        const refresh = await this.jwtService.refresh();
+        const token = this.jwtService.sign(user.user_id);
+        const refresh = this.jwtService.refresh();
 
         // refresh token 해쉬화해서 db에 저장
         await this.authService.setCurrentRefreshToken(refresh, user.user_id);

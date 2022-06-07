@@ -20,7 +20,9 @@ import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 import { insertUserDto } from './dto/insert.user.dto';
 import { signIn } from './dto/signin.dto';
 import { UsersService } from './users.service';
-import { AuthGuard } from '../auth/guard/jwt-refresh.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { Users } from './users.entity';
 
 @ApiTags('users')
 @Controller('users')
@@ -55,11 +57,12 @@ export class UsersController {
         res.status(HttpStatus.OK).json(user);
     }
 
-    @UseGuards(AuthGuard)
     @Get('getalluser')
+    @UseGuards(AuthGuard())
     @ApiBearerAuth()
-    async getUsers(@Res() res: Response, @Req() req: Request) {
-        console.log();
+    async getUsers(@Res() res: Response, @GetUser() user: Users) {
+        const { user_id } = { ...user };
+        console.log(user_id);
 
         const users = await this.userService.getAllUsers();
         res.status(HttpStatus.OK).json(users);
