@@ -19,6 +19,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { getUserId } from 'src/auth/getUserId.decorator';
 import { Users } from './users.entity';
 import { userResultDto } from './dto/user.dto';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -61,7 +62,7 @@ export class UsersController {
     }
 
     @Get('getalluser')
-    @UseGuards(AuthGuard())
+    @UseGuards(JwtGuard)
     @ApiBearerAuth()
     async getUsers(@Res() res: Response, @getUserId() user: Users) {
         const currentUserId = user; // 현재 사용자의 userId를 받아온다
