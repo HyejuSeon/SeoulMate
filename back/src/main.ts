@@ -4,7 +4,7 @@ import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import * as config from 'config';
-import { GlobalExceptionFilter } from './exception/globalexception..filter';
+import { GlobalExceptionFilter } from './exception/globalexception.filter';
 
 async function bootstrap() {
     const logger = new Logger();
