@@ -11,7 +11,6 @@ export class UsersService {
     constructor(
         @Inject('USERS_REPOSITORY')
         private userRepository: Repository<Users>,
-        private readonly jwtService: JwtService,
         private readonly authService: AuthService,
     ) {}
 
@@ -20,31 +19,6 @@ export class UsersService {
         const newUser = await this.authService.register(userDto);
         const user = this.userRepository.save(newUser);
         return user;
-    }
-
-    async login(userDto: signIn): Promise<object> {
-        // login
-        const { email, password } = userDto;
-        const user = await this.authService.validateUser(email, password);
-
-        // 비밀번호 맞으면 access token 생성
-        const token = this.jwtService.sign(user.user_id);
-        const refresh = this.jwtService.refresh();
-
-        // refresh token 해쉬화해서 db에 저장
-        await this.authService.setCurrentRefreshToken(refresh, user.user_id);
-
-        const loggedIn = {
-            userId: user.user_id,
-            email: user.email,
-            name: user.name,
-            accessToken: token,
-            profileImage: user.profile_image,
-            rank: user.rating,
-            exp: user.exp,
-        };
-
-        return loggedIn;
     }
 
     async logout(userId: string) {
