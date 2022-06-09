@@ -18,4 +18,7 @@ export class userResultDto {
 
     @ApiProperty()
     exp: number;
+
+    @ApiProperty()
+    accessToken: string;
 }
