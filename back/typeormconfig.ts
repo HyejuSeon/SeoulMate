@@ -1,5 +1,10 @@
 import 'dotenv/config';
 import { DataSourceOptions } from 'typeorm';
+import * as config from 'config';
+
+const dbConfig = config.get('elice'); // db config
+// config.get('db.host') 와 같은 방식으로 접근 가능
+// dbConfig.host는 안된다
 
 export const typeormLocal: DataSourceOptions = {
     type: 'mysql',
@@ -13,12 +18,12 @@ export const typeormLocal: DataSourceOptions = {
 };
 
 export const typeormGCP: DataSourceOptions = {
-    type: 'mysql',
-    host: process.env.GCP_HOSTNAME,
-    port: 3306,
-    username: process.env.GCP_USERNAME,
-    password: process.env.GCP_PASSWORD,
-    database: process.env.GCP_DB_NAME,
+    type: dbConfig['type'],
+    host: dbConfig['host'],
+    port: dbConfig['port'],
+    username: dbConfig['username'],
+    password: dbConfig['password'],
+    database: dbConfig['database'],
     entities: ['dist/**/*.entity{.ts,.js}'],
     synchronize: true,
 };
