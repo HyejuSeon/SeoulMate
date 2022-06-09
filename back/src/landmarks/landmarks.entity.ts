@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Visited } from 'src/visited/visited.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Landmark {
@@ -11,8 +12,8 @@ export class Landmark {
     @Column()
     category: string;
 
-    @Column({ type: 'longtext' })
-    description: string;
+    // @Column({ type: 'longtext' })
+    // description: string;
 
     @Column()
     add: string;
@@ -22,4 +23,7 @@ export class Landmark {
 
     @Column()
     location_sub: string;
+
+    @OneToMany(() => Visited, (visited) => visited.landmark)
+    visited: Visited[];
 }
