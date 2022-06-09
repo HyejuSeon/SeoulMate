@@ -22,11 +22,12 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async getUserId(req: Request) {
-        // current user id 받아오기
-        const token = req.headers.authorization.split(' ')[1];
-        const { id } = this.jwtService.verity(token);
-        return id;
+    async getUserHashedRefreshToken(userId: string) {
+        // get user
+        const user = this.userRepository.findOne({
+            where: { user_id: userId },
+        });
+        return (await user).hashedRefreshToken;
     }
 
     async register(user: insertUserDto): Promise<saveUserDto> {
@@ -53,12 +54,17 @@ export class AuthService {
     }
 
     async validateUser(email: string, plainPassword: string) {
+        // 로그인
         try {
             const user = await this.userRepository.findOne({
                 where: { email },
             });
             await this.verifyPassword(plainPassword, user.password);
-            const { password, ...result } = user;
+            const refreshToken = this.jwtService.refresh();
+
+            await this.setCurrentRefreshToken(refreshToken, user.user_id);
+
+            const { password, hashedRefreshToken, ...result } = user;
             const userInfo = {
                 ...result,
                 accessToken: this.jwtService.sign(result.user_id),
