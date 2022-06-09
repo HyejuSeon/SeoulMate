@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Visited } from 'src/visited/visited.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Users {
@@ -33,4 +34,7 @@ export class Users {
     @Column({ nullable: true })
     @Exclude() // 민감한 데이터는 응답에서 제외 가능
     hashedRefreshToken?: string;
+
+    @OneToMany(() => Visited, (visited) => visited.user)
+    visited: Visited[];
 }
