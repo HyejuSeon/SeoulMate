@@ -59,7 +59,12 @@ export class AuthService {
             });
             await this.verifyPassword(plainPassword, user.password);
             const { password, ...result } = user;
-            return result;
+            const userInfo = {
+                ...result,
+                accessToken: this.jwtService.sign(result.user_id),
+            };
+
+            return userInfo;
         } catch (error) {
             throw new HttpException(
                 '비밀번호가 다르거나 사용자가 존재하지 않습니다.',

@@ -6,7 +6,7 @@ import { Users } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     constructor(
         @Inject('USERS_REPOSITORY')
         private userRepository: Repository<Users>,
@@ -17,10 +17,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    async validate(payload: { email: any; userId: any }) {
-        const { email, userId } = payload;
+    async validate(payload: { id: any }) {
+        const { id } = payload;
+
         const user = await this.userRepository.findOne({
-            where: { email: email },
+            where: { user_id: id },
         });
         if (!user) {
             throw new UnauthorizedException();
