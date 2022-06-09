@@ -3,11 +3,12 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './exception/globalexception..filter';
-import { AuthModule } from './auth/auth.module';
+
 import { LandmarksModule } from './landmarks/landmarks.module';
+import { VisitedModule } from './visited/visited.module';
 
 @Module({
-    imports: [UsersModule, DatabaseModule, AuthModule, LandmarksModule],
+    imports: [UsersModule, DatabaseModule, LandmarksModule, VisitedModule],
     controllers: [],
     providers: [
         {
