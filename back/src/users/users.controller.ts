@@ -5,21 +5,23 @@ import {
     HttpStatus,
     Patch,
     Post,
+    Request as RequestParam,
     Res,
     UseGuards,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response, Request } from 'express';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { insertUserDto } from './dto/insert.user.dto';
 import { signIn } from './dto/signin.dto';
 import { UsersService } from './users.service';
-import { AuthGuard } from '@nestjs/passport';
-import { getUserId } from 'src/auth/getUserId.decorator';
+import { getUserId } from 'src/common/decorator/getUserId.decorator';
 import { Users } from './users.entity';
 import { userResultDto } from './dto/user.dto';
-import { JwtGuard } from 'src/auth/jwt.guard';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { getUser } from 'src/common/decorator/login.decorator';
+import { LocalGuard } from 'src/auth/guard/local.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -49,6 +51,7 @@ export class UsersController {
     }
 
     @Post('login')
+    @UseGuards(LocalGuard)
     @UsePipes(ValidationPipe)
     @ApiBody({ type: signIn })
     @ApiResponse({
@@ -56,8 +59,7 @@ export class UsersController {
         description: 'login succc',
         type: userResultDto,
     })
-    async login(@Res() res: any, @Body() userDto: signIn): Promise<void> {
-        const user = await this.userService.login(userDto);
+    async login(@getUser() user: Users, @Res() res: Response): Promise<void> {
         res.status(HttpStatus.OK).json(user);
     }
 
@@ -65,7 +67,8 @@ export class UsersController {
     @UseGuards(JwtGuard)
     @ApiBearerAuth()
     async getUsers(@Res() res: Response, @getUserId() user: Users) {
-        const currentUserId = user; // 현재 사용자의 userId를 받아온다
+        const currentUserId = user.user_id;
+        console.log(currentUserId);
 
         const users = await this.userService.getAllUsers();
         res.status(HttpStatus.OK).json(users);
