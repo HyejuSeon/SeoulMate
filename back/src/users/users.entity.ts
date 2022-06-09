@@ -1,12 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { Visited } from 'src/visited/visited.entity';
-import {
-    Column,
-    Entity,
-    OneToMany,
-    PrimaryColumn,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Users {
