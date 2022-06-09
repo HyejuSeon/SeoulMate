@@ -1,37 +1,36 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class User {
-    @PrimaryGeneratedColumn('increment')
-    @ApiProperty()
-    id: number;
-
-    @Column()
-    @ApiProperty({ description: 'user id' })
+export class Users {
+    @PrimaryColumn()
     user_id: string;
 
     @Column()
-    @ApiProperty()
     name: string;
 
     @Column()
-    @ApiProperty()
     email: string;
 
     @Column()
-    @ApiProperty()
     password: string;
 
-    @Column()
-    @ApiProperty()
+    @Column({
+        default: 'profile image url',
+    })
     profile_image: string;
 
-    @Column()
-    @ApiProperty()
-    rank: number;
+    @Column({
+        default: 0,
+    })
+    rating: number;
 
-    @Column()
-    @ApiProperty()
+    @Column({
+        default: 0,
+    })
     exp: number;
+
+    @Column({ nullable: true })
+    @Exclude() // 민감한 데이터는 응답에서 제외 가능
+    hashedRefreshToken?: string;
 }
