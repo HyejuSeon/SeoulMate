@@ -2,9 +2,7 @@ import 'dotenv/config';
 import { DataSourceOptions } from 'typeorm';
 import * as config from 'config';
 
-const dbConfig = config.get('db'); // db config
-// config.get('db.host') 와 같은 방식으로 접근 가능
-// dbConfig.host는 안된다
+const dbConfig = config.get('elice'); // db config
 
 export const typeormLocal: DataSourceOptions = {
     type: 'mysql',
