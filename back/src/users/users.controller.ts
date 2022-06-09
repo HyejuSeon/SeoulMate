@@ -12,7 +12,13 @@ import {
     ValidationPipe,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
-import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiBody,
+    ApiCookieAuth,
+    ApiResponse,
+    ApiTags,
+} from '@nestjs/swagger';
 import { insertUserDto } from './dto/insert.user.dto';
 import { signIn } from './dto/signin.dto';
 import { UsersService } from './users.service';
