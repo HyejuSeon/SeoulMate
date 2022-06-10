@@ -11,6 +11,7 @@ import { GlobalStyles } from './styledCompo/GlobalStyle';
 import Login from './components/user/Login';
 import { ROUTES } from './Route';
 import Signin from './components/user/Signin';
+import Mypage from './components/mypage/Mypage'
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -68,6 +69,9 @@ function App() {
                 <Route path="/login" element={<Login />} />
 
                 <Route path="*" element={<Home />} />
+
+                <Route path="/mypage" element={<Mypage />} />
+
 
                 <Route path="/register" element={<Signin />} />
             </Routes>
