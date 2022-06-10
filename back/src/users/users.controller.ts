@@ -3,6 +3,7 @@ import {
     Controller,
     Get,
     HttpStatus,
+    Param,
     Patch,
     Post,
     Res,
@@ -15,6 +16,7 @@ import {
     ApiBearerAuth,
     ApiBody,
     ApiHeader,
+    ApiParam,
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
@@ -29,6 +31,7 @@ import { getUser } from 'src/common/decorator/login.decorator';
 import { LocalGuard } from 'src/auth/guard/local.guard';
 import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
 import { refreshAccessToken } from 'src/common/decorator/refresh.decorator';
+import { currentUserInfo } from './dto/current-user.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -88,5 +91,18 @@ export class UsersController {
     async refresh(@Res() res: Response, @refreshAccessToken() user: any) {
         const { token } = user;
         res.status(HttpStatus.OK).json(token);
+    }
+
+    @Get('current/info')
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth()
+    @ApiResponse({
+        type: currentUserInfo,
+    })
+    async currentUserInfo(@getUserId() user: Users, @Res() res: Response) {
+        const currentUserId = user.user_id;
+        res.status(HttpStatus.OK).json(
+            await this.userService.getCurrentUserInfo(currentUserId),
+        );
     }
 }
