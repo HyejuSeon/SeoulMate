@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { insertUserDto } from './dto/insert.user.dto';
 import { Users } from './users.entity';
 import { signIn } from './dto/signin.dto';
+import { compare, hash } from 'bcryptjs';
 import { JwtService } from 'src/auth/jwt.service';
 import { AuthService } from 'src/auth/auth.service';
 

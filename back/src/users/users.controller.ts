@@ -22,6 +22,7 @@ import { userResultDto } from './dto/user.dto';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { getUser } from 'src/common/decorator/login.decorator';
 import { LocalGuard } from 'src/auth/guard/local.guard';
+import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -72,5 +73,13 @@ export class UsersController {
 
         const users = await this.userService.getAllUsers();
         res.status(HttpStatus.OK).json(users);
+    }
+
+    @Get('refresh')
+    @UseGuards(JwtRefreshGuard)
+    @ApiBearerAuth()
+    async refresh(@getUserId() user: Users) {
+        const id = user.user_id;
+        console.log(id);
     }
 }
