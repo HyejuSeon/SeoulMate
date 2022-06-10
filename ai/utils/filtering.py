@@ -33,5 +33,18 @@ def main():
             shutil.rmtree(dir_path)
     print(len(os.listdir(path)))
 
+def none_anno():
+    img_path = os.environ['IMGS']
+    label_path = os.environ['LABELS']
+    label_set = set()
+    for dir in os.listdir(label_path):
+        label_set.update([label[:-5] for label in os.listdir(label_path + dir)])
+    
+    for dir in os.listdir(img_path):
+        for img in os.listdir(img_path + dir):
+            if img[:-4] not in label_set:
+                os.remove(f'{img_path}{dir}/{img}')
+
 if __name__ == '__main__':
     main()
+    none_anno()
