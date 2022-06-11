@@ -3,7 +3,6 @@ import {
     Controller,
     Get,
     HttpStatus,
-    Param,
     Patch,
     Post,
     Res,
@@ -16,21 +15,18 @@ import {
     ApiBearerAuth,
     ApiBody,
     ApiHeader,
-    ApiParam,
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
 import { insertUserDto } from './dto/insert.user.dto';
 import { signIn } from './dto/signin.dto';
 import { UsersService } from './users.service';
-import { getUserId } from 'src/common/decorator/getUserId.decorator';
 import { Users } from './users.entity';
 import { userResultDto } from './dto/user.dto';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
-import { getUser } from 'src/common/decorator/login.decorator';
+import { getUserRequest } from 'src/common/decorator/request.decorator';
 import { LocalGuard } from 'src/auth/guard/local.guard';
 import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
-import { refreshAccessToken } from 'src/common/decorator/refresh.decorator';
 import { currentUserInfo } from './dto/current-user.dto';
 
 @ApiTags('users')
@@ -69,14 +65,17 @@ export class UsersController {
         description: 'login succc',
         type: userResultDto,
     })
-    async login(@getUser() user: Users, @Res() res: Response): Promise<void> {
+    async login(
+        @getUserRequest() user: Users,
+        @Res() res: Response,
+    ): Promise<void> {
         res.status(HttpStatus.OK).json(user);
     }
 
     @Get('getalluser')
     @UseGuards(JwtGuard)
     @ApiBearerAuth()
-    async getUsers(@Res() res: Response, @getUserId() user: Users) {
+    async getUsers(@Res() res: Response, @getUserRequest() user: Users) {
         const currentUserId = user.user_id;
         console.log(currentUserId);
 
@@ -88,7 +87,7 @@ export class UsersController {
     @UseGuards(JwtRefreshGuard)
     @ApiBearerAuth()
     @ApiHeader({ name: 'x-refresh-token' })
-    async refresh(@Res() res: Response, @refreshAccessToken() user: any) {
+    async refresh(@Res() res: Response, @getUserRequest() user: any) {
         const { token } = user;
         res.status(HttpStatus.OK).json(token);
     }
@@ -99,7 +98,7 @@ export class UsersController {
     @ApiResponse({
         type: currentUserInfo,
     })
-    async currentUserInfo(@getUserId() user: Users, @Res() res: Response) {
+    async currentUserInfo(@getUserRequest() user: Users, @Res() res: Response) {
         const currentUserId = user.user_id;
         res.status(HttpStatus.OK).json(
             await this.userService.getCurrentUserInfo(currentUserId),
