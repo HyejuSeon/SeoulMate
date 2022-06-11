@@ -3,16 +3,23 @@ import {
     Controller,
     Get,
     HttpStatus,
+    Param,
     Patch,
     Post,
-    Request as RequestParam,
     Res,
     UseGuards,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
-import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import {
+    ApiBearerAuth,
+    ApiBody,
+    ApiHeader,
+    ApiParam,
+    ApiResponse,
+    ApiTags,
+} from '@nestjs/swagger';
 import { insertUserDto } from './dto/insert.user.dto';
 import { signIn } from './dto/signin.dto';
 import { UsersService } from './users.service';
@@ -23,6 +30,8 @@ import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { getUser } from 'src/common/decorator/login.decorator';
 import { LocalGuard } from 'src/auth/guard/local.guard';
 import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
+import { refreshAccessToken } from 'src/common/decorator/refresh.decorator';
+import { currentUserInfo } from './dto/current-user.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -78,8 +87,22 @@ export class UsersController {
     @Get('refresh')
     @UseGuards(JwtRefreshGuard)
     @ApiBearerAuth()
-    async refresh(@getUserId() user: Users) {
-        const id = user.user_id;
-        console.log(id);
+    @ApiHeader({ name: 'x-refresh-token' })
+    async refresh(@Res() res: Response, @refreshAccessToken() user: any) {
+        const { token } = user;
+        res.status(HttpStatus.OK).json(token);
+    }
+
+    @Get('current/info')
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth()
+    @ApiResponse({
+        type: currentUserInfo,
+    })
+    async currentUserInfo(@getUserId() user: Users, @Res() res: Response) {
+        const currentUserId = user.user_id;
+        res.status(HttpStatus.OK).json(
+            await this.userService.getCurrentUserInfo(currentUserId),
+        );
     }
 }

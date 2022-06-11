@@ -1,11 +1,11 @@
 import {
+    BadRequestException,
     ConflictException,
     HttpException,
     HttpStatus,
     Inject,
     Injectable,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { Users } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from './jwt.service';
@@ -68,6 +68,7 @@ export class AuthService {
             const userInfo = {
                 ...result,
                 accessToken: this.jwtService.sign(result.user_id),
+                refreshToken: refreshToken,
             };
 
             return userInfo;
@@ -100,15 +101,21 @@ export class AuthService {
         await this.userRepository.save(userInfo);
     }
 
-    async getUserRefreshTokenMatches(refresh: string, userId: string) {
+    async getUserRefreshTokenMatchesAndValid(refresh: string, userId: string) {
         const user = await this.userRepository.findOne({
             where: { user_id: userId },
         });
         const isMatches = await compare(refresh, user.hashedRefreshToken);
 
-        if (isMatches) {
-            return user;
+        if (!isMatches) {
+            throw new BadRequestException('token not matched');
         }
+        return this.jwtService.refreshVerify(refresh);
+    }
+
+    async refreshAccessToken(id: string) {
+        const token = this.jwtService.sign(id);
+        return token;
     }
 
     async removeRefreshToken(userId: string) {

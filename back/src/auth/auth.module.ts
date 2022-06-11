@@ -8,6 +8,7 @@ import * as config from 'config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategy/jwt.stragegy';
 import { LocalStrategy } from './strategy/local.strategy';
+import { JwtRefreshStrategy } from './strategy/jwt-refresh.strategy';
 
 const jwtConfig = config.get('auth');
 
@@ -28,13 +29,8 @@ const jwtConfig = config.get('auth');
         ...userProviders,
         JwtStrategy,
         LocalStrategy,
+        JwtRefreshStrategy,
     ],
-    exports: [
-        JwtService,
-        AuthService,
-        JwtStrategy,
-        PassportModule,
-        LocalStrategy,
-    ],
+    exports: [AuthService],
 })
 export class AuthModule {}
