@@ -13,12 +13,8 @@ path = os.environ['DATASET_PATH']
 dirs = os.listdir(path)
 data = []
 for dir in dirs:
-    if '원천' not in dir:
-        continue
     landmarks = os.listdir(path + dir)
-    tmp = [[landmark, len(os.listdir(path + dir + f'/{landmark}'))] for landmark in landmarks]
-    data.extend(tmp)
-    print(dir)
+    data.append([dir, len(landmarks)])
 df = pd.DataFrame(data, columns=['name', 'img_num'])
 df.to_excel('ai/eda.xlsx', index=False)
 
