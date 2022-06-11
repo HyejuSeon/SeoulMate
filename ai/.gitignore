@@ -1,0 +1,7 @@
+.env
+eda.xlsx
+utils/chromedriver.exe
+description.xlsx
+data/
+eda_원천.xlsx
+imgs/frame_num_per_landmark_원천.png
