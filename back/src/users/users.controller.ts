@@ -28,6 +28,7 @@ import { getUserRequest } from 'src/common/decorator/request.decorator';
 import { LocalGuard } from 'src/auth/guard/local.guard';
 import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
 import { currentUserInfo } from './dto/current-user.dto';
+import { insertEmail } from './dto/find.password.input.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -103,5 +104,11 @@ export class UsersController {
         res.status(HttpStatus.OK).json(
             await this.userService.getCurrentUserInfo(currentUserId),
         );
+    }
+
+    @Post('reset/password')
+    @ApiBody({ type: insertEmail })
+    async sendMailForResetPassword(@Body() email: insertEmail) {
+        await this.userService.sendMailForResetPassword(email);
     }
 }
