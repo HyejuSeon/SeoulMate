@@ -55,7 +55,7 @@ export default Profile
 
 const CardBox = styled.div`
   margin: 0 auto;
-  width: 50%;
+  width: 80%;
   height: 470px;
   border: 1px solid #E4E4E4;
   border-radius: 30px;

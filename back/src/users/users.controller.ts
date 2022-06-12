@@ -70,6 +70,7 @@ export class UsersController {
         type: userResultDto,
     })
     async login(@getUser() user: Users, @Res() res: Response): Promise<void> {
+        console.log("user")
         res.status(HttpStatus.OK).json(user);
     }
 
