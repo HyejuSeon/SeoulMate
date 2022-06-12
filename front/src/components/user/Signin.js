@@ -14,7 +14,7 @@ function Signin() {
     
     const [form, setForm] = useState({
         email: '',
-        nickname: '',
+        name: '',
         password: '',
     })
 
@@ -27,10 +27,10 @@ function Signin() {
 
         try {
             //user 회원가입 api 호출
-            await Api.post("users/register", form)
+            await Api.post("users/registration", form)
 
         } catch (error) {
-            alert(error.response.data)
+            alert("회원가입에 실패했습니다")
         }
     }
 
@@ -64,10 +64,10 @@ function Signin() {
             <Box class={style.inputNickname}>
                 <CssTextField
                     style = {{width: '30%'}}
-                    id="nickname" 
-                    name="nickname"
-                    label="Nickname" 
-                    placeholder='Nickname'
+                    id="name" 
+                    name="name"
+                    label="name" 
+                    placeholder='name'
                     variant="standard"
                     required
                     InputLabelProps={{

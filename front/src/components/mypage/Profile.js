@@ -1,21 +1,24 @@
-import { Button, Grid, IconButton, Stack, Typography } from "@mui/material"
-import EditIcon from '@mui/icons-material/Edit';
-import styled from 'styled-components';
+import { Button, Grid, Stack, Typography } from "@mui/material";
+import styled from "styled-components";
+import ProfileEdit from "./ProfileEdit.js";
 import Style from '../../styledCompo/MypageStyle/Mypage.module.css'
-function Profile({setEditOpen, editOpen, toggleEditForm}) {
+import { useNavigate } from 'react-router-dom';
+import {ROUTES} from '../../Route'
+
+function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
     return (
     <CardBox>
         <UpperBox>
         {/* 프로필 편집폼이 열리면 이미지 안보이게 함 */}
         {!editOpen && (
           <div className={Style.imageBox} onClick={() => toggleEditForm()}>
-            <img src={``} className={Style.profileImg} alt="프로필 이미지"/>
+            <img src="https://gradium.co.kr/wp-content/uploads/kiwi-2.jpg" className={Style.profileImg} alt="프로필 이미지"/>
               <span className={Style.editButton}>편집하기</span>
             </div>
         )}
         </UpperBox>
         <LowerBox>
-          <Grid container spacing={1}>
+        <Grid container spacing={1}>
           {editOpen ? (
             <ProfileEdit
               updateUser={updateUser}
@@ -38,10 +41,10 @@ function Profile({setEditOpen, editOpen, toggleEditForm}) {
                   : user?.description}
               </Typography>
             </Grid>
-            )}
-            </Grid>
-        </LowerBox>
-        
+          )}
+          </Grid>
+          </LowerBox>
+          
     </CardBox>
     )
     
