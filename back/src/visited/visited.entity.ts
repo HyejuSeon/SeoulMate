@@ -22,11 +22,11 @@ export class Visited {
     @Column()
     user_id: string;
 
-    @ManyToOne(() => Landmark, (landmark) => landmark.visited, { eager: true })
+    @ManyToOne(() => Landmark, (landmark) => landmark.visited)
     @JoinColumn({ name: 'landmark_id' })
     landmark: Landmark;
 
-    @ManyToOne(() => Users, (user) => user.visited, { eager: true })
+    @ManyToOne(() => Users, (user) => user.visited)
     @JoinColumn({ name: 'user_id' })
     user: Users;
 }
