@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import * as config from 'config';
 import { GlobalExceptionFilter } from './exception/globalexception.filter';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
     const logger = new Logger();
@@ -25,6 +26,7 @@ async function bootstrap() {
     const swaggerDocs = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup('api', app, swaggerDocs);
 
+    app.use(cookieParser());
     await app.listen(port);
     logger.log(`application run in ${port}`);
 }

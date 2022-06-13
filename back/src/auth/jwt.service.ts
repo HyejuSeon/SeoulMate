@@ -36,4 +36,15 @@ export class JwtService {
             expiresIn: auth['jwt_refresh_expiresIn'],
         });
     }
+
+    refreshVerify(token: string) {
+        // refresh 검증
+        try {
+            return jwt.verify(token, auth['jwt_refresh_secret']);
+        } catch (error) {
+            throw new UnauthorizedException(
+                'refresh token expired, login required',
+            );
+        }
+    }
 }
