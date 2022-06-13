@@ -63,7 +63,7 @@ const Home = () => {
     const MainiImageRender = MainImage.map((item, idx) => {
         return (
             <SwiperSlide key={idx}>
-                <StartButton onClick={() => navigate('/main')}>시작하기</StartButton>
+                <StartButton onClick={() => navigate('/upload')}>시작하기</StartButton>
                 <HeadCopy>
                     랜드마크를 찾아 사진을 찍으세요.
                     <br />
