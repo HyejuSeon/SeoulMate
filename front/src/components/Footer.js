@@ -22,7 +22,7 @@ function Footer() {
         <>
             <Container>
                 &copy;{new Date().getFullYear()} SeoulMate | All rights reserved | Terms Of Service
-                | Privacy
+                | Privacy😎
             </Container>
         </>
     );
