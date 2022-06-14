@@ -9,7 +9,7 @@ import {
     UploadButtonContainer,
     UploadButton,
     UploadCancelButton,
-} from '../../styledCompo/UploadStyle/UploadStyle';
+} from './UploadStyle';
 
 const Upload = () => {
     const navigate = useNavigate();

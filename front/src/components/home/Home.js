@@ -38,7 +38,7 @@ import {
     FourthPageHeadCopy,
     FourthPageBodyCopy,
     FourthPageMapContainer,
-} from '../../styledCompo/homeStyle/Homestyle';
+} from './Homestyle';
 import img_1 from '../../img/landMark1.jpg';
 import img_2 from '../../img/landMark2.jpg';
 import img_3 from '../../img/landMark3.jpg';
