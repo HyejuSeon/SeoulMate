@@ -36,13 +36,14 @@ def annotation():
         for label in labels:
             with open(f'{path}{dir}/{label}', "r", encoding='utf-8') as jsonfile:
                 anno = json.load(jsonfile)
+            shape = (anno['images'][0]['width'], anno['images'][0]['height'])
             filename = anno['images'][0]['file_name']
             name = anno['categories'][0]['name']
             bbox = anno['annotations'][0]['bbox']
             lt = (int(bbox[0]), int(bbox[1]))
             rb = (int(bbox[2]), int(bbox[3]))
-            x, y = int((lt[0] + rb[0]) // 2), int((lt[1] + rb[1]) // 2)
-            w, h = rb[0] - lt[0], rb[1] - lt[1]
+            x, y = int((lt[0] + rb[0]) // 2) / shape[0], int((lt[1] + rb[1]) // 2) / shape[1]
+            w, h = (rb[0] - lt[0]) / shape[0], (rb[1] - lt[1]) / shape[1]
             with open(f'./ai/data/labels/{filename[:-5]}.txt', 'w') as file:
                 file.write(f'{ko_to_num[name]} {x} {y} {w} {h}')
 
