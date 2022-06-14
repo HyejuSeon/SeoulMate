@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
     UploadWrapper,
@@ -11,6 +12,7 @@ import {
 } from '../../styledCompo/UploadStyle/UploadStyle';
 
 const Upload = () => {
+    const navigate = useNavigate();
     const [avatar, setAvatar] = useState(null);
 
     const filepickerRef = useRef();
@@ -46,8 +48,8 @@ const Upload = () => {
                 <input hidden onChange={uploadAvatar} ref={filepickerRef} type="file" />
             </UploadContainer>
             <UploadButtonContainer>
-                <UploadButton>업로드</UploadButton>
-                <UploadCancelButton>뒤로가기 </UploadCancelButton>
+                <UploadButton onClick={() => navigate('/uploadResult')}>업로드</UploadButton>
+                <UploadCancelButton onClick={() => navigate('/')}>뒤로가기 </UploadCancelButton>
             </UploadButtonContainer>
         </UploadWrapper>
     );

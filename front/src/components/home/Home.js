@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 // import required modules
 import { Navigation, Pagination } from 'swiper';
-
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-
 import './Home.css';
-
 import place from '../../img/Place.png';
-
 import KakaoMap from './kakaoMap';
-
 import {
     StartButton,
     FirstPage,
@@ -47,19 +39,15 @@ import {
     FourthPageBodyCopy,
     FourthPageMapContainer,
 } from '../../styledCompo/homeStyle/Homestyle';
-
 import img_1 from '../../img/landMark1.jpg';
 import img_2 from '../../img/landMark2.jpg';
 import img_3 from '../../img/landMark3.jpg';
 import img_4 from '../../img/landMark4.jpg';
-
 import Logo from '../../img/logo.png';
 
 const Home = () => {
     const navigate = useNavigate();
-
     const MainImage = [img_1, img_2, img_3, img_4];
-
     const MainiImageRender = MainImage.map((item, idx) => {
         return (
             <SwiperSlide key={idx}>

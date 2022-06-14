@@ -2,6 +2,7 @@ import React, { useState, useEffect, useReducer, createContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import * as Api from './api';
+import './App.css';
 import { loginReducer } from './reducer';
 
 import Home from '../src/components/home/Home';
@@ -13,6 +14,7 @@ import { ROUTES } from './Route';
 import Signin from './components/user/Signin';
 import Mypage from './components/mypage/Mypage';
 import Upload from './components/upload/Upload';
+import UploadResult from './components/upload/UploadResult';
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -54,13 +56,13 @@ function App() {
     };
 
     // useEffect함수를 통해 fetchCurrentUser 함수를 실행함.
-    useEffect(() => {
-        fetchCurrentUser();
-    }, []);
+    // useEffect(() => {
+    //     fetchCurrentUser();
+    // }, []);
 
-    if (!isFetchCompleted) {
-        return 'loading...';
-    }
+    // if (!isFetchCompleted) {
+    //     return 'loading...';
+    // }
 
     return (
         <>
@@ -70,6 +72,7 @@ function App() {
                 <Route path="/mypage" element={<Mypage />} />
                 <Route path="/register" element={<Signin />} />
                 <Route path="/upload" element={<Upload />} />
+                <Route path="/uploadResult" element={<UploadResult />} />
                 <Route path="*" element={<Home />} />
             </Routes>
         </>

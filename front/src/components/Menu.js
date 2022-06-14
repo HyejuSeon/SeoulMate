@@ -12,11 +12,12 @@ const StyledMenu = styled.nav`
     height: 40%;
     text-align: left;
     padding: 2rem;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     transition: transform 0.3s ease-in-out;
     z-index: 50;
+    font-family: 'Jeju Gothic', sans-serif;
 
     @media (max-width: 576px) {
         width: 100%;
