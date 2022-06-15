@@ -6,6 +6,7 @@ import numpy as np
 import json
 import pickle
 from glob import glob
+from collections import defaultdict
 
 # custom_dataset
 # │
@@ -23,12 +24,23 @@ from glob import glob
 # │
 # └── data.yaml
 
+def wrong_annotation(items):
+    '''
+    wrong annotation 제거 후 해당 클래스의 이미지 개수 확인
+    '''
+    img_path = os.environ['IMGS']
+    for classname, dlt_num in items:
+        num_imgs = len(os.listdir(img_path + classname)) - dlt_num
+        print(classname, num_imgs)     
+
 def annotation():
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
     path = os.environ['LABELS']
     dirs = os.listdir(path)
     ko_to_num = dict()
     num_to_ko = dict()
+    wrong = defaultdict(int)
+    dlt = []
     for i, dir in enumerate(tqdm(dirs)):
         num_to_ko[i] = dir
         ko_to_num[dir] = i
@@ -42,11 +54,21 @@ def annotation():
             bbox = anno['annotations'][0]['bbox']
             lt = (bbox[0], bbox[1])
             rb = (bbox[2], bbox[3])
-            x, y = (lt[0] + rb[0]) // 2 / shape[0], (lt[1] + rb[1]) // 2 / shape[1]
+            x, y = (lt[0] + rb[0]) / 2 / shape[0], (lt[1] + rb[1]) / 2 / shape[1]
             w, h = (rb[0] - lt[0]) / shape[0], (rb[1] - lt[1]) / shape[1]
-            with open(f'./ai/data/labels/{filename[:-5]}.txt', 'w') as file:
-                file.write(f'{ko_to_num[name]} {x} {y} {w} {h}')
+            # wrong annotation 확인
+            if x > 1 or y > 1 or w > 1 or h > 1:
+                wrong[dir] += 1
+                dlt.append(filename + '\n')
+                
+            with open(f'./ai/data/labels/{filename[:-5]}.txt', 'w') as f:
+                f.write(f'{ko_to_num[name]} {x} {y} {w} {h}')
 
+    # wrong annotaion 확인
+    # wrong_annotation(wrong.items())
+
+    with open('ai/data/dlt_files.txt', 'w', encoding='utf-8') as f:
+        f.writelines(dlt)
     with open('ai/data/ko_to_num.pkl', 'wb') as fw:
         pickle.dump(ko_to_num, fw)
     with open('ai/data/num_to_ko.pkl', 'wb') as fw:
