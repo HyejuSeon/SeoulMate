@@ -6,6 +6,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { currentUserInfo } from './dto/current-user.dto';
 import { resetPassword } from './dto/find.password.input.dto';
 import { EmailService } from 'src/email/email.service';
+import { updateUserDto } from './dto/update.user.dto';
 
 @Injectable()
 export class UsersService {
@@ -53,5 +54,28 @@ export class UsersService {
             randNumber.toString(),
             resetInfo.email,
         );
+    }
+
+    async updateUserInfo(updateUser: updateUserDto, user_id: string) {
+        const user = await this.userRepository.findOneBy({
+            user_id: user_id,
+        });
+        await this.authService.verifyPassword(
+            // 비밀번호 확인
+            updateUser.prePassword,
+            user.password,
+        );
+
+        if (updateUser.newPassword.length !== 0) {
+            // new password가 존재하는 경우
+            user.password = await this.authService.hashedPassword(
+                updateUser.newPassword,
+            );
+        }
+
+        user.name = updateUser.name || user.name;
+        user.profile_image = updateUser.profile_image || user.profile_image;
+
+        await this.userRepository.save(user);
     }
 }

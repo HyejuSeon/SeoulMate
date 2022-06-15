@@ -5,6 +5,7 @@ import {
     HttpStatus,
     Patch,
     Post,
+    Put,
     Res,
     UseGuards,
     UsePipes,
@@ -30,6 +31,7 @@ import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
 import { currentUserInfo } from './dto/current-user.dto';
 import { resetPassword } from './dto/find.password.input.dto';
 import { EmailService } from 'src/email/email.service';
+import { updateUserDto } from './dto/update.user.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -114,5 +116,17 @@ export class UsersController {
     @ApiBody({ type: resetPassword })
     async sendMailForResetPassword(@Body() resetInfo: resetPassword) {
         await this.userService.sendMailForResetPassword(resetInfo);
+    }
+
+    @Patch('update')
+    @ApiBody({ type: updateUserDto })
+    @UseGuards(JwtGuard)
+    @UsePipes(ValidationPipe)
+    @ApiBearerAuth()
+    async updateUserInfo(
+        @Body() updateUser: updateUserDto,
+        @getUserRequest() user: Users,
+    ) {
+        await this.userService.updateUserInfo(updateUser, user.user_id);
     }
 }

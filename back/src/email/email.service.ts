@@ -2,8 +2,6 @@ import Mail = require('nodemailer/lib/mailer');
 import * as nodemailer from 'nodemailer';
 
 import { Injectable } from '@nestjs/common';
-import { resetPassword } from 'src/users/dto/find.password.input.dto';
-import { AuthService } from 'src/auth/auth.service';
 
 interface EmailOptions {
     from: string;
