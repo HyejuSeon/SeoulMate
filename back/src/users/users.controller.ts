@@ -5,6 +5,7 @@ import {
     HttpStatus,
     Patch,
     Post,
+    Put,
     Res,
     UseGuards,
     UsePipes,
@@ -28,12 +29,17 @@ import { getUserRequest } from 'src/common/decorator/request.decorator';
 import { LocalGuard } from 'src/auth/guard/local.guard';
 import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
 import { currentUserInfo } from './dto/current-user.dto';
-import { insertEmail } from './dto/find.password.input.dto';
+import { resetPassword } from './dto/find.password.input.dto';
+import { EmailService } from 'src/email/email.service';
+import { updateUserDto } from './dto/update.user.dto';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-    constructor(private readonly userService: UsersService) {}
+    constructor(
+        private readonly userService: UsersService,
+        private readonly emailService: EmailService,
+    ) {}
 
     @Post('registration') // http method
     @UsePipes(ValidationPipe) // validation pipe
@@ -107,8 +113,20 @@ export class UsersController {
     }
 
     @Post('reset/password')
-    @ApiBody({ type: insertEmail })
-    async sendMailForResetPassword(@Body() email: insertEmail) {
-        await this.userService.sendMailForResetPassword(email);
+    @ApiBody({ type: resetPassword })
+    async sendMailForResetPassword(@Body() resetInfo: resetPassword) {
+        await this.userService.sendMailForResetPassword(resetInfo);
+    }
+
+    @Patch('update')
+    @ApiBody({ type: updateUserDto })
+    @UseGuards(JwtGuard)
+    @UsePipes(ValidationPipe)
+    @ApiBearerAuth()
+    async updateUserInfo(
+        @Body() updateUser: updateUserDto,
+        @getUserRequest() user: Users,
+    ) {
+        await this.userService.updateUserInfo(updateUser, user.user_id);
     }
 }
