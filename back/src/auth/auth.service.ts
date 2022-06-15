@@ -22,6 +22,11 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
+    async hashedPassword(password: string) {
+        const salt = await genSalt();
+        return await hash(password, salt);
+    }
+
     async getUserHashedRefreshToken(userId: string) {
         // get user
         const user = this.userRepository.findOne({
@@ -41,8 +46,7 @@ export class AuthService {
 
         const user_id = uuid();
 
-        const salt = await genSalt();
-        const hashedPassword = await hash(user.password, salt);
+        const hashedPassword = await this.hashedPassword(user.password);
 
         const newUser: saveUserDto = {
             user_id: user_id,
@@ -126,5 +130,15 @@ export class AuthService {
 
         userInfo.hashedRefreshToken = null;
         await this.userRepository.save(userInfo);
+    }
+
+    async resetPassword(newPassword: string, email: string, name: string) {
+        const user = await this.userRepository.findOneBy({
+            email: email,
+            name: name,
+        });
+        const hashedPassword = await this.hashedPassword(newPassword);
+        user.password = hashedPassword;
+        await this.userRepository.save(user);
     }
 }
