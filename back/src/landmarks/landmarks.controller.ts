@@ -21,6 +21,10 @@ export class LandmarksController {
         status: 200,
         description: 'Landmark data initialized successfully',
     })
+    @ApiOperation({
+        summary:
+            '랜드마크 데이터베이스 초기화: 데이터베이스에 랜드마크 데이터가 없는 경우, 데이터가 이상한 경우 실행',
+    })
     async init(@Res() res: any): Promise<void> {
         //   랜드마크 데이터베이스 초기화
         const result = await this.landmarksService.init();
@@ -31,6 +35,9 @@ export class LandmarksController {
     @ApiResponse({
         status: 200,
         description: 'Return all landmarks',
+    })
+    @ApiOperation({
+        summary: '랜드마크 조회',
     })
     async getLandmarks(
         @Res() res: any,
