@@ -139,7 +139,12 @@ export class UsersController {
     async delete(
         @Body() userPassword: deleteUser,
         @getUserRequest() user: Users,
+        @Res() res: Response,
     ) {
-        await this.userService.deleteUser(userPassword, user.user_id);
+        const deleteUser = await this.userService.deleteUser(
+            userPassword,
+            user.user_id,
+        );
+        res.status(HttpStatus.OK).json(deleteUser);
     }
 }

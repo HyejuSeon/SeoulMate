@@ -31,7 +31,10 @@ export class Boards {
     @CreateDateColumn()
     created_at: Date;
 
-    @ManyToOne(() => Users, (user) => user.board, { eager: true })
+    @ManyToOne(() => Users, (user) => user.board, {
+        eager: true,
+        onDelete: 'CASCADE',
+    })
     @JoinColumn({ name: 'user_id' })
     user: Users;
 }
