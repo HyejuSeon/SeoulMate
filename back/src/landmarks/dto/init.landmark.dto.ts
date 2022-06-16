@@ -10,8 +10,8 @@ export class initLandmarkDto {
     @ApiProperty()
     category: string;
 
-    // @ApiProperty()
-    // description: string;
+    @ApiProperty({ required: false })
+    description: string;
 
     @ApiProperty()
     add: string;

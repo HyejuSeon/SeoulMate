@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { saveVisitedDto } from './dto/save.visited.dto';
 import { returnVisitedDto } from './dto/return.visited.dto';
 import { Visited } from './visited.entity';
+import { updateVisitedDto } from './dto/update.visited.dto';
 
 @Injectable()
 export class VisitedService {
@@ -11,6 +12,9 @@ export class VisitedService {
         private visitedRepository: Repository<Visited>,
     ) {}
 
+    async update(visitedDto: updateVisitedDto) {
+        throw new Error('Method not implemented.');
+    }
     async getVisited(
         query: returnVisitedDto,
     ): Promise<
@@ -42,7 +46,12 @@ export class VisitedService {
     }
     async create(visitedDto: saveVisitedDto): Promise<any> {
         try {
-            const result = await this.visitedRepository.save({ ...visitedDto });
+            const { img_name, landmark_id, user_id } = visitedDto;
+            const result = await this.visitedRepository.save({
+                landmark_id,
+                user_id,
+                landmark_img: `/visited/${img_name}`,
+            });
             return result;
         } catch (error) {
             console.log(error);
