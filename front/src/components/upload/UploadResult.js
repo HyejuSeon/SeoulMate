@@ -25,11 +25,13 @@ import name from '../../img/name.png';
 import location from '../../img/location.png';
 import Luggage from '../../img/Luggage.png';
 
+import img_4 from '../../img/landMark4.jpg';
+
 const UploadResult = () => {
     return (
         <UploadResultWrapper>
             <UploadResultLeft>
-                <ImgContainer></ImgContainer>
+                <ImgContainer src={img_4} />
                 <UploadResultContentContainer>
                     <UploadResultContentInfoTitle>
                         <div>사진 제목</div>

@@ -8,6 +8,8 @@ export const UploadResultWrapper = styled.div`
     min-height: 100vh;
     min-width: 95vw;
 
+    font-family: 'Jeju Gothic', sans-serif;
+
     /* background: yellow; */
 `;
 
@@ -67,7 +69,6 @@ export const UploadResultContentInfo = styled.div`
     height: 4rem;
 
     font-size: 1.2rem;
-    font-weight: bold;
 
     background: #ffffff;
     border: 1px solid #f0f0f0;
@@ -115,7 +116,7 @@ export const UploadResultBtn = styled.button`
     width: 10rem;
     height: 3rem;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     background: #42403d;
     box-shadow: 0px 20px 35px rgba(241, 165, 1, 0.15);
     border-radius: 10px;
