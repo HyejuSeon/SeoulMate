@@ -1,21 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsString } from 'class-validator';
 
 export class saveVisitedDto {
     @ApiProperty({
-        description: 'image url',
-        required: false,
+        description: 'image name(will be used as endpoints)',
+        required: true,
     })
-    landmark_img: string;
+    @IsString()
+    img_name: string;
 
     @ApiProperty({
         description: 'landmark_id',
         required: true,
     })
+    @IsNumber()
     landmark_id: number;
 
     @ApiProperty({
         description: 'user_id',
         required: true,
     })
+    @IsString()
     user_id: string;
 }
