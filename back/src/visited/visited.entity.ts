@@ -13,7 +13,7 @@ export class Visited {
     @PrimaryGeneratedColumn()
     index: number;
 
-    @Column({ type: 'varchar', length: 2083 })
+    @Column()
     landmark_img: string;
 
     @Column()

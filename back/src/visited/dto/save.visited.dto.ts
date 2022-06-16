@@ -3,11 +3,11 @@ import { IsNumber, IsString } from 'class-validator';
 
 export class saveVisitedDto {
     @ApiProperty({
-        description: 'image url',
-        required: false,
+        description: 'image name(will be used as endpoints)',
+        required: true,
     })
     @IsString()
-    landmark_img: string;
+    img_name: string;
 
     @ApiProperty({
         description: 'landmark_id',
