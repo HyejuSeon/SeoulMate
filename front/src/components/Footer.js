@@ -14,18 +14,29 @@ const Container = styled.footer`
     color: #a4a4a4;
     text-align: center;
 
-    /* z-index: 1000; */
+    z-index: 1000;
 `;
 
 function Footer() {
+<<<<<<< HEAD
+  return (
+    <>
+      <Container>
+        Copyright{new Date().getFullYear()} by team-ai-project. All Page content is property of
+        상원 해요
+      </Container>
+    </>
+  );
+=======
     return (
         <>
             <Container>
                 &copy;{new Date().getFullYear()} SeoulMate | All rights reserved | Terms Of Service
-                | Privacy
+                | Privacy😎
             </Container>
         </>
     );
+>>>>>>> ff2e6fa16c0bf40d101107b57c87d59cc4ec4f67
 }
 
 export default Footer;
