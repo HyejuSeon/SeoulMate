@@ -1,0 +1,17 @@
+server:
+  port: 5001
+
+db:
+  type: 'mysql'
+  port: 3306
+  database: 'landmark_service'
+
+elice:
+  type: 'mysql'
+  port: 3306
+  database: 'landmark_service'
+  
+auth: 
+  jwt_access_expiresIn: 36000
+  jwt_refresh_expiresIn: 36000
+    

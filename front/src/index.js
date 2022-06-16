@@ -15,11 +15,11 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <RecoilRoot>
-                {/* <Header /> */}
+                <Header />
                 <App />
-                {/* <Footer /> */}
             </RecoilRoot>
         </BrowserRouter>
+        <Footer />
     </React.StrictMode>,
 );
 
