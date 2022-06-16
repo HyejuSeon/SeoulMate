@@ -5,6 +5,7 @@ import { LandmarksModule } from './landmarks/landmarks.module';
 import { VisitedModule } from './visited/visited.module';
 import { EmailService } from './email/email.service';
 import { StorageModule } from './storage/storage.module';
+import { BoardModule } from './board/board.module';
 
 @Module({
     imports: [
@@ -13,7 +14,9 @@ import { StorageModule } from './storage/storage.module';
         LandmarksModule,
         VisitedModule,
         StorageModule,
+        BoardModule,
     ],
+    controllers: [],
     providers: [EmailService],
 })
 export class AppModule {}
