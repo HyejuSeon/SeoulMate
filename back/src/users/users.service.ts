@@ -7,6 +7,7 @@ import { currentUserInfo } from './dto/current-user.dto';
 import { resetPassword } from './dto/find.password.input.dto';
 import { EmailService } from 'src/email/email.service';
 import { updateUserDto } from './dto/update.user.dto';
+import { deleteUser } from './dto/delete-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -77,5 +78,17 @@ export class UsersService {
         user.profile_image = updateUser.profile_image || user.profile_image;
 
         await this.userRepository.save(user);
+    }
+
+    async deleteUser(userPassword: deleteUser, userId: string) {
+        const user = await this.userRepository.findOne({
+            where: { user_id: userId },
+        });
+        await this.authService.verifyPassword(
+            userPassword.password,
+            user.password,
+        );
+        await this.userRepository.delete({ user_id: userId });
+        return 'user deleted';
     }
 }
