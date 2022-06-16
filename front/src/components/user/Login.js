@@ -26,19 +26,19 @@ function Login(){
         try {
             //user 로그인 api 호출!
             const res = await Api.post("users/login", form)
-            const user = res.data.loginUser
+            const user = res.data
 
-            const jwtToken = user.token
+            const jwtToken = user.accessToken
             sessionStorage.setItem("userToken", jwtToken)
+
+            navigate('/')
 
             dispatch({
                 type: "LOGIN_SUCCESS",
                 payload: user,
+
             });
 
-            const userdata = await Api.get(`users/${user.id}`)
-            console.log(userdata)
-        
         } catch (error) {
             alert(error.response.data)
         }
