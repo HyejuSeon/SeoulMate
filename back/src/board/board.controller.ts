@@ -1,9 +1,16 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import { JwtGuard } from 'src/auth/guard/jwt.guard';
-import { getUserRequest } from 'src/common/decorator/request.decorator';
-import { Users } from 'src/users/users.entity';
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Post,
+    Req,
+    UseGuards,
+} from '@nestjs/common';
+import { Request } from 'express';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { BoardService } from './board.service';
+import { boardId } from './dto/detail-board.dto';
 import { writeBoard } from './dto/write-board.dto';
 
 @ApiTags('board')
@@ -19,7 +26,17 @@ export class BoardController {
         @Body() insert: writeBoard,
         // @getUserRequest() user: Users,
     ) {
+        // 게시판 생성
         const user_id = '098ad4b2-ebfa-4788-9f39-ec9c15d46e13';
         return this.boardService.create(insert, user_id);
+    }
+
+    @Get(':id')
+    @ApiParam({ type: String, name: 'boardId' })
+    async getLandmarkDetail(@Req() req: Request) {
+        const { boardId } = req.params;
+        console.log(boardId);
+
+        return 0;
     }
 }
