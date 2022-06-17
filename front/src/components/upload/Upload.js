@@ -1,5 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as API from '../../api';
+
+// import recoil
+import { useRecoilState } from 'recoil';
+import { landmarkInfoState } from '../../atom';
 
 import {
     UploadWrapper,
@@ -14,8 +19,11 @@ import {
 const Upload = () => {
     const navigate = useNavigate();
     const [avatar, setAvatar] = useState(null);
-
     const filepickerRef = useRef();
+
+    // const [landmarkInfo, setLandmarkInfo] = useState('');
+
+    const [landmarkInfo, setLandmarkInfo] = useRecoilState(landmarkInfoState);
 
     const uploadAvatar = (e) => {
         const reader = new FileReader();
@@ -25,7 +33,12 @@ const Upload = () => {
         reader.onload = (readerEvent) => {
             setAvatar(readerEvent.target.result);
         };
+
+        API.post('/ai').then((res) => setLandmarkInfo(res.data));
+        console.log('랜드마크 정보', landmarkInfo);
+        // console.log('info', Info);
     };
+
     return (
         <UploadWrapper>
             <UploadContainer>

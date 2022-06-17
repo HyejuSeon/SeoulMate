@@ -17,11 +17,17 @@
     "lodash": "^4.17.21",
     "react": "^18.1.0",
     "react-burger-menu": "^3.0.8",
+    "react-card-flip": "^1.1.5",
     "react-dom": "^18.1.0",
     "react-dropzone": "^14.2.1",
+    "react-flippy": "^1.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
     "recoil": "^0.7.3",
+=======
+    "recoil": "^0.7.3-alpha.2",
+>>>>>>> cb4b45878bb634eb534e32c827a4edbd2ce097d2
     "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.4.1",

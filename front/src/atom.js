@@ -23,3 +23,9 @@ export const userInfoState = atom({
   default: undefined,
   effects_UNSTABLE: [persistAtom],
 });
+// 랜드마크 정보
+export const landmarkInfoState = atom({
+    key: 'landmarkInfoState',
+    default: undefined,
+    effects_UNSTABLE: [persistAtom],
+});
