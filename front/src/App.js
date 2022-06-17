@@ -7,6 +7,10 @@ import './App.css';
 import { loginReducer } from './reducer';
 
 import { GlobalStyles } from './styledCompo/GlobalStyle';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from './atom';
+
+
 
 const Home = lazy(() => import('./components/home/Home'));
 const Login = lazy(() => import('./components/user/Login'));
@@ -22,7 +26,7 @@ export const DispatchContext = createContext(null);
 
 function App() {
     const location = useLocation();
-
+    const user = useRecoilValue(userInfoState);
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [location]);
@@ -66,8 +70,12 @@ function App() {
     //     return 'loading...';
     // }
 
+    
+
     return (
+
         <>
+        {user ? (
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/" exact element={<Home />} />
@@ -80,7 +88,22 @@ function App() {
                     <Route path="/Board" element={<Board />} />
                     <Route path="*" element={<Home />} />
                 </Routes>
-            </Suspense>
+            </Suspense>) : ( 
+                 <Suspense fallback={<div>Loading...</div>}>
+                 <Routes>
+                     <Route path="/" exact element={<Home />} />
+                     <Route path="/login" element={<Login />} />
+                     <Route path="/register" element={<Signin />} />
+                     <Route path="/upload" element={<Upload />} />
+                     <Route path="/uploadResult" element={<UploadResult />} />
+                     <Route path="/boardUpload" element={<BoardUpload />} />
+                     <Route path="/Board" element={<Board />} />
+                     <Route path="*" element={<Home />} />
+                 </Routes>
+             </Suspense>
+
+            )}
+
         </>
     );
 }
