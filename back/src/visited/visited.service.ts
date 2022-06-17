@@ -11,7 +11,6 @@ export class VisitedService {
         @Inject('VISITED_REPOSITORY')
         private visitedRepository: Repository<Visited>,
     ) {}
-
     async update(visitedDto: updateVisitedDto) {
         throw new Error('Method not implemented.');
     }
