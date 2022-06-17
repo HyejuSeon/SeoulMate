@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material"
+import { Container, Typography, Button } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
 import InfoIcon from '@mui/icons-material/Info';
 import Profile from "./Profile"
@@ -7,10 +7,15 @@ import * as API from "../../api";
 import MapContainer from "../kakao/MapContainer";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { tokenState, userState, userInfoState } from "../../atom";
+import {useNavigate} from "react-router-dom"
 
 
 function Mypage() {
+const navigate = useNavigate();
 const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+const [token, setToken] = useRecoilState(tokenState);
+const [recoilUser, setRecoilUser] = useRecoilState(userState);
+
 
 console.log("userInfo:", userInfo)
 
@@ -46,6 +51,21 @@ useEffect(() => {
 }, []);
 
 
+const logout = () => {
+  // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
+  sessionStorage.removeItem('userToken');
+  // dispatch 함수를 이용해 로그아웃함.
+  // dispatch({ type: ‘LOGOUT’ });
+  setRecoilUser(null);
+  setUserInfo(null);
+  setToken(null);
+  
+  // 기본 페이지로 돌아감.
+  navigate('/login');
+  
+  };
+
+
   return (
     <Container sx={{ py: 7, mt: 12 }}>
     {/* 회원 프로필 내용 */}
@@ -55,7 +75,7 @@ useEffect(() => {
       editOpen={editOpen}
       toggleEditForm={toggleEditForm}
     />
-    
+    <Button onClick={logout}>로그아웃</Button>
 
     {/* 회원 설정. 정보 */}
     <Typography
