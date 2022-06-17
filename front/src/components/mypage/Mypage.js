@@ -5,9 +5,15 @@ import Profile from "./Profile"
 import { UserStateContext } from "../../App"
 import * as API from "../../api";
 import MapContainer from "../kakao/MapContainer";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import { tokenState, userState, userInfoState } from "../../atom";
+
 
 function Mypage() {
-  
+const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+console.log("userInfo:", userInfo)
+
 const isLoggedin = sessionStorage.getItem("userToken")
 console.log("abc :", isLoggedin)
 const [user, setUser] = useState(null);

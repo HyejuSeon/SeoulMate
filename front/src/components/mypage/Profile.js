@@ -30,7 +30,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
           ) : (
             <Grid item xs={5} sx={{ textAlign: "center", marginTop: "9em" }}>
               <Typography variant="h3" component="div">
-                {user?.name}
+                {user?.name} 
               </Typography>
 
               <Typography
@@ -89,3 +89,4 @@ const UpperBox = styled.div`
 const LowerBox = styled.div`
   height: 300px;
 `;
+

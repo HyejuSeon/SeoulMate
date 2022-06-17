@@ -55,13 +55,13 @@ function App() {
     };
 
     // useEffect함수를 통해 fetchCurrentUser 함수를 실행함.
-    // useEffect(() => {
-    //     fetchCurrentUser();
-    // }, []);
+    useEffect(() => {
+        fetchCurrentUser();
+    }, []);
 
-    // if (!isFetchCompleted) {
-    //     return 'loading...';
-    // }
+    if (!isFetchCompleted) {
+        return 'loading...';
+    }
 
     return (
         <>
