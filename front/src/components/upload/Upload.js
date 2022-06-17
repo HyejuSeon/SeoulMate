@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import * as API from '../../api';
 
 // import recoil
-import { useRecoilState } from 'recoil';
-import { landmarkInfoState } from '../../atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { landmarkInfoState, userInfoState } from '../../atom';
 
 import {
     UploadWrapper,
@@ -17,13 +17,17 @@ import {
 } from './UploadStyle';
 
 const Upload = () => {
+    const user = useRecoilValue(userInfoState);
     const navigate = useNavigate();
     const [avatar, setAvatar] = useState(null);
     const filepickerRef = useRef();
 
     // const [landmarkInfo, setLandmarkInfo] = useState('');
+    // console.log(user);
 
-    const [landmarkInfo, setLandmarkInfo] = useRecoilState(landmarkInfoState);
+    // const [landmarkInfo, setLandmarkInfo] = useRecoilState(landmarkInfoState);
+
+    const [landmarkInfo, setLandmarkInfo] = useState('');
 
     const uploadAvatar = (e) => {
         const reader = new FileReader();
@@ -34,9 +38,17 @@ const Upload = () => {
             setAvatar(readerEvent.target.result);
         };
 
-        API.post('/ai').then((res) => setLandmarkInfo(res.data));
+        API.post('/ai')
+            .then((res) => {
+                setLandmarkInfo(res.data);
+                console.log('info', res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        //
+
         console.log('랜드마크 정보', landmarkInfo);
-        // console.log('info', Info);
     };
 
     return (
@@ -61,7 +73,9 @@ const Upload = () => {
                 <input hidden onChange={uploadAvatar} ref={filepickerRef} type="file" />
             </UploadContainer>
             <UploadButtonContainer>
-                <UploadButton onClick={() => navigate('/uploadResult')}>업로드</UploadButton>
+                <UploadButton onClick={() => navigate('/uploadResult', { state: landmarkInfo })}>
+                    업로드
+                </UploadButton>
                 <UploadCancelButton onClick={() => navigate('/')}>뒤로가기 </UploadCancelButton>
             </UploadButtonContainer>
         </UploadWrapper>
