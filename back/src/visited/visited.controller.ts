@@ -11,6 +11,7 @@ import {
     Res,
     ServiceUnavailableException,
     UploadedFile,
+    UseGuards,
     UseInterceptors,
     UsePipes,
     ValidationPipe,
@@ -30,6 +31,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
 @ApiTags('visited')
 @Controller('visited')
@@ -54,20 +56,20 @@ export class VisitedController {
         res.status(HttpStatus.OK).json(result);
     }
 
-    @Get('/images/:img_name')
+    @Get('/images/:imageId')
     @ApiOperation({ summary: '방문지 사진 받아오기' })
     @ApiResponse({
         status: 200,
         description: 'Return visited image by image name',
     })
     async downloadMedia(
-        @Param('img_name') img_name: string,
+        @Param('imageId') imageId: string,
         @Res() res: Response,
     ) {
         let storageFile: StorageFile;
         try {
             storageFile = await this.storageService.getWithMetaData(
-                'visited/' + img_name,
+                'visited/' + imageId,
             );
         } catch (e) {
             if (e.message.toString().includes('No such object')) {
@@ -81,9 +83,22 @@ export class VisitedController {
         res.status(HttpStatus.OK).end(storageFile.buffer);
     }
 
-    @Post()
+    @Post('/images')
     @ApiOperation({ summary: '방문지 등록' })
     @ApiConsumes('multipart/form-data')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                file: {
+                    type: 'string',
+                    format: 'binary',
+                },
+                landmark_id: { type: 'number' },
+                user_id: { type: 'string' },
+            },
+        },
+    })
     @ApiResponse({
         status: 200,
         description: 'Post Visited',
@@ -102,14 +117,34 @@ export class VisitedController {
         @Body() visitedDto: saveVisitedDto,
     ): Promise<void> {
         try {
-            await this.storageService.save(
-                'visited/' + visitedDto.img_name,
-                file.mimetype,
-                file.buffer,
-                [{ img_name: visitedDto.img_name }],
-            );
-            const visited = await this.visitedService.create(visitedDto);
-            res.status(HttpStatus.OK).json(visited);
+            if (
+                file !== undefined &&
+                visitedDto.landmark_id !== undefined &&
+                visitedDto.user_id !== undefined
+            ) {
+                var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+                const encodedName = encodeURI(
+                    encodeURIComponent(file.originalname),
+                ).replace(reg, ''); // 한글 인코딩후 모든 특수기호 제거
+                const imageId = `${Date.now()}_${
+                    visitedDto.user_id
+                }_${encodedName}`;
+                await this.storageService.save(
+                    'visited/' + imageId,
+                    file.mimetype,
+                    file.buffer,
+                    [{ imageId: imageId }],
+                );
+                const visited = await this.visitedService.create(
+                    visitedDto,
+                    imageId,
+                );
+                res.status(HttpStatus.OK).json(visited);
+            } else {
+                res.status(HttpStatus.BAD_REQUEST).send(
+                    'Check the request body',
+                );
+            }
         } catch (err) {
             console.log(err);
         }
