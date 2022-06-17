@@ -88,10 +88,10 @@ const CssTextField = withStyles({
             sx={{ mt: 1.3, alignItems: "center", justifyContent: "center" }}
           >
             <CssTextField
-              id="Nickname"
-              name="nickname"
-              label="Nickname 수정"
-              placeholder={user?.nickname}
+              id="name"
+              name="name"
+              label={user?.name}
+              placeholder={user?.name}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -101,10 +101,10 @@ const CssTextField = withStyles({
             />
   
             <CssTextField
-              id="Description"
-              name="description"
-              label="Description 수정"
-              placeholder={currentDescription}
+              id="email"
+              name="email"
+              label={user?.email}
+              placeholder={user?.email}
               multiline
               row={3}
               onChange={(e) =>
