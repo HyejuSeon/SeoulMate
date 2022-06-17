@@ -14,6 +14,8 @@ const Signin = lazy(() => import('./components/user/Signin'));
 const Mypage = lazy(() => import('./components/mypage/Mypage'));
 const Upload = lazy(() => import('./components/upload/Upload'));
 const UploadResult = lazy(() => import('./components/upload/UploadResult'));
+const BoardUpload = lazy(() => import('./components/board/Board'));
+const Board = lazy(() => import('./components/board/Board'));
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -73,6 +75,8 @@ function App() {
                     <Route path="/register" element={<Signin />} />
                     <Route path="/upload" element={<Upload />} />
                     <Route path="/uploadResult" element={<UploadResult />} />
+                    <Route path="/boardUpload" element={<BoardUpload />} />
+                    <Route path="/Board" element={<Board />} />
                     <Route path="*" element={<Home />} />
                 </Routes>
             </Suspense>
