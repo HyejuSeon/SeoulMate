@@ -54,7 +54,7 @@ export class VisitedController {
         res.status(HttpStatus.OK).json(result);
     }
 
-    @Get('/image/:img_name')
+    @Get('/images/:img_name')
     @ApiOperation({ summary: '방문지 사진 받아오기' })
     @ApiResponse({
         status: 200,
