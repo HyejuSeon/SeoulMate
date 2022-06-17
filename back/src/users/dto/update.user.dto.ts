@@ -12,6 +12,10 @@ export class updateUserDto {
 
     @ApiProperty()
     @IsString()
+    img_name: string;
+
+    @ApiProperty()
+    @IsString()
     @MinLength(4)
     prePassword: string;
 

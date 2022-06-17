@@ -57,7 +57,11 @@ export class UsersService {
         );
     }
 
-    async updateUserInfo(updateUser: updateUserDto, user_id: string) {
+    async updateUserInfo(
+        updateUser: updateUserDto,
+        user_id: string,
+        file: Express.Multer.File,
+    ) {
         const user = await this.userRepository.findOneBy({
             user_id: user_id,
         });
