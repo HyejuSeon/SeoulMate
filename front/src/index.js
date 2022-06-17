@@ -7,7 +7,7 @@ import { RecoilRoot } from 'recoil';
 import 'swiper/css/bundle';
 import './components/home/Home.css';
 
-// import Footer from '../src/components/Footer';
+import Footer from '../src/components/Footer';
 import Header from './components/Header';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,7 +19,7 @@ root.render(
                 <App />
             </RecoilRoot>
         </BrowserRouter>
-        {/* <Footer /> */}
+        <Footer />
     </React.StrictMode>,
 );
 
