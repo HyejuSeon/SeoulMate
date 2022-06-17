@@ -4,8 +4,10 @@ import { insertUserDto } from './dto/insert.user.dto';
 import { Users } from './users.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { currentUserInfo } from './dto/current-user.dto';
-import { MailerService } from '@nestjs-modules/mailer';
-import { insertEmail } from './dto/find.password.input.dto';
+import { resetPassword } from './dto/find.password.input.dto';
+import { EmailService } from 'src/email/email.service';
+import { updateUserDto } from './dto/update.user.dto';
+import { deleteUser } from './dto/delete-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +15,7 @@ export class UsersService {
         @Inject('USERS_REPOSITORY')
         private userRepository: Repository<Users>,
         private readonly authService: AuthService,
-        private readonly mailService: MailerService,
+        private readonly mailService: EmailService,
     ) {}
 
     async create(userDto: insertUserDto): Promise<Users> {
@@ -40,22 +42,53 @@ export class UsersService {
         return userInfo;
     }
 
-    async sendMailForResetPassword(email: insertEmail) {
-        console.log(email.email);
-
+    async sendMailForResetPassword(resetInfo: resetPassword) {
         const randNumber: number = Math.ceil(
-            Math.random() * (9999999 - 1111111) + 1111111,
+            Math.random() * (999999999 - 111111111) + 111111111,
         );
-        try {
-            await this.mailService.sendMail({
-                to: email.email,
-                from: 'dev.nowgnas@gmail.com',
-                subject: '이메일 인증 요청 메일입니다.',
-                html: '인증 코드: ' + `<b>${randNumber}</b>`,
-            });
-            return randNumber;
-        } catch (error) {
-            throw new Error(error);
+        await this.authService.resetPassword(
+            randNumber.toString(),
+            resetInfo.email,
+            resetInfo.name,
+        );
+        await this.mailService.sendMemberJoinVerification(
+            randNumber.toString(),
+            resetInfo.email,
+        );
+    }
+
+    async updateUserInfo(updateUser: updateUserDto, user_id: string) {
+        const user = await this.userRepository.findOneBy({
+            user_id: user_id,
+        });
+        await this.authService.verifyPassword(
+            // 비밀번호 확인
+            updateUser.prePassword,
+            user.password,
+        );
+
+        if (updateUser.newPassword.length !== 0) {
+            // new password가 존재하는 경우
+            user.password = await this.authService.hashedPassword(
+                updateUser.newPassword,
+            );
         }
+
+        user.name = updateUser.name || user.name;
+        user.profile_image = updateUser.profile_image || user.profile_image;
+
+        await this.userRepository.save(user);
+    }
+
+    async deleteUser(userPassword: deleteUser, userId: string) {
+        const user = await this.userRepository.findOne({
+            where: { user_id: userId },
+        });
+        await this.authService.verifyPassword(
+            userPassword.password,
+            user.password,
+        );
+        await this.userRepository.delete({ user_id: userId });
+        return 'user deleted';
     }
 }
