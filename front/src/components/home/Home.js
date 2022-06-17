@@ -74,7 +74,7 @@ const Home = () => {
 
     const UserImageRender = MainImage.map((item, idx) => {
         return (
-            <ThirdPageContentWrapper>
+            <ThirdPageContentWrapper key={idx}>
                 <ThirdPageImgContainer>
                     <img src={item} alt="user img" style={{ width: '528px', height: '295px' }} />
                 </ThirdPageImgContainer>

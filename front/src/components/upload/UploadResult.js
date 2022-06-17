@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { landmarkInfoState } from '../../atom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 
 import * as API from '../../api';
@@ -42,11 +42,15 @@ const UploadResult = () => {
 
     const ref = useRef();
     const navigate = useNavigate();
-    const Info = useRecoilValue(landmarkInfoState);
+    const landmarkLocation = useLocation();
+    // const Info = useRecoilValue(landmarkInfoState);
+    // const Info = useRecoilValue(landmarkInfoState);
     // console.log('랜드마크정보', Info);
 
-    console.log('board', title);
-    console.log('board', content);
+    console.log('location', landmarkLocation);
+
+    // console.log('board', title);
+    // console.log('board', content);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -141,21 +145,18 @@ const UploadResult = () => {
                 </BackSide>
             </Flippy>
 
-            <UploadResultRight Info={Info}>
+            <UploadResultRight>
                 <UploadResultNameContainer>
                     <UploadResultNameImg src={name} />
                     {/* 랜드마크 이름: */}
-                    {Info.name}
                 </UploadResultNameContainer>
                 <UploadResultLocationContainer>
                     <UploadResultLocationImg src={location} />
                     {/* 랜드마크 위치:  */}
-                    {Info.add}
                 </UploadResultLocationContainer>
                 <UploadResultDescriptionContainer>
                     <UploadResultDescriptionImg src={description} />
                     {/* 랜드마크 설명:  */}
-                    {Info.description}
                 </UploadResultDescriptionContainer>
             </UploadResultRight>
         </UploadResultWrapper>
