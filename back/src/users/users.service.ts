@@ -8,6 +8,7 @@ import { resetPassword } from './dto/find.password.input.dto';
 import { EmailService } from 'src/email/email.service';
 import { updateUserDto } from './dto/update.user.dto';
 import { deleteUser } from './dto/delete-user.dto';
+import { StorageService } from 'src/storage/storage.service';
 
 @Injectable()
 export class UsersService {
@@ -16,6 +17,7 @@ export class UsersService {
         private userRepository: Repository<Users>,
         private readonly authService: AuthService,
         private readonly mailService: EmailService,
+        private readonly storageService: StorageService,
     ) {}
 
     async create(userDto: insertUserDto): Promise<Users> {
@@ -58,7 +60,12 @@ export class UsersService {
     }
 
     async updateUserInfo(
-        updateUser: updateUserDto,
+        updateUser: {
+            name: any;
+            profile_image: any;
+            prePassword: any;
+            newPassword: any;
+        },
         user_id: string,
         file: Express.Multer.File,
     ) {
@@ -70,6 +77,14 @@ export class UsersService {
             updateUser.prePassword,
             user.password,
         );
+        if (file) {
+            await this.storageService.save(
+                'profile/' + updateUser.profile_image,
+                file.mimetype,
+                file.buffer,
+                [{ img_name: updateUser.profile_image }],
+            );
+        }
 
         if (updateUser.newPassword.length !== 0) {
             // new password가 존재하는 경우

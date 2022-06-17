@@ -8,7 +8,9 @@ import {
     Post,
     Put,
     Res,
+    UploadedFile,
     UseGuards,
+    UseInterceptors,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
@@ -16,6 +18,7 @@ import { Response } from 'express';
 import {
     ApiBearerAuth,
     ApiBody,
+    ApiConsumes,
     ApiHeader,
     ApiResponse,
     ApiTags,
@@ -34,6 +37,7 @@ import { resetPassword } from './dto/find.password.input.dto';
 import { EmailService } from 'src/email/email.service';
 import { updateUserDto } from './dto/update.user.dto';
 import { deleteUser } from './dto/delete-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
 @Controller('users')
@@ -121,15 +125,53 @@ export class UsersController {
     }
 
     @Patch('update')
-    @ApiBody({ type: updateUserDto })
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string',
+                },
+                profile_image: {
+                    type: 'string',
+                },
+                prePassword: {
+                    type: 'string',
+                },
+                newPassword: {
+                    type: 'string',
+                },
+                file: {
+                    type: 'string',
+                    format: 'binary',
+                },
+            },
+        },
+    })
     @UseGuards(JwtGuard)
     @UsePipes(ValidationPipe)
     @ApiBearerAuth()
+    @ApiConsumes('multipart/form-data')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            limits: {
+                files: 1,
+                fileSize: 7000 * 7000,
+            },
+        }),
+    )
     async updateUserInfo(
-        @Body() updateUser: updateUserDto,
+        @UploadedFile() file: Express.Multer.File,
+        @Body()
+        updateUser: {
+            name: string;
+            profile_image: string;
+            prePassword: string;
+            newPassword: string;
+        },
         @getUserRequest() user: Users,
     ) {
-        await this.userService.updateUserInfo(updateUser, user.user_id);
+        await this.userService.updateUserInfo(updateUser, user.user_id, file);
     }
 
     @Delete('delete')
