@@ -49,7 +49,7 @@ export class VisitedService {
             const result = await this.visitedRepository.save({
                 landmark_id,
                 user_id,
-                landmark_img: `/visited/${img_name}`,
+                landmark_img: `/visited/images/${img_name}`,
             });
             return result;
         } catch (error) {
