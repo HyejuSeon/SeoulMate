@@ -8,9 +8,7 @@ import { loginReducer } from './reducer';
 
 import { GlobalStyles } from './styledCompo/GlobalStyle';
 import { useRecoilValue } from 'recoil';
-import { userInfoState } from './atom';
-
-
+import { userInfoState, tokenState } from './atom';
 
 const Home = lazy(() => import('./components/home/Home'));
 const Login = lazy(() => import('./components/user/Login'));
@@ -26,7 +24,7 @@ export const DispatchContext = createContext(null);
 
 function App() {
     const location = useLocation();
-    const user = useRecoilValue(userInfoState);
+    const user = useRecoilValue(tokenState);
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [location]);
@@ -44,8 +42,8 @@ function App() {
             // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
             const res = await Api.get('users/current/info');
             const currentUser = res.data;
-            console.log("currentUser:", currentUser);
-            console.log("abcd")
+            console.log('currentUser:', currentUser);
+            console.log('abcd');
 
             // dispatch 함수를 통해 로그인 성공 상태로 만듦.
             // dispatch({
@@ -70,40 +68,36 @@ function App() {
     //     return 'loading...';
     // }
 
-    
-
     return (
-
         <>
-        {user ? (
-            <Suspense fallback={<div>Loading...</div>}>
-                <Routes>
-                    <Route path="/" exact element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/mypage" element={<Mypage />} />
-                    <Route path="/register" element={<Signin />} />
-                    <Route path="/upload" element={<Upload />} />
-                    <Route path="/uploadResult" element={<UploadResult />} />
-                    <Route path="/boardUpload" element={<BoardUpload />} />
-                    <Route path="/Board" element={<Board />} />
-                    <Route path="*" element={<Home />} />
-                </Routes>
-            </Suspense>) : ( 
-                 <Suspense fallback={<div>Loading...</div>}>
-                 <Routes>
-                     <Route path="/" exact element={<Home />} />
-                     <Route path="/login" element={<Login />} />
-                     <Route path="/register" element={<Signin />} />
-                     <Route path="/upload" element={<Upload />} />
-                     <Route path="/uploadResult" element={<UploadResult />} />
-                     <Route path="/boardUpload" element={<BoardUpload />} />
-                     <Route path="/Board" element={<Board />} />
-                     <Route path="*" element={<Home />} />
-                 </Routes>
-             </Suspense>
-
+            {user ? (
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path="/" exact element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/mypage" element={<Mypage />} />
+                        <Route path="/register" element={<Signin />} />
+                        <Route path="/upload" element={<Upload />} />
+                        <Route path="/uploadResult" element={<UploadResult />} />
+                        <Route path="/boardUpload" element={<BoardUpload />} />
+                        <Route path="/Board" element={<Board />} />
+                        <Route path="*" element={<Home />} />
+                    </Routes>
+                </Suspense>
+            ) : (
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path="/" exact element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Signin />} />
+                        <Route path="/upload" element={<Upload />} />
+                        <Route path="/uploadResult" element={<UploadResult />} />
+                        <Route path="/boardUpload" element={<BoardUpload />} />
+                        <Route path="/Board" element={<Board />} />
+                        <Route path="*" element={<Home />} />
+                    </Routes>
+                </Suspense>
             )}
-
         </>
     );
 }
