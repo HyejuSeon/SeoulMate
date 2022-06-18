@@ -43,13 +43,13 @@ export class VisitedService {
             console.log(error);
         }
     }
-    async create(visitedDto: saveVisitedDto): Promise<any> {
+    async create(visitedDto: saveVisitedDto, imageId: string): Promise<any> {
         try {
-            const { img_name, landmark_id, user_id } = visitedDto;
+            const { landmark_id, user_id } = visitedDto;
             const result = await this.visitedRepository.save({
                 landmark_id,
                 user_id,
-                landmark_img: `/visited/images/${img_name}`,
+                landmark_img: `/visited/images/${imageId}`,
             });
             return result;
         } catch (error) {
