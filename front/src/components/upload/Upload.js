@@ -64,16 +64,7 @@ const Upload = () => {
                 console.log(err);
             });
     };
-    //////////////////////업로드 테스트용/////////////////////////
-    const test = async (e) => {
-        const formData = new FormData();
-        formData.append('image', e.target.files[0]);
 
-        console.log('formData', formData.get('image'));
-
-        await API.sendImage('/visited/images', formData);
-    };
-    /////////////////////////////////////////////////////////
     return (
         <UploadWrapper>
             <UploadContainer>
@@ -99,7 +90,6 @@ const Upload = () => {
                 <UploadButton onClick={() => navigate('/uploadResult', { state: landmarkInfo })}>
                     업로드
                 </UploadButton>
-                <input type="file" onChange={test}></input>
                 <UploadCancelButton onClick={() => navigate('/')}>뒤로가기 </UploadCancelButton>
             </UploadButtonContainer>
         </UploadWrapper>
