@@ -1,4 +1,5 @@
 import {
+    BaseEntity,
     Column,
     CreateDateColumn,
     Entity,
@@ -10,7 +11,7 @@ import {
 import { Users } from '../users/users.entity';
 
 @Entity()
-export class Boards {
+export class Boards extends BaseEntity {
     @PrimaryColumn()
     board_id: string;
 
@@ -32,7 +33,7 @@ export class Boards {
     @CreateDateColumn()
     created_at: Date;
 
-    @ManyToOne(() => Users, (user) => user.board, {
+    @ManyToOne(() => Users, (user) => user.user_id, {
         onDelete: 'CASCADE',
     })
     @JoinColumn()

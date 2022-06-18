@@ -38,6 +38,7 @@ import { EmailService } from 'src/email/email.service';
 import { updateUserDto } from './dto/update.user.dto';
 import { deleteUser } from './dto/delete-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { updatePassword } from './dto/update-password.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -124,7 +125,7 @@ export class UsersController {
         await this.userService.sendMailForResetPassword(resetInfo);
     }
 
-    @Patch('update')
+    @Put('update')
     @ApiBody({
         schema: {
             type: 'object',
@@ -136,9 +137,6 @@ export class UsersController {
                     type: 'string',
                 },
                 prePassword: {
-                    type: 'string',
-                },
-                newPassword: {
                     type: 'string',
                 },
                 file: {
@@ -166,6 +164,17 @@ export class UsersController {
         @getUserRequest() user: Users,
     ) {
         await this.userService.updateUserInfo(updateUser, user.user_id, file);
+    }
+
+    @Put('update/password')
+    @ApiBearerAuth()
+    @ApiBody({ type: updatePassword })
+    @UseGuards(JwtGuard)
+    async updatePassword(
+        @Body() updatePassword: updatePassword,
+        @getUserRequest() user: Users,
+    ) {
+        await this.userService.updatePassword(updatePassword, user.user_id);
     }
 
     @Delete('delete')

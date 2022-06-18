@@ -15,10 +15,6 @@ export class updateUserDto {
     @MinLength(4)
     prePassword: string;
 
-    @ApiProperty({ type: 'string' })
-    @IsString()
-    newPassword?: string;
-
     @ApiProperty({ type: 'string', format: 'binary' })
     file: Express.Multer.File;
 }
