@@ -28,6 +28,7 @@ const Upload = () => {
     // const [landmarkInfo, setLandmarkInfo] = useRecoilState(landmarkInfoState);
 
     const [landmarkInfo, setLandmarkInfo] = useState('');
+    const [landmarkPic, setLandmarkPic] = useState('');
 
     const uploadAvatar = (e) => {
         const reader = new FileReader();
@@ -38,6 +39,12 @@ const Upload = () => {
             setAvatar(readerEvent.target.result);
         };
 
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
+
+        // console.log('formData', formData.get('image'));
+        // console.log('formData', e.target.files[0]);
+
         API.post('/ai')
             .then((res) => {
                 setLandmarkInfo(res.data);
@@ -46,9 +53,19 @@ const Upload = () => {
             .catch((err) => {
                 console.log(err);
             });
-        //
 
-        console.log('랜드마크 정보', landmarkInfo);
+        API.sendImage('/visited/images', {
+            user_id: user.user_id,
+            landmark_id: landmarkInfo.landmark_id,
+            image: formData,
+        })
+            .then((res) => {
+                setLandmarkPic(res.data);
+                console.log('pic', res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     return (

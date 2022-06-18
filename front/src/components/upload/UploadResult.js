@@ -39,6 +39,7 @@ const UploadResult = () => {
     const [content, setContent] = useState('');
     const [restaurant, setRestaurant] = useState('test');
     const [landmark_img, setLandmark_img] = useState('test');
+    const [landmarkInfo, setLandmarkInfo] = useState('test');
 
     const ref = useRef();
     const navigate = useNavigate();
@@ -47,7 +48,10 @@ const UploadResult = () => {
     // const Info = useRecoilValue(landmarkInfoState);
     // console.log('랜드마크정보', Info);
 
-    console.log('location', landmarkLocation);
+    useEffect(() => {
+        setLandmarkInfo(landmarkLocation.state);
+        console.log('location', landmarkInfo);
+    }, [landmarkInfo, landmarkLocation.state, navigate]);
 
     // console.log('board', title);
     // console.log('board', content);
@@ -148,15 +152,16 @@ const UploadResult = () => {
             <UploadResultRight>
                 <UploadResultNameContainer>
                     <UploadResultNameImg src={name} />
-                    {/* 랜드마크 이름: */}
+
+                    {landmarkInfo.name}
                 </UploadResultNameContainer>
                 <UploadResultLocationContainer>
                     <UploadResultLocationImg src={location} />
-                    {/* 랜드마크 위치:  */}
+                    {landmarkInfo.add}
                 </UploadResultLocationContainer>
                 <UploadResultDescriptionContainer>
                     <UploadResultDescriptionImg src={description} />
-                    {/* 랜드마크 설명:  */}
+                    {landmarkInfo.description}
                 </UploadResultDescriptionContainer>
             </UploadResultRight>
         </UploadResultWrapper>
