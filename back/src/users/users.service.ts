@@ -60,12 +60,7 @@ export class UsersService {
     }
 
     async updateUserInfo(
-        updateUser: {
-            name: any;
-            profile_image: any;
-            prePassword: any;
-            newPassword: any;
-        },
+        updateUser: updateUserDto,
         user_id: string,
         file: Express.Multer.File,
     ) {

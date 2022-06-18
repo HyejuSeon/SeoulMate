@@ -162,13 +162,7 @@ export class UsersController {
     )
     async updateUserInfo(
         @UploadedFile() file: Express.Multer.File,
-        @Body()
-        updateUser: {
-            name: string;
-            profile_image: string;
-            prePassword: string;
-            newPassword: string;
-        },
+        @Body() updateUser: updateUserDto,
         @getUserRequest() user: Users,
     ) {
         await this.userService.updateUserInfo(updateUser, user.user_id, file);
