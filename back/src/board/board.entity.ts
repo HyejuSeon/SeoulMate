@@ -6,7 +6,6 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryColumn,
-    RelationId,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
