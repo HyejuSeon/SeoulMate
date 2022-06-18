@@ -67,6 +67,7 @@ const CssTextField = withStyles({
         .then((res) => {
           const InfoData = res[0].data;
           const ImageData = res[1]?.data?.updatedUser; // 이미지 안넣었을 땐 res[1]이 null 값.
+          console.log(res[0].data)
   
           ImageData ? updateUser(ImageData) : updateUser(InfoData);
           alert("회원정보가 정상적으로 변경되었습니다!");

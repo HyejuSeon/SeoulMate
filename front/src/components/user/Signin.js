@@ -37,11 +37,7 @@ function Signin() {
     return(
 
         <SigninBody onSubmit={handleSubmit}>
-            <SigninBodyUpper>
-                <Box>
-                    <SigninTitle>Sign In</SigninTitle>
-                </Box>
-            </SigninBodyUpper>
+
             
             <Box class={style.inputEmail}>
                 <CssTextField

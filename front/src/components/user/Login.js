@@ -64,14 +64,6 @@ function Login(){
     }
     return(
         <LoginBody onSubmit={handleSubmit}>
-            <LoginBodyUpper>
-                <Box>
-                </Box>
-                <Box>
-                    <LoginTitle>Log In</LoginTitle>
-                    <LoginTitle2>LandMark<span style={{color: "#BBD6FF"}}>travle</span></LoginTitle2>
-                </Box>
-            </LoginBodyUpper>
             
             <Box style={{textAlign:"center", marginTop:"20vh"}}>
                 <CssTextField
