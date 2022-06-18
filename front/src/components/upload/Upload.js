@@ -40,10 +40,10 @@ const Upload = () => {
         };
 
         const formData = new FormData();
-        formData.append('file', e.target.files[0]);
+        formData.append('image', e.target.files[0]);
 
-        console.log('formData', formData.get('file'));
-        console.log('formData', e.target.files[0]);
+        // console.log('formData', formData.get('image'));
+        // console.log('formData', e.target.files[0]);
 
         API.post('/ai')
             .then((res) => {
