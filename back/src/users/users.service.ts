@@ -8,6 +8,8 @@ import { resetPassword } from './dto/find.password.input.dto';
 import { EmailService } from 'src/email/email.service';
 import { updateUserDto } from './dto/update.user.dto';
 import { deleteUser } from './dto/delete-user.dto';
+import { StorageService } from 'src/storage/storage.service';
+import { updatePassword } from './dto/update-password.dto';
 
 @Injectable()
 export class UsersService {
@@ -16,6 +18,7 @@ export class UsersService {
         private userRepository: Repository<Users>,
         private readonly authService: AuthService,
         private readonly mailService: EmailService,
+        private readonly storageService: StorageService,
     ) {}
 
     async create(userDto: insertUserDto): Promise<Users> {
@@ -57,7 +60,12 @@ export class UsersService {
         );
     }
 
-    async updateUserInfo(updateUser: updateUserDto, user_id: string) {
+    async updateUserInfo(
+        updateUser: updateUserDto,
+        user_id: string,
+        file: Express.Multer.File,
+    ) {
+        // update user info
         const user = await this.userRepository.findOneBy({
             user_id: user_id,
         });
@@ -66,17 +74,38 @@ export class UsersService {
             updateUser.prePassword,
             user.password,
         );
-
-        if (updateUser.newPassword.length !== 0) {
-            // new password가 존재하는 경우
-            user.password = await this.authService.hashedPassword(
-                updateUser.newPassword,
+        if (file) {
+            await this.storageService.save(
+                'profile/' + updateUser.profile_image,
+                file.mimetype,
+                file.buffer,
+                [{ img_name: updateUser.profile_image }],
             );
         }
 
         user.name = updateUser.name || user.name;
         user.profile_image = updateUser.profile_image || user.profile_image;
 
+        await this.userRepository.save(user);
+    }
+
+    async updatePassword(updatePassword: updatePassword, userId: string) {
+        // update user
+        const user = await this.userRepository.findOneBy({
+            user_id: userId,
+        });
+        await this.authService.verifyPassword(
+            // 비밀번호 확인
+            updatePassword.prePassword,
+            user.password,
+        );
+
+        if (updatePassword.newPassword.length !== 0) {
+            // new password가 존재하는 경우
+            user.password = await this.authService.hashedPassword(
+                updatePassword.newPassword,
+            );
+        }
         await this.userRepository.save(user);
     }
 
