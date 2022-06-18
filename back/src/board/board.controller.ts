@@ -12,6 +12,9 @@ import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { BoardService } from './board.service';
 import { boardId } from './dto/detail-board.dto';
 import { writeBoard } from './dto/write-board.dto';
+import { getUserRequest } from 'src/common/decorator/request.decorator';
+import { Users } from 'src/users/users.entity';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
 @ApiTags('board')
 @Controller('board')
@@ -20,15 +23,14 @@ export class BoardController {
 
     @Post()
     @ApiBody({ type: writeBoard })
-    // @UseGuards(JwtGuard)
-    // @ApiBearerAuth()
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth()
     async createBoard(
         @Body() insert: writeBoard,
-        // @getUserRequest() user: Users,
+        @getUserRequest() user: Users,
     ) {
         // 게시판 생성
-        const user_id = '098ad4b2-ebfa-4788-9f39-ec9c15d46e13';
-        return this.boardService.create(insert, user_id);
+        return this.boardService.create(insert, user.user_id);
     }
 
     @Get(':id')
