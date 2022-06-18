@@ -17,9 +17,9 @@ export class BoardService {
         const newBoard = {
             ...insertBoard,
             board_id: boardId,
-            userId: user_id,
+            user_id: user_id,
         };
-        this.boardRepository.find({ where: {} });
+        console.log(newBoard);
 
         await this.boardRepository.save(newBoard);
     }
