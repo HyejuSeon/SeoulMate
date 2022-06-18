@@ -65,6 +65,9 @@ export class UsersService {
         user_id: string,
         file: Express.Multer.File,
     ) {
+        // image 이름 지정해 주기
+        const profile_image = Date();
+
         // update user info
         const user = await this.userRepository.findOneBy({
             user_id: user_id,
@@ -74,17 +77,18 @@ export class UsersService {
             updateUser.prePassword,
             user.password,
         );
+
         if (file) {
             await this.storageService.save(
-                'profile/' + updateUser.profile_image,
+                'profile/' + profile_image,
                 file.mimetype,
                 file.buffer,
-                [{ img_name: updateUser.profile_image }],
+                [{ img_name: profile_image }],
             );
         }
 
         user.name = updateUser.name || user.name;
-        user.profile_image = updateUser.profile_image || user.profile_image;
+        user.profile_image = profile_image || user.profile_image;
 
         await this.userRepository.save(user);
     }

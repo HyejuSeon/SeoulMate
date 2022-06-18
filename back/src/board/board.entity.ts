@@ -6,7 +6,6 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryColumn,
-    RelationId,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
@@ -33,13 +32,9 @@ export class Boards extends BaseEntity {
     @CreateDateColumn()
     created_at: Date;
 
-    @ManyToOne(() => Users, (user) => user.user_id, {
-        onDelete: 'CASCADE',
+    @ManyToOne(() => Users, (user) => user.board, {
+        nullable: false,
     })
-    @JoinColumn()
-    user_id: Users;
-
-    @Column()
-    @RelationId((board: Boards) => board.user_id)
-    userId: string;
+    @JoinColumn({ name: 'user_id' })
+    user_id: string;
 }
