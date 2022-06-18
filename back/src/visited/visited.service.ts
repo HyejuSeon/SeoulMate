@@ -4,6 +4,7 @@ import { saveVisitedDto } from './dto/save.visited.dto';
 import { returnVisitedDto } from './dto/return.visited.dto';
 import { Visited } from './visited.entity';
 import { updateVisitedDto } from './dto/update.visited.dto';
+import { topVisitedDto } from './dto/top.visited.dto';
 
 @Injectable()
 export class VisitedService {
@@ -51,6 +52,21 @@ export class VisitedService {
                 user_id,
                 landmark_img: `/visited/images/${imageId}`,
             });
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async getTop(query: topVisitedDto) {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_id AS landmark_id')
+                .addSelect('COUNT(*) AS visitedCount')
+                .groupBy('visited.landmark_id')
+                .orderBy('visitedCount', 'DESC')
+                .take(query.take)
+                .getRawMany();
             return result;
         } catch (error) {
             console.log(error);

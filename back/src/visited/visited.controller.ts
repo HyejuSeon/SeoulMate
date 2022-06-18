@@ -1,12 +1,12 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     NotFoundException,
     Param,
     Post,
-    Put,
     Query,
     Res,
     ServiceUnavailableException,
@@ -26,12 +26,12 @@ import {
 import { saveVisitedDto } from './dto/save.visited.dto';
 import { returnVisitedDto } from './dto/return.visited.dto';
 import { VisitedService } from './visited.service';
-import { updateVisitedDto } from './dto/update.visited.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { topVisitedDto } from './dto/top.visited.dto';
 
 @ApiTags('visited')
 @Controller('visited')
@@ -90,7 +90,7 @@ export class VisitedController {
         schema: {
             type: 'object',
             properties: {
-                file: {
+                image: {
                     type: 'string',
                     format: 'binary',
                 },
@@ -148,6 +148,21 @@ export class VisitedController {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    @Get('/top')
+    @ApiOperation({ summary: '상위 몇개만 반환' })
+    @ApiResponse({
+        status: 200,
+        description: 'Return top N most visited landmarks as landmark_id',
+    })
+    async test(
+        @Res() res: any,
+        @Query()
+        query: topVisitedDto,
+    ): Promise<void> {
+        const result = await this.visitedService.getTop(query);
+        res.status(HttpStatus.OK).json(result);
     }
 
     // @Put('/image')

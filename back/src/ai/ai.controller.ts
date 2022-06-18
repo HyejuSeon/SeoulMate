@@ -19,11 +19,10 @@ export class AiController {
     })
     async aiAnalyze(@Res() res: any): Promise<void> {
         try {
-            const visitedList = await this.landmarksService.getLandmarks();
-            const randomIndex = Math.floor(
-                Math.random() * visitedList[0].length,
+            const landmark_id = 15739;
+            const visited = await this.landmarksService.getLandmarkByLandmarkId(
+                landmark_id,
             );
-            const visited = visitedList[0][randomIndex];
             res.status(HttpStatus.OK).json(visited);
         } catch (err) {
             console.log(err);
