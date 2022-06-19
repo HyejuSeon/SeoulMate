@@ -42,5 +42,5 @@ export class Users extends BaseEntity {
     @OneToMany(() => Boards, (board) => board.user_id, {
         cascade: true,
     })
-    board: Boards[];
+    public board: Boards[];
 }
