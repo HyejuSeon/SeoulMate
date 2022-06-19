@@ -1,10 +1,10 @@
 import { Exclude } from 'class-transformer';
 import { Boards } from 'src/board/board.entity';
 import { Visited } from 'src/visited/visited.entity';
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Users {
+export class Users extends BaseEntity {
     @PrimaryColumn()
     user_id: string;
 
@@ -39,6 +39,9 @@ export class Users {
     @OneToMany(() => Visited, (visited) => visited.user)
     visited: Visited[];
 
-    @OneToMany(() => Boards, (board) => board.user)
+    @OneToMany(() => Boards, (board) => board.user_id, {
+        nullable: false,
+        onDelete: 'CASCADE',
+    })
     board: Boards[];
 }

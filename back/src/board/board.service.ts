@@ -16,9 +16,10 @@ export class BoardService {
         const boardId = uuid();
         const newBoard = {
             ...insertBoard,
-            user_id: user_id,
             board_id: boardId,
+            user_id: user_id,
         };
+        console.log(newBoard);
 
         await this.boardRepository.save(newBoard);
     }
