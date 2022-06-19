@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Menu from '../components/Menu';
 
 const StyledBurger = styled.button`
     position: absolute;
@@ -48,11 +49,14 @@ const StyledBurger = styled.button`
 
 const Burger = ({ open, setOpen }) => {
     return (
-        <StyledBurger open={open} onClick={() => setOpen(!open)}>
-            <div />
-            <div />
-            <div />
-        </StyledBurger>
+        <>
+            <StyledBurger open={open} onClick={() => setOpen(!open)}>
+                <div />
+                <div />
+                <div />
+            </StyledBurger>
+            <Menu open={open} setOpen={setOpen} />
+        </>
     );
 };
 
