@@ -38,14 +38,12 @@ const Upload = () => {
         reader.onload = (readerEvent) => {
             setAvatar(readerEvent.target.result);
         };
-
         const formData = new FormData();
         formData.append('image', e.target.files[0]);
+        formData.append('user_id', user.user_id);
+        formData.append('landmark_id', landmarkInfo.landmark_id);
 
-        // console.log('formData', formData.get('image'));
-        // console.log('formData', e.target.files[0]);
-
-        API.post('/ai')
+        API.post('ai')
             .then((res) => {
                 setLandmarkInfo(res.data);
                 console.log('info', res.data);
@@ -54,11 +52,7 @@ const Upload = () => {
                 console.log(err);
             });
 
-        API.sendImage('/visited/images', {
-            user_id: user.user_id,
-            landmark_id: landmarkInfo.landmark_id,
-            image: formData,
-        })
+        API.sendImage('visited/images', formData)
             .then((res) => {
                 setLandmarkPic(res.data);
                 console.log('pic', res.data);
