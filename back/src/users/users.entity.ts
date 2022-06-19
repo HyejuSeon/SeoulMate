@@ -40,8 +40,7 @@ export class Users extends BaseEntity {
     visited: Visited[];
 
     @OneToMany(() => Boards, (board) => board.user_id, {
-        nullable: false,
-        onDelete: 'CASCADE',
+        cascade: true,
     })
-    board: Boards[];
+    public board: Boards[];
 }

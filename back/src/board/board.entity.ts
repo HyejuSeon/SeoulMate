@@ -3,7 +3,6 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    JoinColumn,
     ManyToOne,
     PrimaryColumn,
 } from 'typeorm';
@@ -34,7 +33,7 @@ export class Boards extends BaseEntity {
 
     @ManyToOne(() => Users, (user) => user.board, {
         nullable: false,
+        onDelete: 'CASCADE',
     })
-    @JoinColumn({ name: 'user_id' })
-    user_id: string;
+    public user_id: string;
 }

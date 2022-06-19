@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
 import { v4 as uuid } from 'uuid';
+import { Visited } from 'src/visited/visited.entity';
 
 @Injectable()
 export class BoardService {
@@ -11,16 +12,15 @@ export class BoardService {
         private boardRepository: Repository<Boards>,
     ) {}
 
-    async create(insertBoard: writeBoard, user_id: string) {
+    async create(insertBoard: writeBoard, userId: string) {
         // create board id
         const boardId = uuid();
         const newBoard = {
             ...insertBoard,
             board_id: boardId,
-            user_id: user_id,
+            user_id: userId,
         };
-        console.log(newBoard);
 
-        await this.boardRepository.save(newBoard);
+        return await this.boardRepository.save(newBoard);
     }
 }
