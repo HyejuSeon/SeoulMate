@@ -26,6 +26,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
+import { topVisitedDto } from './dto/top.visited.dto';
 
 @ApiTags('visited')
 @Controller('visited')
