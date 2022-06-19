@@ -40,18 +40,21 @@ const UploadResult = () => {
     const [restaurant, setRestaurant] = useState('test');
     const [landmark_img, setLandmark_img] = useState('test');
     const [landmarkInfo, setLandmarkInfo] = useState('test');
+    const [landmarkPicInfo, setLandmarkPicInfo] = useState('test');
 
     const ref = useRef();
     const navigate = useNavigate();
     const landmarkLocation = useLocation();
-    // const Info = useRecoilValue(landmarkInfoState);
-    // const Info = useRecoilValue(landmarkInfoState);
-    // console.log('랜드마크정보', Info);
 
     useEffect(() => {
-        setLandmarkInfo(landmarkLocation.state);
-        console.log('location', landmarkInfo);
-    }, [landmarkInfo, landmarkLocation.state, navigate]);
+        setLandmarkInfo(landmarkLocation.state.landmarkInfo);
+        setLandmarkPicInfo(landmarkLocation.state.landmarkPic);
+        console.log('업로드에서 넘어온 랜드마크 정보', landmarkInfo);
+        console.log('업로드에서 넘어온 사진 정보', landmarkPicInfo);
+    }, [landmarkInfo, landmarkPicInfo]);
+
+    //랜드마크 url 변수 저장
+    let imgSrc = 'http://localhost:5001' + landmarkPicInfo.landmark_img;
 
     // console.log('board', title);
     // console.log('board', content);
@@ -59,13 +62,16 @@ const UploadResult = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const variable = {
+            title: title,
+            content: content,
+            restaurant: restaurant,
+            landmark_img_id: landmarkPicInfo.landmark_img,
+            landmark_name: landmarkInfo.name,
+        };
+
         try {
-            await API.post('/board', {
-                title,
-                content,
-                restaurant,
-                landmark_img,
-            });
+            await API.post('board', variable);
             navigate('/Board');
         } catch (err) {
             console.log('err');
@@ -77,7 +83,7 @@ const UploadResult = () => {
             <Flippy ref={ref} flipOnClick={false} flipDirection="horizontal">
                 <FrontSide style={{ padding: '0', boxShadow: 'none' }}>
                     <UploadResultLeft>
-                        <ImgContainer src={img_4} />
+                        <ImgContainer src={imgSrc} />
                         <UploadResultContentContainer>
                             <UploadResultContentInfoTitle>
                                 <div>사진 제목</div>
@@ -112,7 +118,7 @@ const UploadResult = () => {
                 </FrontSide>
                 <BackSide style={{ padding: '0', boxShadow: 'none' }}>
                     <UploadResultLeft>
-                        <ImgContainer src={img_4} />
+                        <ImgContainer src={imgSrc} />
                         <UploadResultContentContainer>
                             <ValidationTextField
                                 id="outlined-basic"
