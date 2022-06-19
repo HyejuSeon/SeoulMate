@@ -28,6 +28,7 @@ function Signin() {
         try {
             //user 회원가입 api 호출
             await Api.post("users/registration", form)
+            navigate('/login');
 
         } catch (error) {
             alert("회원가입에 실패했습니다")
