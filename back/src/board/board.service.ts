@@ -8,11 +8,9 @@ import { Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
 import { v4 as uuid } from 'uuid';
-import { Visited } from 'src/visited/visited.entity';
 import { Exception } from 'handlebars';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
-import e from 'express';
 
 @Injectable()
 export class BoardService {

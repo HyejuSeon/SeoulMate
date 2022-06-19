@@ -5,20 +5,12 @@ import {
     HttpStatus,
     Param,
     Post,
-    Req,
     Res,
     UseGuards,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
-import {
-    ApiBearerAuth,
-    ApiBody,
-    ApiParam,
-    ApiResponse,
-    ApiTags,
-} from '@nestjs/swagger';
+import { Response } from 'express';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BoardService } from './board.service';
-import { boardId } from './dto/detail-board.dto';
 import { writeBoard } from './dto/write-board.dto';
 import { getUserRequest } from 'src/common/decorator/request.decorator';
 import { Users } from 'src/users/users.entity';

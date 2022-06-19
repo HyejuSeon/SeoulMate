@@ -1,7 +1,6 @@
 import {
     Body,
     Controller,
-    Delete,
     Get,
     HttpStatus,
     NotFoundException,
@@ -11,10 +10,7 @@ import {
     Res,
     ServiceUnavailableException,
     UploadedFile,
-    UseGuards,
     UseInterceptors,
-    UsePipes,
-    ValidationPipe,
 } from '@nestjs/common';
 import {
     ApiBody,
@@ -30,7 +26,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
-import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
 @ApiTags('visited')
 @Controller('visited')
