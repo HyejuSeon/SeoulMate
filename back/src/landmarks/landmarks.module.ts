@@ -8,5 +8,6 @@ import { LandmarksService } from './landmarks.service';
     imports: [DatabaseModule],
     providers: [LandmarksService, ...landmarkProviders],
     controllers: [LandmarksController],
+    exports: [LandmarksService],
 })
 export class LandmarksModule {}
