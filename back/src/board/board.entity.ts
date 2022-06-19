@@ -26,7 +26,10 @@ export class Boards extends BaseEntity {
     content: string;
 
     @Column()
-    landmark_img: string;
+    landmark_img_id: string;
+
+    @Column()
+    landmark_name: string;
 
     @CreateDateColumn()
     created_at: Date;
