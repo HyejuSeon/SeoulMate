@@ -11,10 +11,7 @@ import {
     Res,
     ServiceUnavailableException,
     UploadedFile,
-    UseGuards,
     UseInterceptors,
-    UsePipes,
-    ValidationPipe,
 } from '@nestjs/common';
 import {
     ApiBody,
@@ -30,7 +27,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
-import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { topVisitedDto } from './dto/top.visited.dto';
 
 @ApiTags('visited')
@@ -122,7 +118,7 @@ export class VisitedController {
                 visitedDto.landmark_id !== undefined &&
                 visitedDto.user_id !== undefined
             ) {
-                var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+                const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
                 const encodedName = encodeURI(
                     encodeURIComponent(file.originalname),
                 ).replace(reg, ''); // 한글 인코딩후 모든 특수기호 제거
