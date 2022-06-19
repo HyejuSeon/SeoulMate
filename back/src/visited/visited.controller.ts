@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     NotFoundException,
@@ -142,6 +143,21 @@ export class VisitedController {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    @Get('/top')
+    @ApiOperation({ summary: '상위 몇개만 반환' })
+    @ApiResponse({
+        status: 200,
+        description: 'Return top N most visited landmarks as landmark_id',
+    })
+    async test(
+        @Res() res: any,
+        @Query()
+        query: topVisitedDto,
+    ): Promise<void> {
+        const result = await this.visitedService.getTop(query);
+        res.status(HttpStatus.OK).json(result);
     }
 
     // @Put('/image')
