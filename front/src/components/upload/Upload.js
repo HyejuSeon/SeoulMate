@@ -38,6 +38,10 @@ const Upload = () => {
         reader.onload = (readerEvent) => {
             setAvatar(readerEvent.target.result);
         };
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
+        formData.append('user_id', user.user_id);
+        formData.append('landmark_id', landmarkInfo.landmark_id);
 
         API.post('ai')
             .then((res) => {
@@ -47,13 +51,6 @@ const Upload = () => {
             .catch((err) => {
                 console.log(err);
             });
-
-        const formData = new FormData();
-        formData.append('image', e.target.files[0]);
-        formData.append('user_id', user.user_id);
-        formData.append('landmark_id', landmarkInfo?.landmark_id);
-
-        console.log('formData', formData);
 
         API.sendImage('visited/images', formData)
             .then((res) => {
