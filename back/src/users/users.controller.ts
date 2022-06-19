@@ -133,9 +133,6 @@ export class UsersController {
                 name: {
                     type: 'string',
                 },
-                profile_image: {
-                    type: 'string',
-                },
                 prePassword: {
                     type: 'string',
                 },
@@ -163,6 +160,8 @@ export class UsersController {
         @Body() updateUser: updateUserDto,
         @getUserRequest() user: Users,
     ) {
+        console.log(user.user_id);
+
         await this.userService.updateUserInfo(updateUser, user.user_id, file);
     }
 
