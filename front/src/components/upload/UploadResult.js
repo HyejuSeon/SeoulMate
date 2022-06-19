@@ -86,7 +86,7 @@ const UploadResult = () => {
                             </UploadResultContentInfoTitle>
                             <UploadResultContentInfo>
                                 {' '}
-                                <div>블라블라.jpg</div>
+                                <div>광안대교</div>
                                 <div>22/12/2019</div>
                                 <div>By Elice</div>
                             </UploadResultContentInfo>
