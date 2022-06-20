@@ -38,36 +38,11 @@ export class BoardService {
     }
 
     async getBoard(boardId: string) {
-        const board = await this.boardRepository.findOne({
+        return await this.boardRepository.findOne({
             where: {
                 board_id: boardId,
             },
         });
-        let storageFile: StorageFile;
-
-        try {
-            storageFile = await this.storageService.getWithMetaData(
-                'visited/' + board.landmark_img_id,
-            );
-        } catch (e) {
-            if (e.message.toString().includes('No such object')) {
-                throw new NotFoundException('image not found');
-            } else {
-                throw new ServiceUnavailableException('internal error');
-            }
-        }
-        const headerContentType = storageFile.contentType;
-        const headerCacheControl = 'max-age=60d';
-        const image = storageFile.buffer;
-        const { landmark_img_id, ...result } = board;
-        return {
-            payload: {
-                headerContentType,
-                headerCacheControl,
-                image,
-                ...result,
-            },
-        };
     }
 
     async paginate(
@@ -75,9 +50,9 @@ export class BoardService {
         currentPage: number,
         perPage: number,
     ) {
-        const total = await aggregator();
+        // const total = await aggregator();
 
-        const totalPage = Math.ceil(total / perPage);
+        const totalPage = Math.ceil(1 / perPage);
         if (currentPage > totalPage) {
             currentPage = totalPage;
         }

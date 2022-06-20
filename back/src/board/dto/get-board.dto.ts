@@ -1,12 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class getBoard {
+    @ApiProperty()
+    board_id: string;
+
     @ApiProperty({
         type: 'string',
         format: 'binary',
         description: '게시글 이미지',
     })
-    image: string;
+    landmark_img_id: string;
 
     @ApiProperty({
         description: '게시글 제목',
