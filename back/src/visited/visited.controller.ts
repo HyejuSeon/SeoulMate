@@ -32,12 +32,14 @@ import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { topVisitedDto } from './dto/top.visited.dto';
+import { LandmarksService } from 'src/landmarks/landmarks.service';
 
 @ApiTags('visited')
 @Controller('visited')
 export class VisitedController {
     constructor(
         private visitedService: VisitedService,
+        private landmarksService: LandmarksService,
         private storageService: StorageService,
     ) {}
 
@@ -122,7 +124,7 @@ export class VisitedController {
                 visitedDto.landmark_id !== undefined &&
                 visitedDto.user_id !== undefined
             ) {
-                var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+                const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
                 const encodedName = encodeURI(
                     encodeURIComponent(file.originalname),
                 ).replace(reg, ''); // 한글 인코딩후 모든 특수기호 제거
@@ -156,13 +158,22 @@ export class VisitedController {
         status: 200,
         description: 'Return top N most visited landmarks as landmark_id',
     })
-    async test(
+    async getTop(
         @Res() res: any,
         @Query()
         query: topVisitedDto,
     ): Promise<void> {
         const result = await this.visitedService.getTop(query);
-        res.status(HttpStatus.OK).json(result);
+
+        const payload = result.map(async (element) => {
+            const landmark_info =
+                await this.landmarksService.getLandmarkByLandmarkId(
+                    element.landmark_id,
+                );
+            return { ...element, ...landmark_info };
+        });
+
+        res.status(HttpStatus.OK).json(payload);
     }
 
     // @Put('/image')
