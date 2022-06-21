@@ -106,6 +106,8 @@ function Login(){
                 <button type='submit' style={{width: "30vw", borderRadius: "50px", border: "none", backgroundColor: "#BBD6FF", color: "white", padding: "5px", fontSize:"x-large" , cursor: "pointer" }}>LOG IN</button>
                 <Box class={style.otherButtonbox}>
                     <Link to={'/register'} class={style.createaccountButton}>Create Account</Link>
+                    <Link to={'/Password'} class={style.forgotpasswordButton}>Forgot password?</Link>
+
                 </Box>
             </div>
             

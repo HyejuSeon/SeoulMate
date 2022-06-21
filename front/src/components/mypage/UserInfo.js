@@ -36,7 +36,7 @@ function UserInfo({updateUser}){
                 else{
                     try{
                         //password 변경하기 
-                        const res = await Api.put("users/update", {password: newPassword})
+                        const res = await Api.put("users/update/password", {password: newPassword})
                         updateUser(res.data)
                         Swal.fire({
                             title: '비밀번호 변경',
