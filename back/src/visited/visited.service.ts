@@ -57,6 +57,21 @@ export class VisitedService {
             console.log(error);
         }
     }
+
+    async getCount(landmark_id: number) {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_id AS landmark_id')
+                .addSelect('COUNT(*) AS visitedCount')
+                .where('visited.landmark_id = :landmark_id', { landmark_id })
+                .getRawOne();
+
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
     async getTop(query: topVisitedDto) {
         try {
             const result = await this.visitedRepository
@@ -67,6 +82,7 @@ export class VisitedService {
                 .orderBy('visitedCount', 'DESC')
                 .take(query.take)
                 .getRawMany();
+
             return result;
         } catch (error) {
             console.log(error);
