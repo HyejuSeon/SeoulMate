@@ -48,11 +48,13 @@ export class AuthService {
 
         const hashedPassword = await this.hashedPassword(user.password);
 
-        const newUser: saveUserDto = {
+        const newUser = {
             user_id: user_id,
             name: user.name,
             email: user.email,
             password: hashedPassword,
+            profile_image:
+                'https://storage.googleapis.com/landmark_service_images/profile/gcs',
         };
         return newUser;
     }
@@ -132,10 +134,9 @@ export class AuthService {
         await this.userRepository.save(userInfo);
     }
 
-    async resetPassword(newPassword: string, email: string, name: string) {
+    async resetPassword(newPassword: string, email: string) {
         const user = await this.userRepository.findOneBy({
             email: email,
-            name: name,
         });
         const hashedPassword = await this.hashedPassword(newPassword);
         user.password = hashedPassword;
