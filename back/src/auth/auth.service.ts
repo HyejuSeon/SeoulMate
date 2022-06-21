@@ -48,11 +48,13 @@ export class AuthService {
 
         const hashedPassword = await this.hashedPassword(user.password);
 
-        const newUser: saveUserDto = {
+        const newUser = {
             user_id: user_id,
             name: user.name,
             email: user.email,
             password: hashedPassword,
+            profile_image:
+                'https://storage.googleapis.com/landmark_service_images/profile/gcs',
         };
         return newUser;
     }

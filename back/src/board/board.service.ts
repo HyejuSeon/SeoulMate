@@ -1,16 +1,9 @@
-import {
-    Inject,
-    Injectable,
-    NotFoundException,
-    ServiceUnavailableException,
-} from '@nestjs/common';
-import { FindManyOptions, Repository } from 'typeorm';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
 import { v4 as uuid } from 'uuid';
 import { Exception } from 'handlebars';
-import { StorageService } from 'src/storage/storage.service';
-import { StorageFile } from 'src/storage/storage-file';
 import { getBoards } from './dto/board-list.dto';
 
 @Injectable()
@@ -18,7 +11,6 @@ export class BoardService {
     constructor(
         @Inject('BOARDS_REPOSITORY')
         private boardRepository: Repository<Boards>,
-        private readonly storageService: StorageService,
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
@@ -80,7 +72,11 @@ export class BoardService {
         return { totalPage: totalPage, boards: boards };
     }
 
-    async getBoards(pagination: getBoards) {
+    async getBoards() {
         //    get boards
+        console.log('df');
+
+        const boards = this.boardRepository.find();
+        console.log(boards);
     }
 }
