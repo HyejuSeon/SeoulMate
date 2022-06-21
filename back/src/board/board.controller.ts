@@ -44,19 +44,16 @@ export class BoardController {
         @Param('boardId') boardId: string,
         @Res() res: Response,
     ) {
-        const { payload } = await this.boardService.getBoard(boardId);
-        res.setHeader('Content-Type', payload.headerContentType);
-        res.setHeader('Cache-Control', payload.headerCacheControl);
-        res.status(HttpStatus.OK).end(payload.image); // swagger에서 확인 가능
+        const board = await this.boardService.getBoard(boardId);
+        res.status(HttpStatus.OK).json(board);
+    }
 
-        // 아래는 응답부분으로 image와 board의 정보가 반환된다
-        // res.status(HttpStatus.OK).end({
-        //     image: payload.image,
-        //     content: payload.content,
-        //     title: payload.title,
-        //     restaurant: payload.restaurant,
-        //     createdAt: payload.created_at,
-        //     name: payload.landmark_name,
-        // });
+    @Get('boards')
+    @ApiResponse({ type: 'string' })
+    async getBoardsList(@Res() res: Response) {
+        res.status(HttpStatus.OK).json('ok');
+
+        // const a = await this.boardService.getBoards();
+        // console.log(a);
     }
 }

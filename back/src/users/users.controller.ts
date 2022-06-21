@@ -39,6 +39,7 @@ import { updateUserDto } from './dto/update.user.dto';
 import { deleteUser } from './dto/delete-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { updatePassword } from './dto/update-password.dto';
+import { json } from 'stream/consumers';
 
 @ApiTags('users')
 @Controller('users')
@@ -155,14 +156,19 @@ export class UsersController {
             },
         }),
     )
+    @ApiResponse({ type: 'string' })
     async updateUserInfo(
         @UploadedFile() file: Express.Multer.File,
         @Body() updateUser: updateUserDto,
         @getUserRequest() user: Users,
+        @Res() res: Response,
     ) {
-        console.log(user.user_id);
-
-        await this.userService.updateUserInfo(updateUser, user.user_id, file);
+        const update = await this.userService.updateUserInfo(
+            updateUser,
+            user.user_id,
+            file,
+        );
+        res.status(HttpStatus.OK).json(update);
     }
 
     @Put('update/password')
