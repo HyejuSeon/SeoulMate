@@ -134,10 +134,9 @@ export class AuthService {
         await this.userRepository.save(userInfo);
     }
 
-    async resetPassword(newPassword: string, email: string, name: string) {
+    async resetPassword(newPassword: string, email: string) {
         const user = await this.userRepository.findOneBy({
             email: email,
-            name: name,
         });
         const hashedPassword = await this.hashedPassword(newPassword);
         user.password = hashedPassword;
