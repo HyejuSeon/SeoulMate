@@ -1,0 +1,16 @@
+db:
+  host: '34.64.45.109'
+  username: 'root'
+  password: '1234'
+  synchronize: true
+
+elice:
+  host: 'kdt-ai4-team07-gpu.elicecoding.com'
+  username: 'root'
+  password: '1234'
+  synchronize: true
+
+auth: 
+  jwt_access_secret: 'mysecret123key'
+  refresh: 'x-refresh-token'
+  jwt_refresh_secret: 'myrefreshsecret'

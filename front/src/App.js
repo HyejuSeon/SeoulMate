@@ -1,31 +1,37 @@
-import React, { useState, useEffect, useReducer, createContext } from 'react';
+import React, { useState, useEffect, useReducer, createContext, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { ROUTES } from './Route';
 
 import * as Api from './api';
+import './App.css';
 import { loginReducer } from './reducer';
 
-import Home from '../src/components/home/Home';
-import Footer from './components/Footer';
 import { GlobalStyles } from './styledCompo/GlobalStyle';
+import { useRecoilValue } from 'recoil';
+import { userInfoState, tokenState } from './atom';
 
-import Login from './components/user/Login';
-import { ROUTES } from './Route';
-import Signin from './components/user/Signin';
-import Mypage from './components/mypage/Mypage'
+const Home = lazy(() => import('./components/home/Home'));
+const Login = lazy(() => import('./components/user/Login'));
+const Signin = lazy(() => import('./components/user/Signin'));
+const Mypage = lazy(() => import('./components/mypage/Mypage'));
+const Upload = lazy(() => import('./components/upload/Upload'));
+const UploadResult = lazy(() => import('./components/upload/UploadResult'));
+const BoardUpload = lazy(() => import('./components/board/Board'));
+const Board = lazy(() => import('./components/board/Board'));
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 
 function App() {
     const location = useLocation();
-
+    const user = useRecoilValue(tokenState);
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [location]);
     // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
-    const [userState, dispatch] = useReducer(loginReducer, {
-        user: null,
-    });
+    // const [userState, dispatch] = useReducer(loginReducer, {
+    //     user: null,
+    // });
 
     // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
     // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
@@ -34,15 +40,16 @@ function App() {
     const fetchCurrentUser = async () => {
         try {
             // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
-            const res = await Api.get('current/info');
+            const res = await Api.get('users/current/info');
             const currentUser = res.data;
-            console.log(currentUser);
+            // console.log('currentUser:', currentUser);
+            // console.log('abcd');
 
             // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                payload: currentUser,
-            });
+            // dispatch({
+            //     type: 'LOGIN_SUCCESS',
+            //     payload: currentUser,
+            // });
             console.log('%c sessionStorage에 토큰 있음.', 'color: #d93d1a;');
         } catch (error) {
             console.log(error);
@@ -57,24 +64,40 @@ function App() {
         fetchCurrentUser();
     }, []);
 
-    if (!isFetchCompleted) {
-        return 'loading...';
-    }
+    // if (!isFetchCompleted) {
+    //     return 'loading...';
+    // }
 
     return (
         <>
-            <Routes>
-                <Route path="/" exact element={<Home />} />
-
-                <Route path="/login" element={<Login />} />
-
-                <Route path="*" element={<Home />} />
-
-                <Route path="/mypage" element={<Mypage />} />
-
-
-                <Route path="/register" element={<Signin />} />
-            </Routes>
+            {user ? (
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path="/" exact element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/mypage" element={<Mypage />} />
+                        <Route path="/register" element={<Signin />} />
+                        <Route path="/upload" element={<Upload />} />
+                        <Route path="/uploadResult" element={<UploadResult />} />
+                        <Route path="/boardUpload" element={<BoardUpload />} />
+                        <Route path="/Board" element={<Board />} />
+                        <Route path="*" element={<Home />} />
+                    </Routes>
+                </Suspense>
+            ) : (
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path="/" exact element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Signin />} />
+                        <Route path="/upload" element={<Upload />} />
+                        <Route path="/uploadResult" element={<UploadResult />} />
+                        <Route path="/boardUpload" element={<BoardUpload />} />
+                        <Route path="/Board" element={<Board />} />
+                        <Route path="*" element={<Home />} />
+                    </Routes>
+                </Suspense>
+            )}
         </>
     );
 }

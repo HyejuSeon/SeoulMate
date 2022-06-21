@@ -12,8 +12,8 @@ export class Landmark {
     @Column()
     category: string;
 
-    // @Column({ type: 'longtext' })
-    // description: string;
+    @Column({ type: 'longtext' })
+    description: string;
 
     @Column()
     add: string;
