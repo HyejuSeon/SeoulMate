@@ -28,6 +28,7 @@ import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
 import { topVisitedDto } from './dto/top.visited.dto';
 import { LandmarksService } from 'src/landmarks/landmarks.service';
+import { UsersService } from 'src/users/users.service';
 
 @ApiTags('visited')
 @Controller('visited')
@@ -36,6 +37,7 @@ export class VisitedController {
         private visitedService: VisitedService,
         private landmarksService: LandmarksService,
         private storageService: StorageService,
+        private usersService: UsersService,
     ) {}
 
     @Get('/')
@@ -136,7 +138,26 @@ export class VisitedController {
                     visitedDto,
                     imageId,
                 );
-                res.status(HttpStatus.OK).json(visited);
+                const visitedCount = await this.visitedService.getCount(
+                    visitedDto.landmark_id,
+                );
+                const user = await this.usersService.getCurrentUserInfo(
+                    visitedDto.user_id,
+                );
+                const landmark =
+                    await this.landmarksService.getLandmarkByLandmarkId(
+                        visitedDto.landmark_id,
+                    );
+                const filename = file.originalname;
+                const payload = {
+                    index: visited.index,
+                    visitedCount: +visitedCount.visitedCount,
+                    landmark,
+                    user,
+                    filename,
+                    landmark_img: visited.landmark_img,
+                };
+                res.status(HttpStatus.OK).json(payload);
             } else {
                 res.status(HttpStatus.BAD_REQUEST).send(
                     'Check the request body',
@@ -151,7 +172,7 @@ export class VisitedController {
     @ApiOperation({ summary: '상위 몇개만 반환' })
     @ApiResponse({
         status: 200,
-        description: 'Return top N most visited landmarks as landmark_id',
+        description: 'Return top Nth most visited landmarks',
     })
     async getTop(
         @Res() res: any,
@@ -159,16 +180,23 @@ export class VisitedController {
         query: topVisitedDto,
     ): Promise<void> {
         const result = await this.visitedService.getTop(query);
-
-        const payload = result.map(async (element) => {
-            const landmark_info =
-                await this.landmarksService.getLandmarkByLandmarkId(
-                    element.landmark_id,
-                );
-            return { ...element, ...landmark_info };
-        });
-
-        res.status(HttpStatus.OK).json(payload);
+        const service = this.landmarksService;
+        async function getTopLandmarks(result, service) {
+            const Result = await Promise.all(
+                result.map((element) => getMergedData(element, service)),
+            );
+            return Result;
+        }
+        async function getMergedData(element, service) {
+            const landmark_info = await service.getLandmarkByLandmarkId(
+                element.landmark_id,
+            );
+            const visitedCount = +element.visitedCount;
+            const result = { visitedCount, ...landmark_info };
+            return result;
+        }
+        const body = await getTopLandmarks(result, service);
+        res.status(HttpStatus.OK).json(body);
     }
 
     // @Put('/image')
