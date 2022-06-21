@@ -5,17 +5,25 @@ import {
     HttpStatus,
     Param,
     Post,
+    Query,
     Res,
     UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiBody,
+    ApiQuery,
+    ApiResponse,
+    ApiTags,
+} from '@nestjs/swagger';
 import { BoardService } from './board.service';
 import { writeBoard } from './dto/write-board.dto';
 import { getUserRequest } from 'src/common/decorator/request.decorator';
 import { Users } from 'src/users/users.entity';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { getBoard } from './dto/get-board.dto';
+import { getBoards } from './dto/board-list.dto';
 
 @ApiTags('board')
 @Controller('board')
@@ -48,12 +56,10 @@ export class BoardController {
         res.status(HttpStatus.OK).json(board);
     }
 
-    @Get('boards')
+    @Post('boards')
     @ApiResponse({ type: 'string' })
-    async getBoardsList(@Res() res: Response) {
-        res.status(HttpStatus.OK).json('ok');
-
-        // const a = await this.boardService.getBoards();
-        // console.log(a);
+    async getBoardsList(@Query() pagination: getBoards, @Res() res?: Response) {
+        const boards = await this.boardService.getBoards(pagination);
+        res.status(HttpStatus.OK).json(boards);
     }
 }
