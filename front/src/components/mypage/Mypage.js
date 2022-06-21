@@ -4,6 +4,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import Profile from "./Profile"
 import { UserStateContext } from "../../App"
 import * as API from "../../api";
+import MapContainer from "../kakao/MapContainer";
 
 function Mypage() {
   
@@ -48,6 +49,7 @@ useEffect(() => {
       editOpen={editOpen}
       toggleEditForm={toggleEditForm}
     />
+    
 
     {/* 회원 설정. 정보 */}
     <Typography
@@ -56,7 +58,11 @@ useEffect(() => {
       sx={{ fontSize: "30px", mt: 6, mb: 2 }}
     >
       <InfoIcon sx={{ mx: 1.2, my: -1, fontSize: "40px", color: "gray" }} />
-      회원 정보
+      내가 다녀온 곳
+      
+      <MapContainer>
+        
+      </MapContainer>
     </Typography>
 
   </Container>

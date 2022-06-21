@@ -3,10 +3,8 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    JoinColumn,
     ManyToOne,
     PrimaryColumn,
-    RelationId,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
@@ -28,18 +26,17 @@ export class Boards extends BaseEntity {
     content: string;
 
     @Column()
-    landmark_img: string;
+    landmark_img_id: string;
+
+    @Column()
+    landmark_name: string;
 
     @CreateDateColumn()
     created_at: Date;
 
-    @ManyToOne(() => Users, (user) => user.user_id, {
+    @ManyToOne(() => Users, (user) => user.board, {
+        nullable: false,
         onDelete: 'CASCADE',
     })
-    @JoinColumn()
-    user_id: Users;
-
-    @Column()
-    @RelationId((board: Boards) => board.user_id)
-    userId: string;
+    public user_id: string;
 }
