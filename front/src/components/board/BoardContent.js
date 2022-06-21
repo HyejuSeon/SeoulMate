@@ -26,6 +26,8 @@ const BoardContent = () => {
     useEffect(() => {
         const getBoardContent = async () => {
             const res = await API.get('board/8411223d-c4ee-4f13-b4db-efb832b90ade');
+            // const res = await API.get('visited/top');
+            console.log(res.data);
             const content = res.data;
             setAllBoardContent(content);
             console.log('content', content);

@@ -8,7 +8,7 @@ export const BoardContentContainer = styled.a`
     width: 32rem;
     height: 45rem;
 
-    /* margin-left: 18rem; */
+    /* margin-left: 1822rem; */
     margin-bottom: 3rem;
 
     background: #ffffff;
