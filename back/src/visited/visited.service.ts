@@ -50,7 +50,7 @@ export class VisitedService {
             const result = await this.visitedRepository.save({
                 landmark_id,
                 user_id,
-                landmark_img: `/visited/images/${imageId}`,
+                landmark_img: `https://storage.googleapis.com/landmark_service_images/visited/${imageId}`,
             });
             return result;
         } catch (error) {
