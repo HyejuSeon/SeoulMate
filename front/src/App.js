@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useReducer, createContext, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ROUTES } from './Route';
+import Lottie from 'react-lottie';
+import loading from './loading.json';
 
 import * as Api from './api';
 import './App.css';
@@ -28,13 +30,7 @@ function App() {
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [location]);
-    // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
-    // const [userState, dispatch] = useReducer(loginReducer, {
-    //     user: null,
-    // });
 
-    // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
-    // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     const fetchCurrentUser = async () => {
@@ -64,14 +60,20 @@ function App() {
         fetchCurrentUser();
     }, []);
 
-    // if (!isFetchCompleted) {
-    //     return 'loading...';
-    // }
-
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: loading,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice',
+        },
+    };
     return (
         <>
             {user ? (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense
+                    fallback={<Lottie options={defaultOptions} height={100} width={100}></Lottie>}
+                >
                     <Routes>
                         <Route path="/" exact element={<Home />} />
                         <Route path="/login" element={<Login />} />
@@ -83,9 +85,12 @@ function App() {
                         <Route path="/Board" element={<Board />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
+                    defaultOptions
                 </Suspense>
             ) : (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense
+                    fallback={<Lottie options={defaultOptions} height={100} width={100}></Lottie>}
+                >
                     <Routes>
                         <Route path="/" exact element={<Home />} />
                         <Route path="/login" element={<Login />} />

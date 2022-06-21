@@ -86,15 +86,15 @@ const UploadResult = () => {
                         <ImgContainer src={imgSrc} />
                         <UploadResultContentContainer>
                             <UploadResultContentInfoTitle>
-                                <div>사진 제목</div>
-                                <div>Date</div>
-                                <div>ID</div>
+                                <span>사진 제목</span>
+                                <span>Date</span>
+                                <span>ID</span>
                             </UploadResultContentInfoTitle>
                             <UploadResultContentInfo>
                                 {' '}
-                                <div>광안대교</div>
-                                <div>22/12/2019</div>
-                                <div>By Elice</div>
+                                <span>광안대교</span>
+                                <span>22/12/2019</span>
+                                <span>By Elice</span>
                             </UploadResultContentInfo>
                             <UploadResultContentPeopleContainer>
                                 <UploadResultPeopleImg src={Luggage} />

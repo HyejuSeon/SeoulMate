@@ -13,8 +13,8 @@ export const StartButton = styled.button`
     position: absolute;
     width: 15rem;
     height: 5rem;
-    left: 42%;
-    top: 62%;
+    margin-top: 25rem;
+    justify-content: center;
 
     background: rgba(17, 1, 1, 0.5);
 
@@ -142,10 +142,7 @@ export const HeadCopy = styled.div`
 
     line-height: 60px;
     position: absolute;
-    text-align: center;
-
-    top: 45%;
-    left: 32%;
+    justify-content: center;
 
     z-index: 10;
 `;
