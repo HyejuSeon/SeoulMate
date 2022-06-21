@@ -56,9 +56,6 @@ const UploadResult = () => {
     //랜드마크 url 변수 저장
     let imgSrc = 'http://localhost:5001' + landmarkPicInfo.landmark_img;
 
-    // console.log('board', title);
-    // console.log('board', content);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -86,15 +83,15 @@ const UploadResult = () => {
                         <ImgContainer src={imgSrc} />
                         <UploadResultContentContainer>
                             <UploadResultContentInfoTitle>
-                                <div>사진 제목</div>
-                                <div>Date</div>
-                                <div>ID</div>
+                                <span>사진 제목</span>
+                                <span>Date</span>
+                                <span>ID</span>
                             </UploadResultContentInfoTitle>
                             <UploadResultContentInfo>
                                 {' '}
-                                <div>광안대교</div>
-                                <div>22/12/2019</div>
-                                <div>By Elice</div>
+                                <span>광안대교</span>
+                                <span>22/12/2019</span>
+                                <span>By Elice</span>
                             </UploadResultContentInfo>
                             <UploadResultContentPeopleContainer>
                                 <UploadResultPeopleImg src={Luggage} />
