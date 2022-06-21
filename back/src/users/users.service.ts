@@ -52,7 +52,6 @@ export class UsersService {
         await this.authService.resetPassword(
             randNumber.toString(),
             resetInfo.email,
-            resetInfo.name,
         );
         await this.mailService.sendMemberJoinVerification(
             randNumber.toString(),

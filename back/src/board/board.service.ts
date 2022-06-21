@@ -72,11 +72,15 @@ export class BoardService {
         return { totalPage: totalPage, boards: boards };
     }
 
-    async getBoards() {
-        //    get boards
-        console.log('df');
-
-        const boards = this.boardRepository.find();
-        console.log(boards);
+    async getBoards(pagination: getBoards) {
+        const perPages = pagination.perPage || 5;
+        const pages = pagination.page || 1;
+        const [boards, count] = await this.boardRepository.findAndCount({
+            skip: perPages * (pages - 1),
+            take: perPages,
+        });
+        const totalPage = Math.ceil(count / perPages);
+        const payloads = boards;
+        return { payloads, totalPage };
     }
 }
