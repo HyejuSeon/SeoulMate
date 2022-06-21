@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, createContext, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from './Route';
 import Lottie from 'react-lottie';
 import loading from './loading.json';
@@ -25,6 +25,7 @@ export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 
 function App() {
+    const navigate = useNavigate();
     const location = useLocation();
     const user = useRecoilValue(tokenState);
     useEffect(() => {
@@ -38,14 +39,8 @@ function App() {
             // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
             const res = await Api.get('users/current/info');
             const currentUser = res.data;
-            // console.log('currentUser:', currentUser);
-            // console.log('abcd');
+            console.log('currentUser:', currentUser);
 
-            // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-            // dispatch({
-            //     type: 'LOGIN_SUCCESS',
-            //     payload: currentUser,
-            // });
             console.log('%c sessionStorage에 토큰 있음.', 'color: #d93d1a;');
         } catch (error) {
             console.log(error);
@@ -85,7 +80,6 @@ function App() {
                         <Route path="/Board" element={<Board />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
-                    defaultOptions
                 </Suspense>
             ) : (
                 <Suspense

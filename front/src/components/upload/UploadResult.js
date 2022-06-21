@@ -56,9 +56,6 @@ const UploadResult = () => {
     //랜드마크 url 변수 저장
     let imgSrc = 'http://localhost:5001' + landmarkPicInfo.landmark_img;
 
-    // console.log('board', title);
-    // console.log('board', content);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 

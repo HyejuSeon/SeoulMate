@@ -57,7 +57,7 @@ const Home = () => {
         user
             ? navigate('/upload')
             : Swal.fire({
-                  title: '로그인이 필요한 서비스 입니다.',
+                  title: '로그인이 필요한 서비스 입니다',
                   text: '로그인 창으로 이동 하시겠습니까?',
                   icon: 'warning',
                   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
@@ -79,9 +79,8 @@ const Home = () => {
             <SwiperSlide key={idx}>
                 <StartButton onClick={start}>시작하기</StartButton>
                 <HeadCopy>
-                    랜드마크를 찾아 사진을 찍으세요.
-                    <br />
-                    서울메이트가 당신의 추억을 기록해드립니다.{' '}
+                    <p>랜드마크를 찾아 사진을 찍으세요.</p>
+                    <p>서울메이트가 당신의 추억을 기록해드립니다.</p>{' '}
                 </HeadCopy>
                 <PhotoContainer>
                     <img src={item} alt="landmark img" />
