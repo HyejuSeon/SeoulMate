@@ -32,11 +32,12 @@ function UserInfo({updateUser}){
                         icon: 'error',
                         title: 'Oops...',
                         text: '다시한번 확인 해주세요',
+                        
                     })
                 else{
                     try{
                         //password 변경하기 
-                        const res = await Api.put("users/update", {password: newPassword})
+                        const res = await Api.put("users/update/password", {password: newPassword})
                         updateUser(res.data)
                         Swal.fire({
                             title: '비밀번호 변경',

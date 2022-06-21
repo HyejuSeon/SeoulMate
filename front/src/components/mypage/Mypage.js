@@ -48,7 +48,9 @@ async function getUserData() {
 
 useEffect(() => {
   getUserData();
-}, []);
+}, [editOpen]);
+
+
 
 
 const logout = () => {
@@ -75,7 +77,6 @@ const logout = () => {
       editOpen={editOpen}
       toggleEditForm={toggleEditForm}
     />
-    <Button onClick={logout}>로그아웃</Button>
 
     {/* 회원 설정. 정보 */}
     <Typography

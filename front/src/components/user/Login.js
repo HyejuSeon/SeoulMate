@@ -124,9 +124,9 @@ function Login() {
                     LOG IN
                 </button>
                 <Box class={style.otherButtonbox}>
-                    <Link to={'/register'} class={style.createaccountButton}>
-                        Create Account
-                    </Link>
+                    <Link to={'/register'} class={style.createaccountButton}>Create Account</Link>
+                    <Link to={'/Password'} class={style.forgotpasswordButton}>Forgot password?</Link>
+
                 </Box>
             </div>
         </LoginBody>

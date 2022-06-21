@@ -15,11 +15,13 @@ import { userInfoState, tokenState } from './atom';
 const Home = lazy(() => import('./components/home/Home'));
 const Login = lazy(() => import('./components/user/Login'));
 const Signin = lazy(() => import('./components/user/Signin'));
+const Password = lazy(() => import('./components/user/Password'));
 const Mypage = lazy(() => import('./components/mypage/Mypage'));
 const Upload = lazy(() => import('./components/upload/Upload'));
 const UploadResult = lazy(() => import('./components/upload/UploadResult'));
 const BoardUpload = lazy(() => import('./components/board/Board'));
 const Board = lazy(() => import('./components/board/Board'));
+
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -78,6 +80,7 @@ function App() {
                         <Route path="/uploadResult" element={<UploadResult />} />
                         <Route path="/boardUpload" element={<BoardUpload />} />
                         <Route path="/Board" element={<Board />} />
+                        <Route path="/Password" element={<Password />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
                 </Suspense>
