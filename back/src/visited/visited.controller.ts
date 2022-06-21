@@ -1,7 +1,6 @@
 import {
     Body,
     Controller,
-    Delete,
     Get,
     HttpStatus,
     NotFoundException,
@@ -28,12 +27,14 @@ import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
 import { topVisitedDto } from './dto/top.visited.dto';
+import { LandmarksService } from 'src/landmarks/landmarks.service';
 
 @ApiTags('visited')
 @Controller('visited')
 export class VisitedController {
     constructor(
         private visitedService: VisitedService,
+        private landmarksService: LandmarksService,
         private storageService: StorageService,
     ) {}
 
@@ -152,13 +153,22 @@ export class VisitedController {
         status: 200,
         description: 'Return top N most visited landmarks as landmark_id',
     })
-    async test(
+    async getTop(
         @Res() res: any,
         @Query()
         query: topVisitedDto,
     ): Promise<void> {
         const result = await this.visitedService.getTop(query);
-        res.status(HttpStatus.OK).json(result);
+
+        const payload = result.map(async (element) => {
+            const landmark_info =
+                await this.landmarksService.getLandmarkByLandmarkId(
+                    element.landmark_id,
+                );
+            return { ...element, ...landmark_info };
+        });
+
+        res.status(HttpStatus.OK).json(payload);
     }
 
     // @Put('/image')
