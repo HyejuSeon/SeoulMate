@@ -47,4 +47,13 @@ export class BoardController {
         const board = await this.boardService.getBoard(boardId);
         res.status(HttpStatus.OK).json(board);
     }
+
+    @Get('boards')
+    @ApiResponse({ type: 'string' })
+    async getBoardsList(@Res() res: Response) {
+        res.status(HttpStatus.OK).json('ok');
+
+        // const a = await this.boardService.getBoards();
+        // console.log(a);
+    }
 }

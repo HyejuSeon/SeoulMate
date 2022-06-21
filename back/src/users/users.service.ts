@@ -65,9 +65,7 @@ export class UsersService {
         user_id: string,
         file: Express.Multer.File,
     ) {
-        // image 이름 지정해 주기
-        const profile_image = Date();
-
+        let profile_image: string;
         // update user info
         const user = await this.userRepository.findOneBy({
             user_id: user_id,
@@ -79,6 +77,8 @@ export class UsersService {
         );
 
         if (file) {
+            // image 이름 지정해 주기
+            profile_image = `${Date.now()}_${user_id}`;
             await this.storageService.save(
                 'profile/' + profile_image,
                 file.mimetype,
@@ -88,9 +88,12 @@ export class UsersService {
         }
 
         user.name = updateUser.name || user.name;
-        user.profile_image = profile_image || user.profile_image;
+        user.profile_image =
+            `https://storage.googleapis.com/landmark_service_images/profile/${profile_image}` ||
+            user.profile_image;
 
         await this.userRepository.save(user);
+        return 'user info updated';
     }
 
     async updatePassword(updatePassword: updatePassword, userId: string) {
