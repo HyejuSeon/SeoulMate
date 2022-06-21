@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import * as API from '../../api';
 import Swal from 'sweetalert2';
 
+import './Upload.css';
+
 // import recoil
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userInfoState } from '../../atom';
