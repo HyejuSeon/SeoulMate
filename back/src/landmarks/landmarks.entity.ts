@@ -12,7 +12,7 @@ export class Landmark {
     @Column()
     category: string;
 
-    @Column({ type: 'longtext' })
+    @Column({ type: 'longtext', nullable: true })
     description: string;
 
     @Column()
