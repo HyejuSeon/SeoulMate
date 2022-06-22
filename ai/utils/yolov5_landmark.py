@@ -1,3 +1,4 @@
+from importlib.resources import path
 import os
 from dotenv import load_dotenv
 from tqdm import tqdm
@@ -7,23 +8,12 @@ import json
 import pickle
 from glob import glob
 from collections import defaultdict
+import pandas as pd
+import shutil
+from sklearn.model_selection import StratifiedKFold
 
-# custom_dataset
-# │
-# ├── train/
-# │   ├── imgs/                    
-# │   └── labels/             
-# │
-# ├── valid/
-# │   ├── imgs/                
-# │   └── labels/               
-# │
-# ├── test/
-# │   ├── imgs/                    
-# │   └── labels/   
-# │
-# └── data.yaml
 
+NUM_FOLDS = 5
 def wrong_annotation(items):
     '''
     wrong annotation 제거 후 해당 클래스의 이미지 개수 확인
@@ -60,8 +50,9 @@ def annotation():
             if x > 1 or y > 1 or w > 1 or h > 1:
                 wrong[dir] += 1
                 dlt.append(filename + '\n')
-                
-            with open(f'./ai/data/labels/{filename[:-5]}.txt', 'w') as f:
+                continue
+
+            with open(f'./ai/data/labels/{filename[:-4]}.txt', 'w') as f:
                 f.write(f'{ko_to_num[name]} {x} {y} {w} {h}')
 
     # wrong annotaion 확인
@@ -102,12 +93,92 @@ def dump_pkl():
     with open(os.environ['PKL'] + 'y.pkl', 'wb') as fw:
         pickle.dump(y, fw)
 
+def dlt_labels():
+    img_path = os.environ['DEST_IMGS']
+    label_path = os.environ['DEST_LABELS']
+    # imgs = [img.split('.')[0] for img in os.listdir(img_path)]
+    # labels = [label.split('.')[0] for label in os.listdir(label_path)]
+    imgs = [img[:-4] for img in os.listdir(img_path)]
+    labels = [label[:-4] for label in os.listdir(label_path)]
+    dlts = set(labels) - set(imgs)
+    for dlt in list(dlts):
+        try:
+            os.remove(label_path + dlt + '.txt')
+        except FileNotFoundError:
+            os.remove(label_path + dlt + '..txt')
+    print(len(os.listdir(img_path)))
+    print(len(os.listdir(label_path)))
+
+def cross_valid(num_fold):
+    df = pd.DataFrame(columns=['filename', 'class', 'path', 'fold'])
+    img_path = os.environ['DEST_IMGS']
+    label_path = os.environ['DEST_LABELS']
+    imgs = os.listdir(img_path)
+    filenames = []
+    classes = []
+    paths = []
+    for img in tqdm(imgs):
+        filenames.append(img)
+        with open(f'{label_path}{img[:-4]}.txt', 'r') as f:
+            class_ = f.readline().split()[0]
+            classes.append(class_)
+        paths.append(img_path + img)
+    df['filename'] = filenames
+    df['class'] = classes
+    df['path'] = paths
+
+    Fold = StratifiedKFold(n_splits=num_fold, shuffle=True, random_state=112)
+    for n, (train_index, val_index) in enumerate(Fold.split(df, df['class'])):
+        df.loc[val_index, 'fold'] = int(n)
+    df['fold'] = df['fold'].astype(int)
+
+    df.to_excel(f'ai/data/df_{num_fold}-fold.xlsx', index=False)
+
+def folds(num_fold):
+    df = pd.read_excel(f'ai/data/df_{num_fold}-fold.xlsx')
+    # Remove existing dirs
+    for fold in range(num_fold):
+        # Prepare train and valid df
+        train_df = df.loc[df.fold != fold].reset_index(drop=True)
+        valid_df = df.loc[df.fold == fold].reset_index(drop=True)
+        
+        try:
+            shutil.rmtree(f'ai/data/dataset_folds_{fold}/images')
+            shutil.rmtree(f'ai/data/dataset_folds_{fold}/labels')
+        except:
+            print('No dirs')
+
+        # Make new dirs
+        os.makedirs(f'ai/data/dataset_folds_{fold}/images/train', exist_ok=True)
+        os.makedirs(f'ai/data/dataset_folds_{fold}/images/valid', exist_ok=True)
+        os.makedirs(f'ai/data/dataset_folds_{fold}/labels/train', exist_ok=True)
+        os.makedirs(f'ai/data/dataset_folds_{fold}/labels/valid', exist_ok=True)
+
+        # Move the images to relevant split folder.
+        for i in tqdm(range(len(train_df))):
+            row = train_df.loc[i]
+            try:
+                shutil.copyfile(row.path, f'ai/data/dataset_folds_{fold}/images/train/{row.filename}')
+                shutil.copyfile(row.path.replace('images', 'labels')[:-3] + 'txt', f'ai/data/dataset_folds_{fold}/labels/train/{row.filename[:-3]}txt')
+            except FileNotFoundError:
+                print(f'{row.filename[:-3]}txt')
+
+        for i in tqdm(range(len(valid_df))):
+            row = valid_df.loc[i]
+            try:
+                shutil.copyfile(row.path, f'ai/data/dataset_folds_{fold}/images/valid/{row.filename}')
+                shutil.copyfile(row.path.replace('images', 'labels')[:-3] + 'txt', f'ai/data/dataset_folds_{fold}/labels/valid/{row.filename[:-3]}txt')
+            except FileNotFoundError:
+                print(f'{row.filename[:-3]}txt')
+
 def main():
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
     annotation()
     rm_imgs_without_anno('train')
     dump_pkl()
+    dlt_labels()
+    cross_valid(NUM_FOLDS)
+    folds(NUM_FOLDS)
 
 if __name__ == '__main__':
     main()
-
