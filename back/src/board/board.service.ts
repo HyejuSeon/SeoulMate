@@ -1,10 +1,11 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
 import { v4 as uuid } from 'uuid';
 import { Exception } from 'handlebars';
 import { getBoards } from './dto/board-list.dto';
+import { searchBoardDto } from './dto/search-board.dto';
 
 @Injectable()
 export class BoardService {
@@ -37,45 +38,26 @@ export class BoardService {
         });
     }
 
-    async paginate(
-        aggregator: { (): Promise<void>; (): any },
-        currentPage: number,
-        perPage: number,
-    ) {
-        // const total = await aggregator();
-
-        const totalPage = Math.ceil(1 / perPage);
-        if (currentPage > totalPage) {
-            currentPage = totalPage;
-        }
-        return { currentPage: currentPage, totalPage: totalPage };
-    }
-
-    async findBoard(board: any, query: object, page: number, perPage: number) {
-        const aggregator = async () => {
-            await this.boardRepository.findAndCount({ where: query });
-        };
-        const { currentPage, totalPage } = await this.paginate(
-            aggregator,
-            page,
-            perPage,
-        );
-        const boards = await this.boardRepository.find({
-            where: query,
-            order: { created_at: 'desc' },
-            skip: (currentPage - 1) * perPage,
-            take: perPage,
-        });
-        if (boards.length === 0) {
-            throw new NotFoundException('board not exist');
-        }
-        return { totalPage: totalPage, boards: boards };
-    }
-
     async getBoards(pagination: getBoards) {
         const perPages = pagination.perPage || 5;
         const pages = pagination.page || 1;
         const [boards, count] = await this.boardRepository.findAndCount({
+            skip: perPages * (pages - 1),
+            take: perPages,
+        });
+        const totalPage = Math.ceil(count / perPages);
+        const payloads = boards;
+        return { payloads, totalPage };
+    }
+
+    async searchBoards(searchBoard: searchBoardDto) {
+        const perPages = searchBoard.perPage || 5;
+        const pages = searchBoard.page || 1;
+        const [boards, count] = await this.boardRepository.findAndCount({
+            where: [
+                { landmark_name: searchBoard.keyword },
+                { location: searchBoard.keyword },
+            ],
             skip: perPages * (pages - 1),
             take: perPages,
         });

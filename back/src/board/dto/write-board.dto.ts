@@ -31,4 +31,16 @@ export class writeBoard {
     })
     @IsString()
     landmark_name: string;
+
+    @ApiProperty({
+        description: '랜드마크 주소',
+    })
+    @IsString()
+    location: string;
+
+    @ApiProperty({
+        description: '랜드마크 설명',
+    })
+    @IsString()
+    description: string;
 }
