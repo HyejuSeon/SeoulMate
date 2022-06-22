@@ -5,6 +5,7 @@ import {
     HttpStatus,
     NotFoundException,
     Param,
+    Patch,
     Post,
     Query,
     Res,
@@ -179,23 +180,39 @@ export class VisitedController {
         @Query()
         query: topVisitedDto,
     ): Promise<void> {
-        const result = await this.visitedService.getTop(query);
-        const service = this.landmarksService;
-        async function getTopLandmarks(result, service) {
+        const visitedService = this.visitedService;
+        const result = await visitedService.getTop(query);
+        const landmarkService = this.landmarksService;
+        async function getTopLandmarks(
+            result,
+            landmarkService,
+            visitedService,
+        ) {
             const Result = await Promise.all(
-                result.map((element) => getMergedData(element, service)),
+                result.map((element) =>
+                    getMergedData(element, landmarkService, visitedService),
+                ),
             );
             return Result;
         }
-        async function getMergedData(element, service) {
-            const landmark_info = await service.getLandmarkByLandmarkId(
+        async function getMergedData(element, landmarkService, visitedService) {
+            const landmark_info = await landmarkService.getLandmarkByLandmarkId(
                 element.landmark_id,
             );
             const visitedCount = +element.visitedCount;
-            const result = { visitedCount, ...landmark_info };
+            const image = await visitedService.getImage(element.landmark_id);
+            const result = {
+                visitedCount,
+                ...landmark_info,
+                landmark_img: image.landmark_img,
+            };
             return result;
         }
-        const body = await getTopLandmarks(result, service);
+        const body = await getTopLandmarks(
+            result,
+            landmarkService,
+            visitedService,
+        );
         res.status(HttpStatus.OK).json(body);
     }
 

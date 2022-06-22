@@ -72,6 +72,22 @@ export class VisitedService {
             console.log(error);
         }
     }
+    async getImage(landmark_id: number) {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_img as landmark_img')
+                .where('visited.landmark_id = :landmark_id', { landmark_id })
+                .getRawMany();
+            const randomIndex = Math.floor(Math.random() * result.length);
+            const Result = result[randomIndex];
+
+            return Result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async getTop(query: topVisitedDto) {
         try {
             const result = await this.visitedRepository
