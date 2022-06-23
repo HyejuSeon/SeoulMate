@@ -12,7 +12,7 @@ export class Landmark {
     @Column()
     category: string;
 
-    @Column({ type: 'longtext' })
+    @Column({ type: 'longtext', nullable: true })
     description: string;
 
     @Column()
@@ -23,6 +23,12 @@ export class Landmark {
 
     @Column()
     location_sub: string;
+
+    @Column({ nullable: true })
+    longitude: string;
+
+    @Column({ nullable: true })
+    latitude: string;
 
     @OneToMany(() => Visited, (visited) => visited.landmark)
     visited: Visited[];
