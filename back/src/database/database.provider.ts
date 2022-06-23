@@ -5,7 +5,7 @@ export const databaseProviders = [
     {
         provide: 'DATA_SOURCE',
         useFactory: async () => {
-            const dataSource = new DataSource(typeormGCP);
+            const dataSource = new DataSource(typeormLocal);
             return dataSource.initialize();
         },
     },
