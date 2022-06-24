@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { Exception } from 'handlebars';
 import { getBoards } from './dto/board-list.dto';
 import { searchBoardDto } from './dto/search-board.dto';
+import { updateBoard } from './dto/update-board.dto';
 
 @Injectable()
 export class BoardService {
@@ -64,5 +65,18 @@ export class BoardService {
         const totalPage = Math.ceil(count / perPages);
         const payloads = boards;
         return { payloads, totalPage };
+    }
+
+    async updateBoard(updateBoard: updateBoard) {
+        const board = await this.boardRepository.findOneBy({
+            board_id: updateBoard.board_id,
+        });
+        board.title = updateBoard.title || board.title;
+        board.restaurant = updateBoard.restaurant || board.restaurant;
+        board.content = updateBoard.content || board.content;
+        board.location = updateBoard.location || board.location;
+        board.description = updateBoard.description || board.description;
+        await this.boardRepository.save(board);
+        return 'board detail updated';
     }
 }
