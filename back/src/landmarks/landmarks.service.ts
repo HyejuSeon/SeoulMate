@@ -14,11 +14,6 @@ export class LandmarksService {
 
     async init(): Promise<Landmark> {
         try {
-            await this.landmarksRepository.delete({});
-        } catch (err) {
-            console.log(err);
-        }
-        try {
             const data = fs.readFileSync('src/data/data.json', 'utf8');
             const description = fs.readFileSync(
                 'src/data/description.json',

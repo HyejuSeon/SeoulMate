@@ -4,7 +4,6 @@ import { saveVisitedDto } from './dto/save.visited.dto';
 import { returnVisitedDto } from './dto/return.visited.dto';
 import { Visited } from './visited.entity';
 import { updateVisitedDto } from './dto/update.visited.dto';
-import { topVisitedDto } from './dto/top.visited.dto';
 
 @Injectable()
 export class VisitedService {
@@ -44,6 +43,32 @@ export class VisitedService {
             console.log(error);
         }
     }
+
+    async getVisitedByIndex(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .where('visited.index = :index', { index })
+                .getRawOne();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async delete(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .delete()
+                .where('visited.index = :index', { index })
+                .execute();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async create(visitedDto: saveVisitedDto, imageId: string): Promise<any> {
         try {
             const { landmark_id, user_id } = visitedDto;
@@ -57,7 +82,38 @@ export class VisitedService {
             console.log(error);
         }
     }
-    async getTop(query: topVisitedDto) {
+
+    async getCount(landmark_id: number) {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_id AS landmark_id')
+                .addSelect('COUNT(*) AS visitedCount')
+                .where('visited.landmark_id = :landmark_id', { landmark_id })
+                .getRawOne();
+
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async getImage(landmark_id: number) {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_img as landmark_img')
+                .where('visited.landmark_id = :landmark_id', { landmark_id })
+                .getRawMany();
+            const randomIndex = Math.floor(Math.random() * result.length);
+            const Result = result[randomIndex];
+
+            return Result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getTop() {
         try {
             const result = await this.visitedRepository
                 .createQueryBuilder('visited')
@@ -65,8 +121,9 @@ export class VisitedService {
                 .addSelect('COUNT(*) AS visitedCount')
                 .groupBy('visited.landmark_id')
                 .orderBy('visitedCount', 'DESC')
-                .take(query.take)
+                .take(4)
                 .getRawMany();
+
             return result;
         } catch (error) {
             console.log(error);

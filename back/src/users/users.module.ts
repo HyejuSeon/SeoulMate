@@ -11,6 +11,7 @@ import { UsersService } from './users.service';
     imports: [DatabaseModule, AuthModule, StorageModule],
     providers: [UsersService, ...userProviders, EmailService],
     controllers: [UsersController],
+    exports: [UsersService],
 })
 export class UsersModule {}
 // https://codingtricks.io/send-emails-with-nestjs/

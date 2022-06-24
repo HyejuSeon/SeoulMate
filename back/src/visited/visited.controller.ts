@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     NotFoundException,
@@ -26,8 +27,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
-import { topVisitedDto } from './dto/top.visited.dto';
 import { LandmarksService } from 'src/landmarks/landmarks.service';
+import { UsersService } from 'src/users/users.service';
 
 @ApiTags('visited')
 @Controller('visited')
@@ -36,6 +37,7 @@ export class VisitedController {
         private visitedService: VisitedService,
         private landmarksService: LandmarksService,
         private storageService: StorageService,
+        private usersService: UsersService,
     ) {}
 
     @Get('/')
@@ -136,7 +138,26 @@ export class VisitedController {
                     visitedDto,
                     imageId,
                 );
-                res.status(HttpStatus.OK).json(visited);
+                const visitedCount = await this.visitedService.getCount(
+                    visitedDto.landmark_id,
+                );
+                const user = await this.usersService.getCurrentUserInfo(
+                    visitedDto.user_id,
+                );
+                const landmark =
+                    await this.landmarksService.getLandmarkByLandmarkId(
+                        visitedDto.landmark_id,
+                    );
+                const filename = file.originalname;
+                const payload = {
+                    index: visited.index,
+                    visitedCount: +visitedCount.visitedCount,
+                    landmark,
+                    user,
+                    filename,
+                    landmark_img: visited.landmark_img,
+                };
+                res.status(HttpStatus.OK).json(payload);
             } else {
                 res.status(HttpStatus.BAD_REQUEST).send(
                     'Check the request body',
@@ -151,40 +172,64 @@ export class VisitedController {
     @ApiOperation({ summary: '상위 몇개만 반환' })
     @ApiResponse({
         status: 200,
-        description: 'Return top N most visited landmarks as landmark_id',
+        description: 'Return top Nth most visited landmarks',
     })
-    async getTop(
-        @Res() res: any,
-        @Query()
-        query: topVisitedDto,
-    ): Promise<void> {
-        const result = await this.visitedService.getTop(query);
-
-        const payload = result.map(async (element) => {
-            const landmark_info =
-                await this.landmarksService.getLandmarkByLandmarkId(
-                    element.landmark_id,
-                );
-            return { ...element, ...landmark_info };
-        });
-
-        res.status(HttpStatus.OK).json(payload);
+    async getTop(@Res() res: any): Promise<void> {
+        const visitedService = this.visitedService;
+        const result = await visitedService.getTop();
+        const landmarkService = this.landmarksService;
+        async function getTopLandmarks(
+            result,
+            landmarkService,
+            visitedService,
+        ) {
+            const Result = await Promise.all(
+                result.map((element) =>
+                    getMergedData(element, landmarkService, visitedService),
+                ),
+            );
+            return Result;
+        }
+        async function getMergedData(element, landmarkService, visitedService) {
+            const landmark_info = await landmarkService.getLandmarkByLandmarkId(
+                element.landmark_id,
+            );
+            const visitedCount = +element.visitedCount;
+            const image = await visitedService.getImage(element.landmark_id);
+            const result = {
+                visitedCount,
+                ...landmark_info,
+                landmark_img: image.landmark_img,
+            };
+            return result;
+        }
+        const body = await getTopLandmarks(
+            result,
+            landmarkService,
+            visitedService,
+        );
+        res.status(HttpStatus.OK).json(body);
     }
 
-    // @Put('/image')
-    // @ApiOperation({
-    //     summary: '이미 등록된 방문지 데이터에 사진만 추가하고 싶은 경우 사용',
-    // })
-    // @ApiBody({ type: updateVisitedDto })
-    // @ApiResponse({
-    //     status: 200,
-    //     description: 'Image successfully updated',
-    // })
-    // async imageUpdate(
-    //     @Res() res: any,
-    //     @Body() visitedDto: updateVisitedDto,
-    // ): Promise<void> {
-    //     const visited = await this.visitedService.update(visitedDto);
-    //     res.status(HttpStatus.OK).json(visited);
-    // }
+    @Delete('/:index')
+    @ApiOperation({
+        summary: 'visited delete',
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Image successfully updated',
+    })
+    async imageUpdate(@Res() res: any, @Param() param): Promise<void> {
+        const { index } = param;
+        const visited = await this.visitedService.getVisitedByIndex(index);
+
+        const path = visited.visited_landmark_img.split(
+            'landmark_service_images/',
+        )[1];
+
+        await this.storageService.delete(path);
+        await this.visitedService.delete(index);
+
+        res.status(HttpStatus.OK).json('Delete finished');
+    }
 }
