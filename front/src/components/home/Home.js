@@ -15,12 +15,6 @@ import Box from '@mui/material/Box';
 import './Home.css';
 import place from '../../img/Place.png';
 import KakaoMap from './kakaoMap';
-import { useRecoilValue } from 'recoil';
-import { userInfoState } from '../../atom';
-
-
-
-
 import {
     StartButton,
     FirstPage,
@@ -53,9 +47,6 @@ import Logo from '../../img/logo.png';
 
 const Home = () => {
     const navigate = useNavigate();
-    const user = useRecoilValue(userInfoState);
-    console.log("user:", user);
-
     const MainImage = [img_1, img_2, img_3, img_4];
     const MainiImageRender = MainImage.map((item, idx) => {
         return (
@@ -83,7 +74,7 @@ const Home = () => {
 
     const UserImageRender = MainImage.map((item, idx) => {
         return (
-            <ThirdPageContentWrapper key={idx}>
+            <ThirdPageContentWrapper>
                 <ThirdPageImgContainer>
                     <img src={item} alt="user img" style={{ width: '528px', height: '295px' }} />
                 </ThirdPageImgContainer>

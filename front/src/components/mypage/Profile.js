@@ -3,11 +3,9 @@ import styled from "styled-components";
 import ProfileEdit from "./ProfileEdit.js";
 import Style from '../../styledCompo/MypageStyle/Mypage.module.css'
 import { useNavigate } from 'react-router-dom';
-import UserInfo from "./UserInfo.js";
-
+import {ROUTES} from '../../Route'
 
 function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
-  const navigate = useNavigate()
     return (
     <CardBox>
         <UpperBox>
@@ -30,7 +28,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
           ) : (
             <Grid item xs={5} sx={{ textAlign: "center", marginTop: "9em" }}>
               <Typography variant="h3" component="div">
-                {user?.name} 
+                {user?.nickname}
               </Typography>
 
               <Typography
@@ -38,28 +36,12 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
                 sx={{ marginTop: "20px" }}
                 component="div"
               >
-                {user?.email}
+                {user?.description === "None"
+                  ? "설명이 아직 없습니다. 추가해 주세요."
+                  : user?.description}
               </Typography>
-              <Stack direction="row" sx={{ mt: 9, justifyContent: "center" }}>
-              <Typography
-                variant="h2"
-                sx={{ color: "#FC8694" }}
-                component="span"
-              >
-              </Typography>
-            </Stack>
             </Grid>
           )}
-
-<Grid item xs={6} sx={{ marginTop: "12em" }}>
-            <Typography
-              variant="h5"
-              sx={{ fontSize: "30px", textAlign: "center" }}
-              component="div"
-            >
-              <UserInfo />
-            </Typography>
-          </Grid>
           </Grid>
           </LowerBox>
           
@@ -89,4 +71,3 @@ const UpperBox = styled.div`
 const LowerBox = styled.div`
   height: 300px;
 `;
-
