@@ -79,4 +79,9 @@ export class BoardService {
         await this.boardRepository.save(board);
         return 'board detail updated';
     }
+
+    async deleteBoard(boardId: string) {
+        await this.boardRepository.delete({ board_id: boardId });
+        return 'board deleted';
+    }
 }

@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     Param,
@@ -74,5 +75,11 @@ export class BoardController {
     async updateBoard(@Query() updateBoard: updateBoard, @Res() res: Response) {
         const board = await this.boardService.updateBoard(updateBoard);
         res.status(HttpStatus.OK).json(board);
+    }
+
+    @Delete('delete')
+    async deleteBoard(@Query('boardId') boardId: string, @Res() res: Response) {
+        const msg = await this.boardService.deleteBoard(boardId);
+        res.status(HttpStatus.OK).json(msg);
     }
 }
