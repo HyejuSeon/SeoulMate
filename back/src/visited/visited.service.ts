@@ -4,7 +4,6 @@ import { saveVisitedDto } from './dto/save.visited.dto';
 import { returnVisitedDto } from './dto/return.visited.dto';
 import { Visited } from './visited.entity';
 import { updateVisitedDto } from './dto/update.visited.dto';
-import { topVisitedDto } from './dto/top.visited.dto';
 
 @Injectable()
 export class VisitedService {
@@ -44,6 +43,32 @@ export class VisitedService {
             console.log(error);
         }
     }
+
+    async getVisitedByIndex(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .where('visited.index = :index', { index })
+                .getRawOne();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async delete(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .delete()
+                .where('visited.index = :index', { index })
+                .execute();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async create(visitedDto: saveVisitedDto, imageId: string): Promise<any> {
         try {
             const { landmark_id, user_id } = visitedDto;
@@ -88,7 +113,7 @@ export class VisitedService {
         }
     }
 
-    async getTop(query: topVisitedDto) {
+    async getTop() {
         try {
             const result = await this.visitedRepository
                 .createQueryBuilder('visited')
@@ -96,7 +121,7 @@ export class VisitedService {
                 .addSelect('COUNT(*) AS visitedCount')
                 .groupBy('visited.landmark_id')
                 .orderBy('visitedCount', 'DESC')
-                .take(query.take)
+                .take(4)
                 .getRawMany();
 
             return result;
