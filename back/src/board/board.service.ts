@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
-import { v4 as uuid } from 'uuid';
 import { Exception } from 'handlebars';
 import { getBoards } from './dto/board-list.dto';
 import { searchBoardDto } from './dto/search-board.dto';
@@ -17,10 +16,8 @@ export class BoardService {
 
     async create(insertBoard: writeBoard, userId: string) {
         // create board id
-        const boardId = uuid();
         const newBoard = {
             ...insertBoard,
-            board_id: boardId,
             user_id: userId,
         };
         try {

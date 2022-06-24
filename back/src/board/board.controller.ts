@@ -72,8 +72,8 @@ export class BoardController {
     }
 
     @Put('update')
-    async updateBoard(@Query() updateBoard: updateBoard, @Res() res: Response) {
-        const board = await this.boardService.updateBoard(updateBoard);
+    async updateBoard(@Query() update: updateBoard, @Res() res: Response) {
+        const board = await this.boardService.updateBoard(update);
         res.status(HttpStatus.OK).json(board);
     }
 

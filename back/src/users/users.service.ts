@@ -28,10 +28,6 @@ export class UsersService {
         return user;
     }
 
-    async logout(userId: string) {
-        // logout 시 refresh tonen null로 저장
-    }
-
     async getAllUsers(): Promise<Users[]> {
         const users = await this.userRepository.find({});
         return users;
