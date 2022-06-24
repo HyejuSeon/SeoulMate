@@ -43,6 +43,32 @@ export class VisitedService {
             console.log(error);
         }
     }
+
+    async getVisitedByIndex(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .where('visited.index = :index', { index })
+                .getRawOne();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async delete(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .delete()
+                .where('visited.index = :index', { index })
+                .execute();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async create(visitedDto: saveVisitedDto, imageId: string): Promise<any> {
         try {
             const { landmark_id, user_id } = visitedDto;
