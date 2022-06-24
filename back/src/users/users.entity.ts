@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { Boards } from 'src/board/board.entity';
+import { Comments } from 'src/comment/comment.entity';
 import { Visited } from 'src/visited/visited.entity';
 import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
@@ -43,4 +44,9 @@ export class Users extends BaseEntity {
         cascade: true,
     })
     public board: Boards[];
+
+    @OneToMany(() => Comments, (comment) => comment.user_id, {
+        cascade: true,
+    })
+    public comment: Comments[];
 }
