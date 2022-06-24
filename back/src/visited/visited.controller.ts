@@ -1,11 +1,11 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     NotFoundException,
     Param,
-    Patch,
     Post,
     Query,
     Res,
@@ -27,7 +27,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
-import { topVisitedDto } from './dto/top.visited.dto';
 import { LandmarksService } from 'src/landmarks/landmarks.service';
 import { UsersService } from 'src/users/users.service';
 
@@ -175,13 +174,9 @@ export class VisitedController {
         status: 200,
         description: 'Return top Nth most visited landmarks',
     })
-    async getTop(
-        @Res() res: any,
-        @Query()
-        query: topVisitedDto,
-    ): Promise<void> {
+    async getTop(@Res() res: any): Promise<void> {
         const visitedService = this.visitedService;
-        const result = await visitedService.getTop(query);
+        const result = await visitedService.getTop();
         const landmarkService = this.landmarksService;
         async function getTopLandmarks(
             result,
@@ -216,20 +211,25 @@ export class VisitedController {
         res.status(HttpStatus.OK).json(body);
     }
 
-    // @Put('/image')
-    // @ApiOperation({
-    //     summary: '이미 등록된 방문지 데이터에 사진만 추가하고 싶은 경우 사용',
-    // })
-    // @ApiBody({ type: updateVisitedDto })
-    // @ApiResponse({
-    //     status: 200,
-    //     description: 'Image successfully updated',
-    // })
-    // async imageUpdate(
-    //     @Res() res: any,
-    //     @Body() visitedDto: updateVisitedDto,
-    // ): Promise<void> {
-    //     const visited = await this.visitedService.update(visitedDto);
-    //     res.status(HttpStatus.OK).json(visited);
-    // }
+    @Delete('/:index')
+    @ApiOperation({
+        summary: 'visited delete',
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Image successfully updated',
+    })
+    async imageUpdate(@Res() res: any, @Param() param): Promise<void> {
+        const { index } = param;
+        const visited = await this.visitedService.getVisitedByIndex(index);
+
+        const path = visited.visited_landmark_img.split(
+            'landmark_service_images/',
+        )[1];
+
+        await this.storageService.delete(path);
+        await this.visitedService.delete(index);
+
+        res.status(HttpStatus.OK).json('Delete finished');
+    }
 }
