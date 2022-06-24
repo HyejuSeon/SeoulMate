@@ -31,6 +31,12 @@ export class Boards extends BaseEntity {
     @Column()
     landmark_name: string;
 
+    @Column()
+    location: string;
+
+    @Column()
+    description: string;
+
     @CreateDateColumn()
     created_at: Date;
 

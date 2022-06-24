@@ -66,15 +66,11 @@ export class AuthService {
                 where: { email },
             });
             await this.verifyPassword(plainPassword, user.password);
-            const refreshToken = this.jwtService.refresh();
-
-            await this.setCurrentRefreshToken(refreshToken, user.user_id);
 
             const { password, hashedRefreshToken, ...result } = user;
             const userInfo = {
                 ...result,
                 accessToken: this.jwtService.sign(result.user_id),
-                refreshToken: refreshToken,
             };
 
             return userInfo;
