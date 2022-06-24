@@ -30,9 +30,9 @@ export const BoardSearchContainer = styled.div`
 `;
 
 export const BoardSearchImg = styled.img`
-    align-items: center;
+    /* align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: center; */
 
     width: 3rem;
     height: 3rem;
@@ -53,11 +53,4 @@ export const BoardContainer = styled.div`
         0px 38.5185px 25.4815px rgba(0, 0, 0, 0.0121481), 0px 20px 13px rgba(0, 0, 0, 0.01),
         0px 8.14815px 6.51852px rgba(0, 0, 0, 0.00785185),
         0px 1.85185px 3.14815px rgba(0, 0, 0, 0.00481481);
-`;
-
-export const BoardContent = styled.div`
-    width: 25rem;
-    height: 35rem;
-
-    background: grey;
 `;
