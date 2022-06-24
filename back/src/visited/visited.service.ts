@@ -4,7 +4,6 @@ import { saveVisitedDto } from './dto/save.visited.dto';
 import { returnVisitedDto } from './dto/return.visited.dto';
 import { Visited } from './visited.entity';
 import { updateVisitedDto } from './dto/update.visited.dto';
-import { topVisitedDto } from './dto/top.visited.dto';
 
 @Injectable()
 export class VisitedService {
@@ -88,7 +87,7 @@ export class VisitedService {
         }
     }
 
-    async getTop(query: topVisitedDto) {
+    async getTop() {
         try {
             const result = await this.visitedRepository
                 .createQueryBuilder('visited')
@@ -96,7 +95,7 @@ export class VisitedService {
                 .addSelect('COUNT(*) AS visitedCount')
                 .groupBy('visited.landmark_id')
                 .orderBy('visitedCount', 'DESC')
-                .take(query.take)
+                .take(4)
                 .getRawMany();
 
             return result;

@@ -27,7 +27,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { StorageService } from 'src/storage/storage.service';
 import { StorageFile } from 'src/storage/storage-file';
 import { Response } from 'express';
-import { topVisitedDto } from './dto/top.visited.dto';
 import { LandmarksService } from 'src/landmarks/landmarks.service';
 import { UsersService } from 'src/users/users.service';
 
@@ -175,13 +174,9 @@ export class VisitedController {
         status: 200,
         description: 'Return top Nth most visited landmarks',
     })
-    async getTop(
-        @Res() res: any,
-        @Query()
-        query: topVisitedDto,
-    ): Promise<void> {
+    async getTop(@Res() res: any): Promise<void> {
         const visitedService = this.visitedService;
-        const result = await visitedService.getTop(query);
+        const result = await visitedService.getTop();
         const landmarkService = this.landmarksService;
         async function getTopLandmarks(
             result,
