@@ -28,10 +28,6 @@ export class UsersService {
         return user;
     }
 
-    async logout(userId: string) {
-        // logout 시 refresh tonen null로 저장
-    }
-
     async getAllUsers(): Promise<Users[]> {
         const users = await this.userRepository.find({});
         return users;
@@ -125,5 +121,12 @@ export class UsersService {
         );
         await this.userRepository.delete({ user_id: userId });
         return 'user deleted';
+    }
+
+    async getExperience(userId: string, exp: number) {
+        const user = await this.userRepository.findOneBy({ user_id: userId });
+        user.exp = user.exp + exp;
+        // 등급도 조건에 따라 변경해줘야 함
+        await this.userRepository.save(user);
     }
 }
