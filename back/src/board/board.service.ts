@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
 import { v4 as uuid } from 'uuid';
@@ -55,8 +55,8 @@ export class BoardService {
         const pages = searchBoard.page || 1;
         const [boards, count] = await this.boardRepository.findAndCount({
             where: [
-                { landmark_name: searchBoard.keyword },
-                { location: searchBoard.keyword },
+                { landmark_name: Like(`%${searchBoard.keyword}%`) },
+                { location: Like(`%${searchBoard.keyword}%`) },
             ],
             skip: perPages * (pages - 1),
             take: perPages,
