@@ -6,12 +6,14 @@ import { Exception } from 'handlebars';
 import { getBoards } from './dto/board-list.dto';
 import { searchBoardDto } from './dto/search-board.dto';
 import { updateBoard } from './dto/update-board.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class BoardService {
     constructor(
         @Inject('BOARDS_REPOSITORY')
         private boardRepository: Repository<Boards>,
+        private userService: UsersService,
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
@@ -20,8 +22,10 @@ export class BoardService {
             ...insertBoard,
             user_id: userId,
         };
+        await this.userService.getExperience(userId, 20);
         try {
             await this.boardRepository.save(newBoard);
+
             return 'board created';
         } catch (error) {
             throw new Exception('board create error');
