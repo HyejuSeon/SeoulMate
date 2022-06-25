@@ -17,7 +17,6 @@ export class BoardService {
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
-        // create board id
         const newBoard = {
             ...insertBoard,
             user_id: userId,
