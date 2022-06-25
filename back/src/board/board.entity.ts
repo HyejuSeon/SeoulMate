@@ -1,4 +1,3 @@
-import { Comments } from 'src/comment/comment.entity';
 import {
     BaseEntity,
     Column,
@@ -44,9 +43,4 @@ export class Boards extends BaseEntity {
         onDelete: 'CASCADE',
     })
     public user_id: string;
-
-    @OneToMany(() => Comments, (comment) => comment.board_id, {
-        cascade: true,
-    })
-    public comment: Comments[];
 }
