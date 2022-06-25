@@ -1,4 +1,3 @@
-import { Boards } from 'src/board/board.entity';
 import {
     BaseEntity,
     Column,
@@ -6,13 +5,13 @@ import {
     Entity,
     JoinColumn,
     ManyToOne,
-    PrimaryGeneratedColumn,
+    PrimaryColumn,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
 @Entity()
 export class Comments extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryColumn()
     comment_id: string;
 
     @Column()
@@ -27,11 +26,4 @@ export class Comments extends BaseEntity {
     })
     @JoinColumn({ name: 'user_id' })
     public user_id: string;
-
-    @ManyToOne(() => Boards, (board) => board.comment, {
-        nullable: false,
-        onDelete: 'CASCADE',
-    })
-    @JoinColumn({ name: 'board_id' })
-    public board_id: string;
 }
