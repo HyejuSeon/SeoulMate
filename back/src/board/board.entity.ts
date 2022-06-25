@@ -4,17 +4,14 @@ import {
     CreateDateColumn,
     Entity,
     ManyToOne,
-    PrimaryColumn,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
 @Entity()
 export class Boards extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     board_id: string;
-
-    // @Column()
-    // user_id: string;
 
     @Column()
     title: string;
