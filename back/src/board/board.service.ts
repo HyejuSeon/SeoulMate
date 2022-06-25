@@ -2,28 +2,30 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
-import { v4 as uuid } from 'uuid';
 import { Exception } from 'handlebars';
 import { getBoards } from './dto/board-list.dto';
 import { searchBoardDto } from './dto/search-board.dto';
+import { updateBoard } from './dto/update-board.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class BoardService {
     constructor(
         @Inject('BOARDS_REPOSITORY')
         private boardRepository: Repository<Boards>,
+        private userService: UsersService,
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
         // create board id
-        const boardId = uuid();
         const newBoard = {
             ...insertBoard,
-            board_id: boardId,
             user_id: userId,
         };
+        await this.userService.getExperience(userId, 20);
         try {
             await this.boardRepository.save(newBoard);
+
             return 'board created';
         } catch (error) {
             throw new Exception('board create error');
@@ -64,5 +66,23 @@ export class BoardService {
         const totalPage = Math.ceil(count / perPages);
         const payloads = boards;
         return { payloads, totalPage };
+    }
+
+    async updateBoard(updateBoard: updateBoard) {
+        const board = await this.boardRepository.findOneBy({
+            board_id: updateBoard.board_id,
+        });
+        board.title = updateBoard.title || board.title;
+        board.restaurant = updateBoard.restaurant || board.restaurant;
+        board.content = updateBoard.content || board.content;
+        board.location = updateBoard.location || board.location;
+        board.description = updateBoard.description || board.description;
+        await this.boardRepository.save(board);
+        return 'board detail updated';
+    }
+
+    async deleteBoard(boardId: string) {
+        await this.boardRepository.delete({ board_id: boardId });
+        return 'board deleted';
     }
 }

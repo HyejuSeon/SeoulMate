@@ -10,7 +10,6 @@ import { Users } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from './jwt.service';
 import { compare, hash, genSalt } from 'bcryptjs';
-import { v4 as uuid } from 'uuid';
 import { saveUserDto } from 'src/users/dto/save.user.dto';
 import { insertUserDto } from 'src/users/dto/insert.user.dto';
 
@@ -44,12 +43,9 @@ export class AuthService {
             throw new ConflictException('user already exist');
         }
 
-        const user_id = uuid();
-
         const hashedPassword = await this.hashedPassword(user.password);
 
         const newUser = {
-            user_id: user_id,
             name: user.name,
             email: user.email,
             password: hashedPassword,
