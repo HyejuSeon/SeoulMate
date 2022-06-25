@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class postCommentDto {
+export class updateCommentDto {
     @ApiProperty({
-        description: 'board_id',
+        description: 'comment_id',
         required: true,
     })
-    board_id: string;
+    comment_id: string;
 
     @ApiProperty({
         description: 'body',
