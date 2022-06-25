@@ -12,7 +12,6 @@ import pandas as pd
 import shutil
 from sklearn.model_selection import StratifiedKFold
 
-
 NUM_FOLDS = 5
 def wrong_annotation(items):
     '''
@@ -173,7 +172,7 @@ def folds(num_fold):
 
 def union_labels():
     path = os.environ['LABELS']
-    labels = os.listdir(path)
+    labels = os.listdir(path)       
     convert = {'74': '58'}
     keys = convert.keys()
     for label in tqdm(labels):
@@ -185,15 +184,32 @@ def union_labels():
             with open(path + label, 'w') as f:
                 f.write(' '.join(anno))
 
+def reduce_classes():
+    img_path = os.environ['IMGS']
+    label_path = os.environ['LABELS']
+    img_dest = os.environ['DLT_IMGS']
+    label_dest = os.environ['DLT_LABELS']
+    imgs = os.listdir(img_path)
+    dlts = {'강남스타일', '은행나무'}
+    
+    for img in tqdm(imgs):
+        for dlt in dlts:
+            if dlt in img:
+                shutil.move(img_path + img, img_dest)
+                label = img[:-3] + 'txt'
+                shutil.move(label_path + label, label_dest)
+                break
+
 def main():
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
-    # annotation()
-    # rm_imgs_without_anno('train')
-    # dump_pkl()
-    # dlt_labels()
-    # cross_valid(NUM_FOLDS)
-    # folds(NUM_FOLDS)
+    annotation()
+    rm_imgs_without_anno('train')
+    dump_pkl()
+    dlt_labels()
+    cross_valid(NUM_FOLDS)
+    folds(NUM_FOLDS)
     union_labels()
+    reduce_classes()
 
 if __name__ == '__main__':
     main()
