@@ -200,6 +200,18 @@ def reduce_classes():
                 shutil.move(label_path + label, label_dest)
                 break
 
+def get_class():
+    path = os.environ['LABELS']
+    labels = os.listdir(path)
+    classes = set()
+    for label in tqdm(labels):
+        with open(path + label, 'r') as f:
+            anno = f.readline().split()
+        class_ = int(anno[0])
+        classes.add(class_)
+    print(len(classes))
+    print(list(classes))
+
 def main():
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
     annotation()
@@ -210,6 +222,7 @@ def main():
     folds(NUM_FOLDS)
     union_labels()
     reduce_classes()
+    get_class()
 
 if __name__ == '__main__':
     main()
