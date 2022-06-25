@@ -4,14 +4,15 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
-    PrimaryColumn,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
 @Entity()
 export class Comments extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     comment_id: string;
 
     @Column()
@@ -24,11 +25,13 @@ export class Comments extends BaseEntity {
         nullable: false,
         onDelete: 'CASCADE',
     })
+    @JoinColumn({ name: 'user_id' })
     public user_id: string;
 
     @ManyToOne(() => Boards, (board) => board.comment, {
         nullable: false,
         onDelete: 'CASCADE',
     })
+    @JoinColumn({ name: 'board_id' })
     public board_id: string;
 }
