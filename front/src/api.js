@@ -62,13 +62,16 @@ async function sendImage(endpoint, formData) {
     });
 }
 
-async function getQuery(endpoint, { params = '' }) {
-    console.log(`%cGET 요청 ${serverUrl + endpoint + '?' + params}`, 'color: #a25cd1;');
+async function getQuery(endpoint, data) {
+    // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
+    // 예시: {name: "Kim"} => {"name": "Kim"}
+    const bodyData = JSON.stringify(data);
+    console.log(`%cPOST 요청: ${serverUrl + endpoint}`, 'color: #296aba;');
+    console.log(`%cPOST 요청 데이터: ${bodyData}`, 'color: #296aba;');
 
-    return axios.get(serverUrl + endpoint, {
-        params,
-        // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+    return axios.get(endpoint, bodyData, {
         headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
         },
     });

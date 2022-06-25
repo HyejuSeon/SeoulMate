@@ -1,11 +1,20 @@
 /*global kakao */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { markerdata } from "./makerData";
+import * as API from "../../api";
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../atom';
 
 export default function Map() {
   useEffect(() => {
     mapscript();
   }, []);
+
+  const [user, setUser] = useState(null);
+
+
+  // const user = useRecoilValue(userInfoState);
+  const [kakaouser, setkakaoUser] = useState();
 
   const mapscript = () => {
     let container = document.getElementById("map");
@@ -14,6 +23,7 @@ export default function Map() {
       level: 5,
     };
 
+  
     //map
     const map = new kakao.maps.Map(container, options);
     
@@ -30,5 +40,38 @@ export default function Map() {
     });
   };
 
+  async function getUserData() {
+    try {
+    const res = await API.get("users/current/info");
+    setUser(res.data.user_id)
+    } catch (err) {
+    console.log("err");
+    }
+}
+
+
+
+useEffect(() => {
+  const kakaoUser = () => {
+  try{
+  const res = API.getQuery('visited?user_id=d810a62e-7100-4fa8-9383-11c0cf9db695')
+  setkakaoUser(res.data) 
+  } catch(err) {
+    console.log("err");
+  }
+}
+
+  kakaoUser();
+}, []);
+
+
+
+console.log("user:", user)  
+console.log("kakaouser:", kakaouser)  
+
+
+
+
   return <div id="map" style={{ width: "100vw", height: "100vh" }}></div>;
+  
 }

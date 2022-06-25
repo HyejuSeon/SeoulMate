@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { landmarkInfoState } from '../../atom';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 
 import * as API from '../../api';
@@ -39,36 +39,25 @@ const UploadResult = () => {
     const [content, setContent] = useState('');
     const [restaurant, setRestaurant] = useState('test');
     const [landmark_img, setLandmark_img] = useState('test');
-    const [landmarkInfo, setLandmarkInfo] = useState('test');
-    const [landmarkPicInfo, setLandmarkPicInfo] = useState('test');
 
     const ref = useRef();
     const navigate = useNavigate();
-    const landmarkLocation = useLocation();
+    const Info = useRecoilValue(landmarkInfoState);
+    // console.log('랜드마크정보', Info);
 
-    useEffect(() => {
-        setLandmarkInfo(landmarkLocation.state.landmarkInfo);
-        setLandmarkPicInfo(landmarkLocation.state.landmarkPic);
-        console.log('업로드에서 넘어온 랜드마크 정보', landmarkInfo);
-        console.log('업로드에서 넘어온 사진 정보', landmarkPicInfo);
-    }, [landmarkInfo, landmarkPicInfo]);
-
-    //랜드마크 url 변수 저장
-    let imgSrc = 'http://localhost:5001' + landmarkPicInfo.landmark_img;
+    console.log('board', title);
+    console.log('board', content);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const variable = {
-            title: title,
-            content: content,
-            restaurant: restaurant,
-            landmark_img_id: landmarkPicInfo.landmark_img,
-            landmark_name: landmarkInfo.name,
-        };
-
         try {
-            await API.post('board', variable);
+            await API.post('/board', {
+                title,
+                content,
+                restaurant,
+                landmark_img,
+            });
             navigate('/Board');
         } catch (err) {
             console.log('err');
@@ -80,18 +69,18 @@ const UploadResult = () => {
             <Flippy ref={ref} flipOnClick={false} flipDirection="horizontal">
                 <FrontSide style={{ padding: '0', boxShadow: 'none' }}>
                     <UploadResultLeft>
-                        <ImgContainer src={imgSrc} />
+                        <ImgContainer src={img_4} />
                         <UploadResultContentContainer>
                             <UploadResultContentInfoTitle>
-                                <span>사진 제목</span>
-                                <span>Date</span>
-                                <span>ID</span>
+                                <div>사진 제목</div>
+                                <div>Date</div>
+                                <div>ID</div>
                             </UploadResultContentInfoTitle>
                             <UploadResultContentInfo>
                                 {' '}
-                                <span>광안대교</span>
-                                <span>22/12/2019</span>
-                                <span>By Elice</span>
+                                <div>블라블라.jpg</div>
+                                <div>22/12/2019</div>
+                                <div>By Elice</div>
                             </UploadResultContentInfo>
                             <UploadResultContentPeopleContainer>
                                 <UploadResultPeopleImg src={Luggage} />
@@ -115,7 +104,7 @@ const UploadResult = () => {
                 </FrontSide>
                 <BackSide style={{ padding: '0', boxShadow: 'none' }}>
                     <UploadResultLeft>
-                        <ImgContainer src={imgSrc} />
+                        <ImgContainer src={img_4} />
                         <UploadResultContentContainer>
                             <ValidationTextField
                                 id="outlined-basic"
@@ -152,19 +141,21 @@ const UploadResult = () => {
                 </BackSide>
             </Flippy>
 
-            <UploadResultRight>
+            <UploadResultRight Info={Info}>
                 <UploadResultNameContainer>
                     <UploadResultNameImg src={name} />
-
-                    {landmarkInfo.name}
+                    {/* 랜드마크 이름: */}
+                    {Info.name}
                 </UploadResultNameContainer>
                 <UploadResultLocationContainer>
                     <UploadResultLocationImg src={location} />
-                    {landmarkInfo.add}
+                    {/* 랜드마크 위치:  */}
+                    {Info.add}
                 </UploadResultLocationContainer>
                 <UploadResultDescriptionContainer>
                     <UploadResultDescriptionImg src={description} />
-                    {landmarkInfo.description}
+                    {/* 랜드마크 설명:  */}
+                    {Info.description}
                 </UploadResultDescriptionContainer>
             </UploadResultRight>
         </UploadResultWrapper>
