@@ -173,7 +173,7 @@ def folds(num_fold):
 def union_labels():
     path = os.environ['LABELS']
     labels = os.listdir(path)       
-    convert = {'74': '58'}
+    convert = {'74': '58', '21':'16', '72':'37'}
     keys = convert.keys()
     for label in tqdm(labels):
         with open(path + label, 'r') as f:
@@ -190,7 +190,7 @@ def reduce_classes():
     img_dest = os.environ['DLT_IMGS']
     label_dest = os.environ['DLT_LABELS']
     imgs = os.listdir(img_path)
-    dlts = {'강남스타일', '은행나무'}
+    dlts = {'은행나무', '범우관', '재일학도', '포병위령', '국회의정관', '국회헌정기념관', '김옥길', '김수영', '근현대사', '돌담길', '망원정지', '몽촌토성', '문화비축기지', '보현정사', '한양도성', '손기정', '윤동주', '전태일', '청계천', '코엑스'}
     
     for img in tqdm(imgs):
         for dlt in dlts:
