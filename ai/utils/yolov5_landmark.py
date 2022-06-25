@@ -171,14 +171,29 @@ def folds(num_fold):
             except FileNotFoundError:
                 print(f'{row.filename[:-3]}txt')
 
+def union_labels():
+    path = os.environ['LABELS']
+    labels = os.listdir(path)
+    convert = {'74': '58'}
+    keys = convert.keys()
+    for label in tqdm(labels):
+        with open(path + label, 'r') as f:
+            anno = f.readline().split()
+        class_ = anno[0]
+        if class_ in keys:            
+            anno[0] = convert[class_]
+            with open(path + label, 'w') as f:
+                f.write(' '.join(anno))
+
 def main():
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
-    annotation()
-    rm_imgs_without_anno('train')
-    dump_pkl()
-    dlt_labels()
-    cross_valid(NUM_FOLDS)
-    folds(NUM_FOLDS)
+    # annotation()
+    # rm_imgs_without_anno('train')
+    # dump_pkl()
+    # dlt_labels()
+    # cross_valid(NUM_FOLDS)
+    # folds(NUM_FOLDS)
+    union_labels()
 
 if __name__ == '__main__':
     main()
