@@ -7,6 +7,7 @@ import { EmailService } from './email/email.service';
 import { StorageModule } from './storage/storage.module';
 import { BoardModule } from './board/board.module';
 import { AiModule } from './ai/ai.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { AiModule } from './ai/ai.module';
         StorageModule,
         BoardModule,
         AiModule,
+        CommentModule,
     ],
     controllers: [],
     providers: [EmailService],
