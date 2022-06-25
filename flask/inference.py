@@ -15,8 +15,8 @@ def predict(img):
 
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
 
-@app.route('/predict', methods=['POST'])
-def predict():
+@app.route('/', methods=['POST'])
+def inference():
     if request.method == 'POST':
         file = request.files['file']
         file = request.urlopen(file).read()
