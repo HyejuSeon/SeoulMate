@@ -1,6 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../api';
+import Swal from 'sweetalert2';
+
+import './Upload.css';
 
 // import recoil
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -24,39 +27,6 @@ const Upload = () => {
 
     const [landmarkInfo, setLandmarkInfo] = useState('');
     const [landmarkPic, setLandmarkPic] = useState('');
-
-    // const uploadAvatar = (e) => {
-    //     const reader = new FileReader();
-    //     if (e.target.files[0]) {
-    //         reader.readAsDataURL(e.target.files[0]);
-    //     }
-    //     reader.onload = (readerEvent) => {
-    //         setAvatar(readerEvent.target.result);
-    //     };
-
-    //     API.post('ai')
-    //         .then((res) => {
-    //             setLandmarkInfo(res.data);
-    //             console.log('info', res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-
-    //     const formData = new FormData();
-    //     formData.append('image', e.target.files[0]);
-    //     formData.append('user_id', user.user_id);
-    //     formData.append('landmark_id', landmarkInfo.landmark_id);
-
-    //     API.sendImage('visited/images', formData)
-    //         .then((res) => {
-    //             setLandmarkPic(res.data);
-    //             console.log('pic', res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // };
 
     const uploadAvatar = (e) => {
         const reader = new FileReader();
@@ -97,55 +67,19 @@ const Upload = () => {
         console.log('pic', landmarkPic);
     }, [landmarkInfo, landmarkPic]);
 
-    // const getLandMarkInfo = async () => {
-    //     try {
-    //         const res = await API.post('ai');
-    //         return res.data;
-    //     } catch (err) {
-    //         console.log('err');
-    //         return undefined;
-    //     }
-    // };
-
-    // const getLandMarkPic = async (file, user_id, landmarkId) => {
-    //     try {
-    //         const formData = new FormData();
-    //         formData.append('image', file);
-    //         formData.append('user_id', user_id);
-    //         formData.append('landmark_id', landmarkId);
-    //         const res = await API.sendImage('visited/images', formData);
-    //         return res.data;
-    //     } catch (err) {
-    //         console.log('err');
-    //         return undefined;
-    //     }
-    // };
-    // const uploadAvatar = async (e) => {
-    //     const reader = new FileReader();
-    //     if (e.target.files[0]) {
-    //         reader.readAsDataURL(e.target.files[0]);
-    //     }
-    //     reader.onload = (readerEvent) => {
-    //         setAvatar(readerEvent.target.result);
-    //     };
-
-    //     const landmarkInfo = await getLandMarkInfo();
-    //     console.log('landmarkInfo', landmarkInfo);
-    //     if (!landmarkInfo) {
-    //         return console.log('landmarkInfo is empty');
-    //     }
-
-    //     const landMarkPic = await getLandMarkPic(
-    //         e.target.files[0],
-    //         user.user_id,
-    //         landmarkInfo.landMark_id,
-    //     );
-    //     if (!landMarkPic) {
-    //         return console.log('landMarkPic is empty');
-    //     }
-    //     setLandmarkPic(landmarkPic);
-    // };
-
+    const UploadHandler = () => {
+        avatar
+            ? navigate('/uploadResult', {
+                  state: { landmarkInfo: landmarkInfo, landmarkPic: landmarkPic },
+              })
+            : Swal.fire({
+                  title: '먼저 사진을 업로드 하세요',
+                  icon: 'warning',
+                  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+                  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+                  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+              });
+    };
     return (
         <UploadWrapper>
             <UploadContainer>
@@ -168,15 +102,7 @@ const Upload = () => {
                 <input hidden onChange={uploadAvatar} ref={filepickerRef} type="file" />
             </UploadContainer>
             <UploadButtonContainer>
-                <UploadButton
-                    onClick={() =>
-                        navigate('/uploadResult', {
-                            state: { landmarkInfo: landmarkInfo, landmarkPic: landmarkPic },
-                        })
-                    }
-                >
-                    업로드
-                </UploadButton>
+                <UploadButton onClick={UploadHandler}>업로드</UploadButton>
                 <UploadCancelButton onClick={() => navigate('/')}>뒤로가기 </UploadCancelButton>
             </UploadButtonContainer>
         </UploadWrapper>

@@ -1,10 +1,12 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     Param,
     Post,
+    Put,
     Query,
     Res,
     UseGuards,
@@ -19,6 +21,7 @@ import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { getBoard } from './dto/get-board.dto';
 import { getBoards } from './dto/board-list.dto';
 import { searchBoardDto } from './dto/search-board.dto';
+import { updateBoard } from './dto/update-board.dto';
 
 @ApiTags('board')
 @Controller('board')
@@ -66,5 +69,17 @@ export class BoardController {
     ) {
         const boards = await this.boardService.searchBoards(searchBoard);
         res.status(HttpStatus.OK).json(boards);
+    }
+
+    @Put('update')
+    async updateBoard(@Query() update: updateBoard, @Res() res: Response) {
+        const board = await this.boardService.updateBoard(update);
+        res.status(HttpStatus.OK).json(board);
+    }
+
+    @Delete('delete')
+    async deleteBoard(@Query('boardId') boardId: string, @Res() res: Response) {
+        const msg = await this.boardService.deleteBoard(boardId);
+        res.status(HttpStatus.OK).json(msg);
     }
 }

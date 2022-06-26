@@ -28,7 +28,7 @@ export const UploadResultLeft = styled.div`
         0px 38.5185px 25.4815px rgba(0, 0, 0, 0.0121481), 0px 20px 13px rgba(0, 0, 0, 0.01),
         0px 8.14815px 6.51852px rgba(0, 0, 0, 0.00785185),
         0px 1.85185px 3.14815px rgba(0, 0, 0, 0.00481481);
-    /* border-radius: 26px; */
+    border-radius: 26px;
 `;
 
 export const ImgContainer = styled.img`
@@ -54,10 +54,10 @@ export const UploadResultContentInfoTitle = styled.div`
     width: 35rem;
     height: 4rem;
 
-    font-size: 0.8rem;
+    font-size: 0.6rem;
 
-    /* background-color: blue; */
-
+    background: #ffffff;
+    margin-left: -1.6rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -68,7 +68,7 @@ export const UploadResultContentInfo = styled.div`
     width: 35rem;
     height: 4rem;
 
-    font-size: 1.2rem;
+    font-size: 1rem;
 
     background: #ffffff;
     border: 1px solid #f0f0f0;
