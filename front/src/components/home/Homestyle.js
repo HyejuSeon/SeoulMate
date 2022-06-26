@@ -7,6 +7,7 @@ export const MainContainer = styled.div`
 `;
 
 export const StartButton = styled.button`
+    font-family: 'Jeju Gothic', sans-serif;
     box-sizing: border-box;
 
     position: absolute;
@@ -113,6 +114,7 @@ export const BurgerMenu = styled.nav`
 export const FirstPage = styled.section`
     height: 100vh;
     display: flex;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const PhotoContainer = styled.div`
@@ -154,6 +156,7 @@ export const SecondPage = styled.section`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const SecondPageHeadCopy = styled.section`
@@ -164,6 +167,8 @@ export const SecondPageHeadCopy = styled.section`
     line-height: 80px;
     font-weight: bold;
     margin-bottom: 5%;
+
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const SecondPageBodyCopy = styled.section`
@@ -186,6 +191,7 @@ export const SecondPageBodyCopy2 = styled.section`
 `;
 
 export const StartButton2 = styled.button`
+    font-family: 'Jeju Gothic', sans-serif;
     box-sizing: border-box;
 
     position: relative;
@@ -211,6 +217,7 @@ export const ThirdPage = styled.section`
     justify-content: center;
     flex-direction: column;
     background-color: #d2eef6;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const ThirdPageHeadCopy = styled.section`
@@ -315,6 +322,7 @@ export const FourthPage = styled.section`
     justify-content: center;
     flex-direction: column;
     background-color: white;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const FourthPageHeadCopy = styled.section`

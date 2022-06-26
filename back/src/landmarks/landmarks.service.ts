@@ -14,13 +14,20 @@ export class LandmarksService {
 
     async init(): Promise<Landmark> {
         try {
-            await this.landmarksRepository.delete({});
-        } catch (err) {
-            console.log(err);
-        }
-        try {
             const data = fs.readFileSync('src/data/data.json', 'utf8');
+            const description = fs.readFileSync(
+                'src/data/description.json',
+                'utf8',
+            );
             const array = JSON.parse(data);
+            const drray = JSON.parse(description);
+            array.forEach((landmark) => {
+                drray.forEach((des) => {
+                    if (des.name === landmark.name) {
+                        landmark.description = des.description;
+                    }
+                });
+            });
             array.forEach((landmark: initLandmarkDto) =>
                 this.landmarksRepository.save({ ...landmark }),
             );

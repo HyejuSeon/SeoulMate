@@ -1,10 +1,18 @@
 import { Exclude } from 'class-transformer';
+import { Boards } from 'src/board/board.entity';
+import { Comments } from 'src/comment/comment.entity';
 import { Visited } from 'src/visited/visited.entity';
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
-export class Users {
-    @PrimaryColumn()
+export class Users extends BaseEntity {
+    @PrimaryGeneratedColumn('uuid')
     user_id: string;
 
     @Column()
@@ -37,4 +45,14 @@ export class Users {
 
     @OneToMany(() => Visited, (visited) => visited.user)
     visited: Visited[];
+
+    @OneToMany(() => Boards, (board) => board.user_id, {
+        cascade: true,
+    })
+    public board: Boards[];
+
+    @OneToMany(() => Comments, (comment) => comment.user_id, {
+        cascade: true,
+    })
+    public comment: Comments[];
 }

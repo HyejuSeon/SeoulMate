@@ -6,17 +6,18 @@ const StyledMenu = styled.nav`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: #ffff;
+    background: #fce9e9;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
     width: 15%;
-    height: 40%;
+    height: 60%;
     text-align: left;
     padding: 2rem;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     transition: transform 0.3s ease-in-out;
     z-index: 50;
+    font-family: 'Jeju Gothic', sans-serif;
 
     @media (max-width: 576px) {
         width: 100%;
