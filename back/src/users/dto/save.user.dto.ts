@@ -14,4 +14,7 @@ export class saveUserDto {
     @IsString()
     @MinLength(4)
     password: string;
+
+    @ApiProperty()
+    profile_image: string;
 }
