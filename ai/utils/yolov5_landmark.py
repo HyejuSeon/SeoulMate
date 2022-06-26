@@ -212,6 +212,20 @@ def get_class():
     print(len(classes))
     print(list(classes))
 
+def set_reduced_class():
+    old = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 24, 25, 26, 27, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 50, 51, 52, 53, 54, 56, 58, 60, 64, 66, 68, 69, 70, 71, 73, 75, 76, 78, 79, 80, 82, 83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 95, 96, 97, 98, 99, 100, 101, 103, 105, 106, 107, 108, 109, 110, 111]
+    dic = dict()
+    for i in range(len(old)):
+        dic[old[i]] = i
+    path = os.environ['LABELS']
+    labels = os.listdir(path)
+    for label in tqdm(labels):
+        with open(path + label, 'r') as f:
+            anno = f.readline().split()
+        anno[0] = str(dic[int(anno[0])])
+        with open(path + label, 'w') as f:
+            f.write(' '.join(anno))
+
 def main():
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
     annotation()
@@ -223,6 +237,7 @@ def main():
     union_labels()
     reduce_classes()
     get_class()
+    set_reduced_class()
 
 if __name__ == '__main__':
     main()
