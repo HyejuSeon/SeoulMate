@@ -33,7 +33,7 @@ import name from '../../img/name.png';
 import location from '../../img/location.png';
 import Luggage from '../../img/Luggage.png';
 
-import img_4 from '../../img/landMark4.jpg';
+// import img_4 from '../../img/landMark4.jpg';
 
 const UploadResult = () => {
     const [title, setTitle] = useState('');
