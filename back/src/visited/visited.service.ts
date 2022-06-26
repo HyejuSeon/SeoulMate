@@ -3,7 +3,6 @@ import { Repository } from 'typeorm';
 import { saveVisitedDto } from './dto/save.visited.dto';
 import { returnVisitedDto } from './dto/return.visited.dto';
 import { Visited } from './visited.entity';
-import { updateVisitedDto } from './dto/update.visited.dto';
 
 @Injectable()
 export class VisitedService {
@@ -11,9 +10,7 @@ export class VisitedService {
         @Inject('VISITED_REPOSITORY')
         private visitedRepository: Repository<Visited>,
     ) {}
-    async update(visitedDto: updateVisitedDto) {
-        throw new Error('Method not implemented.');
-    }
+
     async getVisited(
         query: returnVisitedDto,
     ): Promise<
@@ -27,20 +24,30 @@ export class VisitedService {
                 );
             }
             if (page === undefined || perPage === undefined) {
-                const visited = await this.visitedRepository.find({
-                    where: { landmark_id, user_id },
-                });
-                return { payloads: [...visited], totalPages: 1 };
+                const comments = await this.visitedRepository
+                    .createQueryBuilder('comments')
+                    .where('comments.landmark_id= :landmark_id', {
+                        landmark_id,
+                    })
+                    .orWhere('comments.user_id= :user_id', { user_id })
+                    .getRawMany();
+                return { payloads: [...comments], totalPages: 1 };
             }
-            const [visited, count] = await this.visitedRepository.findAndCount({
-                skip: perPage * (page - 1),
-                take: perPage,
-            });
+
+            const skip = perPage * (page - 1);
+            const [comments, count] = await this.visitedRepository
+                .createQueryBuilder('comments')
+                .where('comments.landmark_id= :landmark_id', { landmark_id })
+                .orWhere('comments.user_id= :user_id', { user_id })
+                .take(perPage)
+                .skip(skip)
+                .getManyAndCount();
+
             const totalPages = Math.ceil(count / perPage);
-            const payloads = visited;
+            const payloads = comments;
             return { payloads, totalPages };
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.log(err);
         }
     }
 

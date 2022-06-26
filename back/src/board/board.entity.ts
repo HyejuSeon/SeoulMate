@@ -1,9 +1,11 @@
+import { Comments } from 'src/comment/comment.entity';
 import {
     BaseEntity,
     Column,
     CreateDateColumn,
     Entity,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
@@ -42,4 +44,9 @@ export class Boards extends BaseEntity {
         onDelete: 'CASCADE',
     })
     public user_id: string;
+
+    @OneToMany(() => Comments, (comment) => comment.board_id, {
+        cascade: true,
+    })
+    public comment: Comments[];
 }
