@@ -29,7 +29,9 @@
     height: 100%;
     object-fit: cover;
 }
-
+.mySwiper {
+    background-size: cover;
+}
 .swal2-title {
     font-family: 'Jeju Gothic', sans-serif;
     font-size: 2rem;

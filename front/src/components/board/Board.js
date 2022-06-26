@@ -1,50 +1,76 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../api';
 import BoardContent from './BoardContent';
 import { Container, Grid } from '@mui/material';
-import { BoardWrapper, BoardSearchContainer, BoardSearchImg, BoardContainer } from './BoardStyle';
+import {
+    BoardWrapper,
+    BoardSearchContainer,
+    BoardSearchImg,
+    BoardContainer,
+    InputContainer,
+    ToggleButton,
+} from './BoardStyle';
 import { ValidationTextField } from '../upload/MuiCustom';
 import Search from '../../img/Search.png';
+import clear from '../../img/clear.png';
 import { useRecoilState } from 'recoil';
 import { searchLandmarkInfoState } from '../../atom';
 
 const Board = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchState, setSearchState] = useState(false);
 
     //검색결과 데이터를 전역으로 저장
     const [searchResult, setSearchResult] = useRecoilState(searchLandmarkInfoState);
 
-    const SearchHandler = async (e) => {
+    const searchHandler = async (e) => {
         e.preventDefault();
         const res = await API.post(`board/search?keyword=${searchTerm}`);
         const SearchData = res.data;
-        setSearchResult(SearchData);
+        setSearchResult(SearchData.payloads);
+        setSearchState(true);
     };
 
-    // useEffect(() => {
-    //     console.log('검색결과', searchResult);
-    // }, [searchResult]);
+    useEffect(() => {
+        console.log('검색결과', searchResult);
+    }, [searchResult]);
+
+    const clearInput = useRef();
+
+    const clearHandler = () => {
+        setSearchTerm('');
+        clearInput.current.focus();
+        setSearchState(false);
+    };
 
     return (
         <>
             <BoardWrapper>
                 <BoardSearchContainer>
-                    <ValidationTextField
-                        id="outlined-basic"
-                        label="검색"
-                        variant="outlined"
-                        onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                        }}
-                    />
-                    <BoardSearchImg src={Search} onClick={SearchHandler} />
+                    <InputContainer>
+                        <ValidationTextField
+                            id="outlined-basic"
+                            label="검색"
+                            variant="outlined"
+                            value={searchTerm}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                            }}
+                            ref={clearInput}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') searchHandler(e);
+                            }}
+                        />
+                        {searchTerm && <ToggleButton src={clear} onClick={clearHandler} />}
+                        <BoardSearchImg src={Search} onClick={searchHandler} />
+                    </InputContainer>
                 </BoardSearchContainer>
                 <BoardContainer>
                     <Container sx={{ marginTop: 1, flexGrow: 1 }}>
                         <Grid container>
-                            <BoardContent />
+                            <BoardContent searchState={searchState} />
                         </Grid>
                     </Container>
                 </BoardContainer>

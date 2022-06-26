@@ -27,10 +27,11 @@ export const userInfoState = atom({
 // 모든 게시글 정보
 export const allBoardContentState = atom({
     key: 'allBoardContentState',
-    default: undefined,
+    default: [],
 });
 
 // 검색 랜드마크 정보
 export const searchLandmarkInfoState = atom({
     key: 'searchLandmarkInfoState',
+    default: [],
 });
