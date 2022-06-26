@@ -39,7 +39,7 @@ const UploadResult = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [restaurant, setRestaurant] = useState('test');
-    const [landmark_img, setLandmark_img] = useState('test');
+    // const [landmark_img, setLandmark_img] = useState('test');
     const [landmarkInfo, setLandmarkInfo] = useState('test');
     const [landmarkPicInfo, setLandmarkPicInfo] = useState('test');
     const user = useRecoilValue(userInfoState);
