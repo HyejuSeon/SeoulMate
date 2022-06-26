@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 
-export class getBoards {
+export class searchBoardDto {
     @ApiProperty({
         description: '현재 페이지',
         required: false,
@@ -14,4 +14,10 @@ export class getBoards {
         required: false,
     })
     perPage: number;
+
+    @ApiProperty({
+        description: '검색어',
+        required: true,
+    })
+    keyword: string;
 }

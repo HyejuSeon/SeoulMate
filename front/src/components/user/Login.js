@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import {Box} from '@mui/material';
 import { Link , useNavigate } from "react-router-dom";
 import * as Api from '../../api';
@@ -7,22 +7,12 @@ import {ROUTES} from '../../Route'
 import styled from 'styled-components';
 import style from "../../styledCompo/LoginStyle/Login.moudule.css"
 import CssTextField from "./CssTextField";
-// import recoil
-import { useSetRecoilState, useRecoilState } from "recoil";
-import { userState, userInfoState,tokenState } from "../../atom"
 
 
 
 
 function Login(){
-    // 전역 유저 정보
     const navigate = useNavigate()
-    
-    const setUser = useSetRecoilState(userState);
-    const setToken = useSetRecoilState(tokenState) ;
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-
-
     const dispatch = useContext(DispatchContext);
 
     const [form, setForm] = useState({
@@ -37,15 +27,6 @@ function Login(){
             //user 로그인 api 호출!
             const res = await Api.post("users/login", form)
             const user = res.data
-
-            //recoil전역으로 관리할 정보
-            setUser(user)
-            setUserInfo(user)
-            setToken(user.accessToken)
-
-            console.log(setUser)
-            console.log(setToken)
-            console.log("a")
 
             const jwtToken = user.accessToken
             sessionStorage.setItem("userToken", jwtToken)
@@ -64,6 +45,14 @@ function Login(){
     }
     return(
         <LoginBody onSubmit={handleSubmit}>
+            <LoginBodyUpper>
+                <Box>
+                </Box>
+                <Box>
+                    <LoginTitle>Log In</LoginTitle>
+                    <LoginTitle2>LandMark<span style={{color: "#BBD6FF"}}>travle</span></LoginTitle2>
+                </Box>
+            </LoginBodyUpper>
             
             <Box style={{textAlign:"center", marginTop:"20vh"}}>
                 <CssTextField
@@ -105,7 +94,7 @@ function Login(){
             <div style={{display: "flex", flexDirection: "column", alignItems: "center", marginTop:"5vh"}}>
                 <button type='submit' style={{width: "30vw", borderRadius: "50px", border: "none", backgroundColor: "#BBD6FF", color: "white", padding: "5px", fontSize:"x-large" , cursor: "pointer" }}>LOG IN</button>
                 <Box class={style.otherButtonbox}>
-                    <Link to={'/register'} class={style.createaccountButton}>Create Account</Link>
+                    <Link to={ROUTES.SIGN_IN.link} class={style.createaccountButton}>Create Account</Link>
                 </Box>
             </div>
             

@@ -1,20 +1,19 @@
+import { Comments } from 'src/comment/comment.entity';
 import {
     BaseEntity,
     Column,
     CreateDateColumn,
     Entity,
     ManyToOne,
-    PrimaryColumn,
+    OneToMany,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
 @Entity()
 export class Boards extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     board_id: string;
-
-    // @Column()
-    // user_id: string;
 
     @Column()
     title: string;
@@ -31,6 +30,12 @@ export class Boards extends BaseEntity {
     @Column()
     landmark_name: string;
 
+    @Column()
+    location: string;
+
+    @Column()
+    description: string;
+
     @CreateDateColumn()
     created_at: Date;
 
@@ -39,4 +44,9 @@ export class Boards extends BaseEntity {
         onDelete: 'CASCADE',
     })
     public user_id: string;
+
+    @OneToMany(() => Comments, (comment) => comment.board_id, {
+        cascade: true,
+    })
+    public comment: Comments[];
 }
