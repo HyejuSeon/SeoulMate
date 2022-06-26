@@ -57,7 +57,7 @@ const UploadResult = () => {
         console.log('landmarkPicInfo 업로드에서 넘어온 사진 정보', landmarkPicInfo);
     }, [landmarkInfo, landmarkPicInfo]);
 
-    //랜드마크 url 변수 저장
+    //랜드마크 url 변수 저장.
     let imgSrc = landmarkPicInfo.landmark_img;
 
     //게시글 올리기 버튼 누르면 게시글을 서버에 등록하고 게시판 페이지로 이동.
