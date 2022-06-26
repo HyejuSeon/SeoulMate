@@ -74,7 +74,7 @@ const BoardContent = (props) => {
                               </UploadResultContentContainer>
                               <UploadResultContentPeopleContainer>
                                   <UploadResultPeopleImg src={Luggage} />
-                                  24명의 랜드마커들이 다녀갔습니다
+                                  00명의 랜드마커들이 다녀갔습니다
                               </UploadResultContentPeopleContainer>
                           </BoardContentContainer>
                       );
