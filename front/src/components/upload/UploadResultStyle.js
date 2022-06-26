@@ -54,10 +54,10 @@ export const UploadResultContentInfoTitle = styled.div`
     width: 35rem;
     height: 4rem;
 
-    font-size: 0.8rem;
+    font-size: 0.6rem;
 
-    /* background-color: blue; */
-
+    background: #ffffff;
+    margin-left: -1.6rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -68,7 +68,7 @@ export const UploadResultContentInfo = styled.div`
     width: 35rem;
     height: 4rem;
 
-    font-size: 1.2rem;
+    font-size: 1rem;
 
     background: #ffffff;
     border: 1px solid #f0f0f0;

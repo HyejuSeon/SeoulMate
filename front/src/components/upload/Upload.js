@@ -1,5 +1,13 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as API from '../../api';
+import Swal from 'sweetalert2';
+
+import './Upload.css';
+
+// import recoil
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userInfoState } from '../../atom';
 
 import {
     UploadWrapper,
@@ -17,6 +25,9 @@ const Upload = () => {
 
     const filepickerRef = useRef();
 
+    const [landmarkInfo, setLandmarkInfo] = useState('');
+    const [landmarkPic, setLandmarkPic] = useState('');
+
     const uploadAvatar = (e) => {
         const reader = new FileReader();
         if (e.target.files[0]) {
@@ -25,6 +36,25 @@ const Upload = () => {
         reader.onload = (readerEvent) => {
             setAvatar(readerEvent.target.result);
         };
+    };
+
+    useEffect(() => {
+        console.log('info', landmarkInfo);
+        console.log('pic', landmarkPic);
+    }, [landmarkInfo, landmarkPic]);
+
+    const UploadHandler = () => {
+        avatar
+            ? navigate('/uploadResult', {
+                  state: { landmarkInfo: landmarkInfo, landmarkPic: landmarkPic },
+              })
+            : Swal.fire({
+                  title: '먼저 사진을 업로드 하세요',
+                  icon: 'warning',
+                  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+                  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+                  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+              });
     };
     return (
         <UploadWrapper>
@@ -48,7 +78,7 @@ const Upload = () => {
                 <input hidden onChange={uploadAvatar} ref={filepickerRef} type="file" />
             </UploadContainer>
             <UploadButtonContainer>
-                <UploadButton onClick={() => navigate('/uploadResult')}>업로드</UploadButton>
+                <UploadButton onClick={UploadHandler}>업로드</UploadButton>
                 <UploadCancelButton onClick={() => navigate('/')}>뒤로가기 </UploadCancelButton>
             </UploadButtonContainer>
         </UploadWrapper>

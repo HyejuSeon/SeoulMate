@@ -53,7 +53,7 @@ const CssTextField = withStyles({
           formData,
           config
         ));
-  
+          
       const Edit = async () => {
         try {
           return await Promise.all([UserInfoEdit, ImageEdit]);
@@ -68,7 +68,7 @@ const CssTextField = withStyles({
           const InfoData = res[0].data;
           const ImageData = res[1]?.data?.updatedUser; // 이미지 안넣었을 땐 res[1]이 null 값.
   
-          ImageData ? updateUser(ImageData) : updateUser(InfoData);
+          ImageData ? updateUser(ImageData) : updateUser({name : form.name});
           alert("회원정보가 정상적으로 변경되었습니다!");
   
           toggleEditForm();

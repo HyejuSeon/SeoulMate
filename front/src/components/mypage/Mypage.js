@@ -37,7 +37,9 @@ async function getUserData() {
 
 useEffect(() => {
   getUserData();
-}, []);
+}, [editOpen]);
+
+
 
 
   return (
@@ -49,7 +51,10 @@ useEffect(() => {
       editOpen={editOpen}
       toggleEditForm={toggleEditForm}
     />
+<<<<<<< HEAD
     
+=======
+>>>>>>> feat-board-front
 
     {/* 회원 설정. 정보 */}
     <Typography
