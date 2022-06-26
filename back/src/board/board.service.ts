@@ -1,28 +1,31 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
+import { Like, Repository } from 'typeorm';
 import { Boards } from './board.entity';
 import { writeBoard } from './dto/write-board.dto';
-import { v4 as uuid } from 'uuid';
 import { Exception } from 'handlebars';
 import { getBoards } from './dto/board-list.dto';
+import { searchBoardDto } from './dto/search-board.dto';
+import { updateBoard } from './dto/update-board.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class BoardService {
     constructor(
         @Inject('BOARDS_REPOSITORY')
         private boardRepository: Repository<Boards>,
+        private userService: UsersService,
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
         // create board id
-        const boardId = uuid();
         const newBoard = {
             ...insertBoard,
-            board_id: boardId,
             user_id: userId,
         };
+        await this.userService.getExperience(userId, 20);
         try {
             await this.boardRepository.save(newBoard);
+
             return 'board created';
         } catch (error) {
             throw new Exception('board create error');
@@ -37,46 +40,49 @@ export class BoardService {
         });
     }
 
-    async paginate(
-        aggregator: { (): Promise<void>; (): any },
-        currentPage: number,
-        perPage: number,
-    ) {
-        // const total = await aggregator();
-
-        const totalPage = Math.ceil(1 / perPage);
-        if (currentPage > totalPage) {
-            currentPage = totalPage;
-        }
-        return { currentPage: currentPage, totalPage: totalPage };
-    }
-
-    async findBoard(board: any, query: object, page: number, perPage: number) {
-        const aggregator = async () => {
-            await this.boardRepository.findAndCount({ where: query });
-        };
-        const { currentPage, totalPage } = await this.paginate(
-            aggregator,
-            page,
-            perPage,
-        );
-        const boards = await this.boardRepository.find({
-            where: query,
-            order: { created_at: 'desc' },
-            skip: (currentPage - 1) * perPage,
-            take: perPage,
+    async getBoards(pagination: getBoards) {
+        const perPages = pagination.perPage || 5;
+        const pages = pagination.page || 1;
+        const [boards, count] = await this.boardRepository.findAndCount({
+            skip: perPages * (pages - 1),
+            take: perPages,
         });
-        if (boards.length === 0) {
-            throw new NotFoundException('board not exist');
-        }
-        return { totalPage: totalPage, boards: boards };
+        const totalPage = Math.ceil(count / perPages);
+        const payloads = boards;
+        return { payloads, totalPage };
     }
 
-    async getBoards() {
-        //    get boards
-        console.log('df');
+    async searchBoards(searchBoard: searchBoardDto) {
+        const perPages = searchBoard.perPage || 5;
+        const pages = searchBoard.page || 1;
+        const [boards, count] = await this.boardRepository.findAndCount({
+            where: [
+                { landmark_name: Like(`%${searchBoard.keyword}%`) },
+                { location: Like(`%${searchBoard.keyword}%`) },
+            ],
+            skip: perPages * (pages - 1),
+            take: perPages,
+        });
+        const totalPage = Math.ceil(count / perPages);
+        const payloads = boards;
+        return { payloads, totalPage };
+    }
 
-        const boards = this.boardRepository.find();
-        console.log(boards);
+    async updateBoard(updateBoard: updateBoard) {
+        const board = await this.boardRepository.findOneBy({
+            board_id: updateBoard.board_id,
+        });
+        board.title = updateBoard.title || board.title;
+        board.restaurant = updateBoard.restaurant || board.restaurant;
+        board.content = updateBoard.content || board.content;
+        board.location = updateBoard.location || board.location;
+        board.description = updateBoard.description || board.description;
+        await this.boardRepository.save(board);
+        return 'board detail updated';
+    }
+
+    async deleteBoard(boardId: string) {
+        await this.boardRepository.delete({ board_id: boardId });
+        return 'board deleted';
     }
 }

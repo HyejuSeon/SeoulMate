@@ -1,11 +1,17 @@
 import { Exclude } from 'class-transformer';
 import { Boards } from 'src/board/board.entity';
 import { Visited } from 'src/visited/visited.entity';
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Users extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     user_id: string;
 
     @Column()

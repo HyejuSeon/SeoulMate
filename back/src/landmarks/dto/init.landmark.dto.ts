@@ -21,4 +21,10 @@ export class initLandmarkDto {
 
     @ApiProperty()
     location_sub: string;
+
+    @ApiProperty({ required: false })
+    longitude: string;
+
+    @ApiProperty({ required: false })
+    latitude: string;
 }
