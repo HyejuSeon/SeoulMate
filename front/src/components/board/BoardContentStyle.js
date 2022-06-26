@@ -7,8 +7,7 @@ export const BoardContentContainer = styled.a`
     justify-content: center;
     width: 32rem;
     height: 45rem;
-
-    /* margin-left: 1822rem; */
+    margin: 2rem;
     margin-bottom: 3rem;
 
     background: #ffffff;
@@ -17,8 +16,6 @@ export const BoardContentContainer = styled.a`
         0px 8.14815px 6.51852px rgba(0, 0, 0, 0.00785185),
         0px 1.85185px 3.14815px rgba(0, 0, 0, 0.00481481);
     border-radius: 26px;
-
-    cursor: pointer;
 `;
 
 export const ImgContainer = styled.img`
@@ -27,11 +24,17 @@ export const ImgContainer = styled.img`
 
     object-fit: cover;
     border-radius: 3rem;
+    cursor: pointer;
 
-    /* &:hover {
-        cursor: pointer;
-        opacity: 0.8;
-    } */
+    &:hover {
+        content: '';
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        opacity: 0.7;
+    }
 `;
 
 export const UploadResultContentContainer = styled.section`

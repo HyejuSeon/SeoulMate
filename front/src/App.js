@@ -21,7 +21,7 @@ const Upload = lazy(() => import('./components/upload/Upload'));
 const UploadResult = lazy(() => import('./components/upload/UploadResult'));
 const BoardUpload = lazy(() => import('./components/board/Board'));
 const Board = lazy(() => import('./components/board/Board'));
-
+const EachBoard = lazy(() => import('./components/board/EachBoard'));
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -79,8 +79,9 @@ function App() {
                         <Route path="/upload" element={<Upload />} />
                         <Route path="/uploadResult" element={<UploadResult />} />
                         <Route path="/boardUpload" element={<BoardUpload />} />
-                        <Route path="/Board" element={<Board />} />
+                        <Route path="/board" element={<Board />} />
                         <Route path="/Password" element={<Password />} />
+                        <Route path="/board/:board_id" element={<EachBoard />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
                 </Suspense>

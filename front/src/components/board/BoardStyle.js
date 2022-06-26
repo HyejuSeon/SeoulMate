@@ -29,19 +29,36 @@ export const BoardSearchContainer = styled.div`
     /* background: blue; */
 `;
 
-export const BoardSearchImg = styled.img`
-    align-items: center;
+export const InputContainer = styled.div`
     display: flex;
-    justify-content: center;
 
-    width: 3rem;
-    height: 3rem;
+    width: 80rem;
+    height: 3.5rem;
 
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
+    margin-top: 10rem;
+
+    font-family: 'Jeju Gothic', sans-serif;
 
     /* background: blue; */
+`;
+export const ToggleButton = styled.img`
+    margin-top: 1rem;
+    margin-right: 0.2rem;
+    right: 24rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    cursor: pointer;
+    font-family: 'Jeju Gothic', sans-serif;
+`;
+
+export const BoardSearchImg = styled.img`
+    width: 2.3rem;
+    height: 2.3rem;
+
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
 `;
 
 export const BoardContainer = styled.div`
@@ -53,11 +70,4 @@ export const BoardContainer = styled.div`
         0px 38.5185px 25.4815px rgba(0, 0, 0, 0.0121481), 0px 20px 13px rgba(0, 0, 0, 0.01),
         0px 8.14815px 6.51852px rgba(0, 0, 0, 0.00785185),
         0px 1.85185px 3.14815px rgba(0, 0, 0, 0.00481481);
-`;
-
-export const BoardContent = styled.div`
-    width: 25rem;
-    height: 35rem;
-
-    background: grey;
 `;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as API from '../../api';
 import Swal from 'sweetalert2';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -53,6 +54,17 @@ const Home = () => {
     const user = useRecoilValue(userInfoState);
     console.log('user:', user);
 
+    const [sencondPageImgs, setSecondPageImgs] = useState([]);
+
+    useEffect(() => {
+        const getSecondPageImg = async () => {
+            const res = await API.get('visited/top');
+            setSecondPageImgs(res.data);
+        };
+        getSecondPageImg();
+    }, []);
+
+    console.log('탑4', sencondPageImgs);
     const start = () => {
         user
             ? navigate('/upload')
@@ -97,11 +109,15 @@ const Home = () => {
         );
     });
 
-    const UserImageRender = MainImage.map((item, idx) => {
+    const UserImageRender = sencondPageImgs.map((item, idx) => {
         return (
             <ThirdPageContentWrapper key={idx}>
                 <ThirdPageImgContainer>
-                    <img src={item} alt="user img" style={{ width: '528px', height: '295px' }} />
+                    <img
+                        src={item.landmark_img}
+                        alt="user img"
+                        style={{ width: '528px', height: '295px' }}
+                    />
                 </ThirdPageImgContainer>
                 <ThirdPageContentDescription>
                     랜드마크 설명 너무 이뻐요 멋있어요 블라블라{' '}

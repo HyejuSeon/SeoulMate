@@ -24,9 +24,14 @@ export const userInfoState = atom({
     effects_UNSTABLE: [persistAtom],
 });
 
-// 랜드마크 정보
-export const landmarkInfoState = atom({
-    key: 'landmarkInfoState',
-    default: undefined,
-    effects_UNSTABLE: [persistAtom],
+// 모든 게시글 정보
+export const allBoardContentState = atom({
+    key: 'allBoardContentState',
+    default: [],
+});
+
+// 검색 랜드마크 정보
+export const searchLandmarkInfoState = atom({
+    key: 'searchLandmarkInfoState',
+    default: [],
 });
