@@ -60,7 +60,7 @@ const UploadResult = () => {
     //랜드마크 url 변수 저장
     let imgSrc = landmarkPicInfo.landmark_img;
 
-    //게시글 올리기 버튼 누르면 게시글을 서버에 등록하고 게시판 페이지로 이동
+    //게시글 올리기 버튼 누르면 게시글을 서버에 등록하고 게시판 페이지로 이동.
     const handleSubmit = async (e) => {
         e.preventDefault();
 
