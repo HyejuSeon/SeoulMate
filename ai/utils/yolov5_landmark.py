@@ -10,7 +10,7 @@ from glob import glob
 from collections import defaultdict
 import pandas as pd
 import shutil
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, train_test_split
 
 NUM_FOLDS = 5
 def wrong_annotation(items):
@@ -226,6 +226,22 @@ def set_reduced_class():
         with open(path + label, 'w') as f:
             f.write(' '.join(anno))
 
+def move_files(files, dest_dir):
+    for f in tqdm(files):
+        shutil.move(f, dest_dir)
+
+def train_valid_split():
+    img_path = os.environ['IMGS']
+    label_path = os.environ['LABELS']
+    imgs = [img_path + img for img in os.listdir(img_path) if os.path.isfile(img_path + img)]
+    labels = [label_path + label for label in os.listdir(label_path) if os.path.isfile(label_path + label)]
+
+    X_train, X_valid, y_train, y_valid = train_test_split(imgs, labels, test_size=0.2, random_state=42)
+    move_files(X_train, img_path + 'train/')
+    move_files(X_valid, img_path + 'valid/')
+    move_files(y_train, label_path + 'train/')
+    move_files(y_valid, label_path + 'valid/')
+
 def main():
     load_dotenv(dotenv_path=os.getcwd() + '\\ai\\.env')
     annotation()
@@ -238,6 +254,7 @@ def main():
     reduce_classes()
     get_class()
     set_reduced_class()
+    train_valid_split()
 
 if __name__ == '__main__':
     main()
