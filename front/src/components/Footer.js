@@ -18,16 +18,6 @@ const Container = styled.footer`
 `;
 
 function Footer() {
-<<<<<<< HEAD
-  return (
-    <>
-      <Container>
-        Copyright{new Date().getFullYear()} by team-ai-project. All Page content is property of
-        상원 해요
-      </Container>
-    </>
-  );
-=======
     return (
         <>
             <Container>
@@ -36,7 +26,6 @@ function Footer() {
             </Container>
         </>
     );
->>>>>>> ff2e6fa16c0bf40d101107b57c87d59cc4ec4f67
 }
 
 export default Footer;
