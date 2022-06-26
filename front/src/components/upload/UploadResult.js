@@ -101,12 +101,12 @@ const UploadResult = () => {
             <Flippy ref={ref} flipOnClick={false} flipDirection="horizontal">
                 <FrontSide style={{ padding: '0', boxShadow: 'none' }}>
                     <UploadResultLeft>
-                        <ImgContainer src={imgSrc} />
+                        <ImgContainer src={img_4} />
                         <UploadResultContentContainer>
                             <UploadResultContentInfoTitle>
-                                <span>사진 제목</span>
-                                <span>Date</span>
-                                <span>ID</span>
+                                <div>사진 제목</div>
+                                <div>Date</div>
+                                <div>ID</div>
                             </UploadResultContentInfoTitle>
                             <UploadResultContentInfo>
                                 {' '}
@@ -173,7 +173,7 @@ const UploadResult = () => {
                 </BackSide>
             </Flippy>
 
-            <UploadResultRight>
+            <UploadResultRight Info={Info}>
                 <UploadResultNameContainer>
                     <UploadResultNameImg src={name} />
                     랜드마크 이름: 블라블라

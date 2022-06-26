@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import style from '../../styledCompo/SigninStyle/Signin.module.css';
 import * as Api from '../../api'
 import CssTextField from './CssTextField'
+import { validateEmail } from './validateEmail';
 
 function Signin() {
     const navigate = useNavigate()
@@ -20,7 +21,15 @@ function Signin() {
 
     const [confirmPassword, setConfirmpassword] = useState("")
     
-    const isPasswordSame = form.password === confirmPassword
+    const isPasswordSame = form.password === confirmPassword;
+    const checkEmail = form.email
+    const isEmailValid = validateEmail(checkEmail);
+    console.log(isEmailValid)
+    // 비밀번호가 4글자 이상인지 여부를 확인함.
+    const isPasswordValid = form.password.length >= 4;
+    // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
+    // 이름이 2글자 이상인지 여부를 확인함.
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -59,6 +68,11 @@ function Signin() {
                         ...prev, [e.target.name]: e.target.value
                     }))}  
                 />
+                {!isEmailValid && (
+                    <h1 className={style.warning}>
+                        이메일이 유효하지 않습니다.
+                    </h1>
+                )}
             </Box>
 
             <Box class={style.inputNickname}>
@@ -96,6 +110,11 @@ function Signin() {
                         ...prev, [e.target.name]: e.target.value
                     }))}  
                 />
+                {!isPasswordValid && (
+                    <h1 className={style.warning}>
+                        비밀번호는 네글자 이상 입력해 주세요!
+                    </h1>
+                )}
             </Box>
 
             <Box class={style.inputPasswordconfirm}>
@@ -122,7 +141,7 @@ function Signin() {
             </Box>
 
             <div class={style.signinButtonbox}>
-                <button type='submit' class={style.signinButton}>SIGN IN</button>
+                <button type='submit' class={style.signinButton} disabled={!(isEmailValid && isPasswordValid)}>SIGN IN</button>
 
                 <Box class={style.otherButtonbox}>
                    

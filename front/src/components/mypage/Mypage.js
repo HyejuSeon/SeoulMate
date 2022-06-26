@@ -9,7 +9,7 @@ import MapContainer from "../kakao/MapContainer";
 function Mypage() {
   
 const isLoggedin = sessionStorage.getItem("userToken")
-console.log("abc :", isLoggedin)
+
 const [user, setUser] = useState(null);
 const [editOpen, setEditOpen] = useState(false);
 
