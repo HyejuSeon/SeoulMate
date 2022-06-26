@@ -28,7 +28,6 @@ function Signin() {
         try {
             //user 회원가입 api 호출
             await Api.post("users/registration", form)
-            navigate('/login');
 
         } catch (error) {
             alert("회원가입에 실패했습니다")
@@ -38,7 +37,11 @@ function Signin() {
     return(
 
         <SigninBody onSubmit={handleSubmit}>
-
+            <SigninBodyUpper>
+                <Box>
+                    <SigninTitle>Sign In</SigninTitle>
+                </Box>
+            </SigninBodyUpper>
             
             <Box class={style.inputEmail}>
                 <CssTextField

@@ -10,7 +10,6 @@ import { Users } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from './jwt.service';
 import { compare, hash, genSalt } from 'bcryptjs';
-import { v4 as uuid } from 'uuid';
 import { saveUserDto } from 'src/users/dto/save.user.dto';
 import { insertUserDto } from 'src/users/dto/insert.user.dto';
 
@@ -44,15 +43,14 @@ export class AuthService {
             throw new ConflictException('user already exist');
         }
 
-        const user_id = uuid();
-
         const hashedPassword = await this.hashedPassword(user.password);
 
-        const newUser: saveUserDto = {
-            user_id: user_id,
+        const newUser = {
             name: user.name,
             email: user.email,
             password: hashedPassword,
+            profile_image:
+                'https://storage.googleapis.com/landmark_service_images/profile/gcs',
         };
         return newUser;
     }
@@ -64,15 +62,11 @@ export class AuthService {
                 where: { email },
             });
             await this.verifyPassword(plainPassword, user.password);
-            const refreshToken = this.jwtService.refresh();
-
-            await this.setCurrentRefreshToken(refreshToken, user.user_id);
 
             const { password, hashedRefreshToken, ...result } = user;
             const userInfo = {
                 ...result,
                 accessToken: this.jwtService.sign(result.user_id),
-                refreshToken: refreshToken,
             };
 
             return userInfo;
@@ -132,10 +126,9 @@ export class AuthService {
         await this.userRepository.save(userInfo);
     }
 
-    async resetPassword(newPassword: string, email: string, name: string) {
+    async resetPassword(newPassword: string, email: string) {
         const user = await this.userRepository.findOneBy({
             email: email,
-            name: name,
         });
         const hashedPassword = await this.hashedPassword(newPassword);
         user.password = hashedPassword;

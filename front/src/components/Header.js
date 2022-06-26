@@ -43,6 +43,7 @@ const Header = () => {
                     navigate('/');
                 }}
             ></LogoImg>
+            {/* <Menu open={open} setOpen={setOpen} /> */}
         </div>
     );
 };
