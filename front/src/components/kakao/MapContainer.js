@@ -5,9 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../atom';
 
 export default function Map() {
-  useEffect(() => {
-    userInfo();
-  }, []);
+
 
   const [user, setUser] = useState();
 
@@ -55,7 +53,7 @@ function userInfo () {
     console.log("서울마커:", b)
   }
 }
-
+userInfo()
 
 
 
