@@ -39,7 +39,6 @@ import { updateUserDto } from './dto/update.user.dto';
 import { deleteUser } from './dto/delete-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { updatePassword } from './dto/update-password.dto';
-import { json } from 'stream/consumers';
 
 @ApiTags('users')
 @Controller('users')
