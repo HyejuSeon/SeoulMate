@@ -24,25 +24,113 @@ export class VisitedService {
                 );
             }
             if (page === undefined || perPage === undefined) {
-                const visited = await this.visitedRepository.find({
-                    where: { landmark_id, user_id },
-                });
-                return { payloads: [...visited], totalPages: 1 };
+                const comments = await this.visitedRepository
+                    .createQueryBuilder('comments')
+                    .where('comments.landmark_id= :landmark_id', {
+                        landmark_id,
+                    })
+                    .orWhere('comments.user_id= :user_id', { user_id })
+                    .getRawMany();
+                return { payloads: [...comments], totalPages: 1 };
             }
-            const [visited, count] = await this.visitedRepository.findAndCount({
-                skip: perPage * (page - 1),
-                take: perPage,
-            });
+
+            const skip = perPage * (page - 1);
+            const [comments, count] = await this.visitedRepository
+                .createQueryBuilder('comments')
+                .where('comments.landmark_id= :landmark_id', { landmark_id })
+                .orWhere('comments.user_id= :user_id', { user_id })
+                .take(perPage)
+                .skip(skip)
+                .getManyAndCount();
+
             const totalPages = Math.ceil(count / perPage);
-            const payloads = visited;
+            const payloads = comments;
             return { payloads, totalPages };
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async getVisitedByIndex(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .where('visited.index = :index', { index })
+                .getRawOne();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async delete(index: number): Promise<any> {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .delete()
+                .where('visited.index = :index', { index })
+                .execute();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async create(visitedDto: saveVisitedDto, imageId: string): Promise<any> {
+        try {
+            const { landmark_id, user_id } = visitedDto;
+            const result = await this.visitedRepository.save({
+                landmark_id,
+                user_id,
+                landmark_img: `https://storage.googleapis.com/landmark_service_images/visited/${imageId}`,
+            });
+            return result;
         } catch (error) {
             console.log(error);
         }
     }
-    async create(visitedDto: saveVisitedDto): Promise<any> {
+
+    async getCount(landmark_id: number) {
         try {
-            const result = await this.visitedRepository.save({ ...visitedDto });
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_id AS landmark_id')
+                .addSelect('COUNT(*) AS visitedCount')
+                .where('visited.landmark_id = :landmark_id', { landmark_id })
+                .getRawOne();
+
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async getImage(landmark_id: number) {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_img as landmark_img')
+                .where('visited.landmark_id = :landmark_id', { landmark_id })
+                .getRawMany();
+            const randomIndex = Math.floor(Math.random() * result.length);
+            const Result = result[randomIndex];
+
+            return Result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getTop() {
+        try {
+            const result = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .select('visited.landmark_id AS landmark_id')
+                .addSelect('COUNT(*) AS visitedCount')
+                .groupBy('visited.landmark_id')
+                .orderBy('visitedCount', 'DESC')
+                .take(4)
+                .getRawMany();
+
             return result;
         } catch (error) {
             console.log(error);
