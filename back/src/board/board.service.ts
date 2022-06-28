@@ -36,6 +36,7 @@ export class BoardService {
             where: {
                 board_id: boardId,
             },
+            relations: ['user_id'],
         });
     }
 
