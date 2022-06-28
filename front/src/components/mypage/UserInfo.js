@@ -21,6 +21,9 @@ function UserInfo({user, updateUser}){
             inputPlaceholder: "새로운 비밀번호",
             showConfirmButton: true,
             confirmButtonText: '변경',
+            inputAttributes: {
+                autocomplete: 'off'
+            },
             showCancelButton: true,
             cancelButtonText: '취소',
             showCloseButton: true,
@@ -63,24 +66,27 @@ function UserInfo({user, updateUser}){
             input: 'password',
             inputPlaceholder: "기존 비밀번호",
             showConfirmButton: true,
-            confirmButtonText: '변경',
+            confirmButtonText: '탈퇴',
             showCancelButton: true,
             cancelButtonText: '취소',
             showCloseButton: true,
         }).then(async function(result) {
-            const checkPassword = result.value
+            const password = result.value
 
             if(result.isConfirmed){
                     try{
                         //password 회원탈퇴하기
-                        await API.delpw("users/delete", {password: checkPassword})
+                        await API.delpw('users/delete', {password})
                         Swal.fire({
                             title: '회원탈퇴 완료',
                             icon: 'success'
                         })
                     }
                     catch(err){
-                        console.log('회원 관리 오류')
+                        Swal.fire({
+                            title: '회원탈퇴가 정상적으로 이루어지지 않았습니다. ',
+                            icon: 'fail'
+                        })
                 }
                 
             }            
