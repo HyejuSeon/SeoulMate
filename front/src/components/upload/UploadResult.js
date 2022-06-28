@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import { useRecoilValue } from 'recoil';
 import * as API from '../../api';
 
 import { userInfoState } from '../../atom';
@@ -39,7 +39,7 @@ const UploadResult = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [restaurant, setRestaurant] = useState('test');
-    // const [landmark_img, setLandmark_img] = useState('test');
+
     const [landmarkInfo, setLandmarkInfo] = useState('test');
     const [landmarkPicInfo, setLandmarkPicInfo] = useState('test');
     const user = useRecoilValue(userInfoState);
@@ -53,9 +53,14 @@ const UploadResult = () => {
     useEffect(() => {
         setLandmarkInfo(landmarkLocation.state.landmarkInfo);
         setLandmarkPicInfo(landmarkLocation.state.landmarkPic);
-        console.log('landmarkInfo 넘어온업로드에서 넘어온 랜드마크 정보', landmarkInfo);
+        console.log('landmarkInfo 업로드에서 넘어온 랜드마크 정보', landmarkInfo);
         console.log('landmarkPicInfo 업로드에서 넘어온 사진 정보', landmarkPicInfo);
-    }, [landmarkInfo, landmarkPicInfo]);
+    }, [
+        landmarkInfo,
+        landmarkLocation.state.landmarkInfo,
+        landmarkLocation.state.landmarkPic,
+        landmarkPicInfo,
+    ]);
 
     //랜드마크 url 변수 저장.
     let imgSrc = landmarkPicInfo.landmark_img;
@@ -143,6 +148,7 @@ const UploadResult = () => {
                                 label="제목"
                                 variant="outlined"
                                 value={title}
+                                multiline
                                 onChange={(e) => {
                                     setTitle(e.target.value);
                                 }}

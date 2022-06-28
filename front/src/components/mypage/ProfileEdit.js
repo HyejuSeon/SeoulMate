@@ -18,23 +18,19 @@ const CssTextField = withStyles({
   })(TextField);
   
   function ProfileEdit({ toggleEditForm, updateUser, user }) {
-    const currentDescription =
-      user?.description === "None"
-        ? "설명이 아직 없습니다. 추가해 주세요."
-        : user?.description;
   
     const [imageInfo, setImageInfo] = useState(null);
   
     const [form, setForm] = useState({
-      nickname: user?.nickname,
-      description: currentDescription,
+      name: user?.name,
+      prePassword:"",
     });
   
     const handleSubmit = async (e) => {
       e.preventDefault();
   
       // user 수정 api 호출
-      const UserInfoEdit = await Api.put(`users`, form);
+      const UserInfoEdit = await Api.put('users/update', form);
   
       let formData = new FormData();
       const config = {
@@ -43,13 +39,12 @@ const CssTextField = withStyles({
           Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       };
-      formData.append("profileImgUrl", imageInfo);
-  
+      formData.append("profile_image", imageInfo);
       // 이미지를 넣었을 경우에만 업로드 api 호출
       const ImageEdit =
         imageInfo &&
         (await axios.post(
-          `http://${window.location.hostname}:5005/users/profile/image`,
+          ``,
           formData,
           config
         ));
@@ -67,6 +62,7 @@ const CssTextField = withStyles({
         .then((res) => {
           const InfoData = res[0].data;
           const ImageData = res[1]?.data?.updatedUser; // 이미지 안넣었을 땐 res[1]이 null 값.
+
   
           ImageData ? updateUser(ImageData) : updateUser({name : form.name});
           alert("회원정보가 정상적으로 변경되었습니다!");
@@ -88,10 +84,10 @@ const CssTextField = withStyles({
             sx={{ mt: 1.3, alignItems: "center", justifyContent: "center" }}
           >
             <CssTextField
-              id="Nickname"
-              name="nickname"
-              label="Nickname 수정"
-              placeholder={user?.nickname}
+              id="name"
+              name="name"
+              label="name"
+              placeholder={user?.name}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -101,10 +97,10 @@ const CssTextField = withStyles({
             />
   
             <CssTextField
-              id="Description"
-              name="description"
-              label="Description 수정"
-              placeholder={currentDescription}
+              id="prePassword"
+              name="prePassword"
+              label="prePassword"
+              placeholder="prePassword"
               multiline
               row={3}
               onChange={(e) =>
@@ -117,7 +113,7 @@ const CssTextField = withStyles({
   
             <Stack direction="column" spacing={1} sx={UploadBox}>
               <UploadFileIcon sx={{ alignItems: "center", color: "gray" }} />
-              <Typography sx={{ opacity: 1 }}>Image Upload Here!</Typography>
+              <Typography sx={{ opacity: 1 }}>이미지를 업로드 하세요!</Typography>
   
               <input
                 style={{ padding: "10px 0 0 85px" }}

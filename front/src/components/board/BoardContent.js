@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { searchLandmarkInfoState } from '../../atom';
+import { searchLandmarkInfoState, landmarkPicState } from '../../atom';
 
 import {
     BoardContentContainer,
@@ -74,7 +74,7 @@ const BoardContent = (props) => {
                               </UploadResultContentContainer>
                               <UploadResultContentPeopleContainer>
                                   <UploadResultPeopleImg src={Luggage} />
-                                  24명의 랜드마커들이 다녀갔습니다
+                                  {item.visitedCount}명의 랜드마커들이 다녀갔습니다
                               </UploadResultContentPeopleContainer>
                           </BoardContentContainer>
                       );
@@ -110,7 +110,7 @@ const BoardContent = (props) => {
                               </UploadResultContentContainer>
                               <UploadResultContentPeopleContainer>
                                   <UploadResultPeopleImg src={Luggage} />
-                                  24명의 랜드마커들이 다녀갔습니다
+                                  {item.visitedCount}명의 랜드마커들이 다녀갔습니다
                               </UploadResultContentPeopleContainer>
                           </BoardContentContainer>
                       );
