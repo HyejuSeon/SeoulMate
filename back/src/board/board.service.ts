@@ -17,7 +17,6 @@ export class BoardService {
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
-        // create board id
         const newBoard = {
             ...insertBoard,
             user_id: userId,
@@ -73,7 +72,6 @@ export class BoardService {
             board_id: updateBoard.board_id,
         });
         board.title = updateBoard.title || board.title;
-        board.restaurant = updateBoard.restaurant || board.restaurant;
         board.content = updateBoard.content || board.content;
         board.location = updateBoard.location || board.location;
         board.description = updateBoard.description || board.description;
