@@ -16,3 +16,17 @@ export const ValidationTextField = styled(TextField)({
         },
     },
 });
+
+export const SearchTextField = styled(TextField)({
+    width: '100%',
+    marginBottom: '2rem',
+
+    '& .MuiOutlinedInput-root': {
+        '&:hover fieldset': {
+            borderColor: 'green',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: '#699C1D',
+        },
+    },
+});

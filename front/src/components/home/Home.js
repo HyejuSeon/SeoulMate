@@ -120,13 +120,15 @@ const Home = () => {
                     />
                 </ThirdPageImgContainer>
                 <ThirdPageContentDescription>
-                    랜드마크 설명 너무 이뻐요 멋있어요 블라블라{' '}
+                    {item.description.substring(0, 40)}...{' '}
                 </ThirdPageContentDescription>
                 <ThirdPageContentDescription2>
-                    <ThirdPageContentUserInfo>유저이름</ThirdPageContentUserInfo>
+                    <ThirdPageContentUserInfo>
+                        방문객 수: {item.visitedCount}
+                    </ThirdPageContentUserInfo>
                     <ThirdPageContentLocationInfo>
                         <img src={place} alt="location" style={{ width: '30px', height: '30px' }} />
-                        랜드마크 주소 정보 서울 특별시 어쩌구저쩌구
+                        {item.add}
                     </ThirdPageContentLocationInfo>
                 </ThirdPageContentDescription2>
             </ThirdPageContentWrapper>

@@ -264,10 +264,16 @@ export const ThirdPageContentWrapper = styled.div`
 `;
 export const ThirdPageContentDescription = styled.div`
     width: 525px;
-    font-size: 1.4rem;
+    font-size: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    /* 
+    display: flex;
+    align-items: center;
+    justify-content: center; */
 
     color: #373737;
-    line-height: 80px;
+    line-height: 20px;
     font-weight: bold;
 `;
 export const ThirdPageContentDescription2 = styled.div`

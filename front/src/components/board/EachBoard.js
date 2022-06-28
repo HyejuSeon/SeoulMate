@@ -28,6 +28,16 @@ import {
     UploadResultDescriptionImg,
 } from '../upload/UploadResultStyle';
 
+import {
+    BoardWrapper,
+    BoardTitleWrapper,
+    BoardTitle,
+    BoardTitleContainer,
+    BoardContentWrapper,
+    BoardContent,
+    BoardContentContainer,
+} from './EachBoardStyle';
+
 import description from '../../img/description.png';
 import name from '../../img/name.png';
 import location from '../../img/location.png';
@@ -94,7 +104,7 @@ const EachBoard = () => {
                             <UploadResultContentInfo>
                                 {' '}
                                 <span>광안대교</span>
-                                <span>{date}</span>
+                                <span>{eachBoardInfo.created_at.substring(0, 10)}</span>
                                 <span>By Elice</span>
                             </UploadResultContentInfo>
                             <UploadResultContentPeopleContainer>
@@ -180,25 +190,20 @@ const EachBoard = () => {
         <UploadResultWrapper>
             <UploadResultLeft>
                 <ImgContainer src={eachBoardInfo.landmark_img_id} alt="" />
-                <UploadResultContentContainer>
-                    <ValidationTextField
-                        id="outlined-basic"
-                        label="제목"
-                        variant="outlined"
-                        multiline
-                        value={title}
-                        focused
-                    />
-
-                    <ValidationTextField
-                        id="outlined-multiline-static"
-                        label="내용"
-                        value={content}
-                        multiline
-                        rows={6}
-                        focused
-                    />
-                </UploadResultContentContainer>
+                <BoardWrapper>
+                    <BoardTitleWrapper>
+                        <BoardTitle>제목</BoardTitle>
+                        <BoardTitleContainer>{eachBoardInfo.title}</BoardTitleContainer>
+                    </BoardTitleWrapper>
+                    <BoardContentWrapper>
+                        <BoardContent>내용</BoardContent>
+                        <BoardContentContainer>{eachBoardInfo.content}</BoardContentContainer>
+                    </BoardContentWrapper>
+                </BoardWrapper>
+                <UploadResultContentPeopleContainer>
+                    <UploadResultPeopleImg src={Luggage} />
+                    24명의 랜드마커들이 다녀갔습니다
+                </UploadResultContentPeopleContainer>
             </UploadResultLeft>
             <UploadResultRight>
                 <UploadResultNameContainer>

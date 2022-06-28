@@ -113,10 +113,6 @@ const Menu = ({ open }) => {
                         <span role="img" aria-label="price" />
                         회원가입
                     </a>
-                    <a href="/board">
-                        <span role="img" aria-label="contact" />
-                        게시판
-                    </a>
                 </>
             )}
         </StyledMenu>

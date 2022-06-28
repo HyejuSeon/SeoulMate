@@ -19,7 +19,7 @@ export const UploadResultLeft = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 45rem;
-    height: 45rem;
+    height: 50rem;
 
     margin-left: 18rem;
 

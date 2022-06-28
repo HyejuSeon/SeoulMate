@@ -32,7 +32,7 @@ export const BoardSearchContainer = styled.div`
 export const InputContainer = styled.div`
     display: flex;
 
-    width: 80rem;
+    min-width: 60rem;
     height: 3.5rem;
 
     margin-top: 10rem;
@@ -42,14 +42,13 @@ export const InputContainer = styled.div`
     /* background: blue; */
 `;
 export const ToggleButton = styled.img`
-    margin-top: 1rem;
+    /* margin-top: 0.6rem; */
     margin-right: 0.2rem;
-    right: 24rem;
-    width: 1.2rem;
-    height: 1.2rem;
-    position: absolute;
+    right: 34rem;
+    width: 2rem;
+    height: 2rem;
+    /* position: absolute; */
     cursor: pointer;
-    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const BoardSearchImg = styled.img`
