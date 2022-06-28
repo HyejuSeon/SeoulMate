@@ -35,3 +35,8 @@ export const searchLandmarkInfoState = atom({
     key: 'searchLandmarkInfoState',
     default: [],
 });
+//  랜드마크 정보
+export const landmarkPicState = atom({
+    key: 'landmarkPicState',
+    default: '',
+});
