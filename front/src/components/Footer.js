@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+
 const Container = styled.footer`
     height: 60px;
     width: 100%;
@@ -14,15 +15,21 @@ const Container = styled.footer`
     color: #a4a4a4;
     text-align: center;
 
-    /* z-index: 1000; */
+    z-index: 1000;
 `;
 
 function Footer() {
+    if (window.location.pathname === '/login') {
+        return null
+        } else if (window.location.pathname === '/register') {
+        return null
+    }
+
     return (
         <>
             <Container>
                 &copy;{new Date().getFullYear()} SeoulMate | All rights reserved | Terms Of Service
-                | Privacy
+                | Privacy😎
             </Container>
         </>
     );

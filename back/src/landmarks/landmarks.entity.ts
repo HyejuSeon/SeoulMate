@@ -12,8 +12,8 @@ export class Landmark {
     @Column()
     category: string;
 
-    // @Column({ type: 'longtext' })
-    // description: string;
+    @Column({ type: 'longtext', nullable: true })
+    description: string;
 
     @Column()
     add: string;
@@ -24,6 +24,14 @@ export class Landmark {
     @Column()
     location_sub: string;
 
-    @OneToMany(() => Visited, (visited) => visited.landmark)
+    @Column({ nullable: true })
+    longitude: string;
+
+    @Column({ nullable: true })
+    latitude: string;
+
+    @OneToMany(() => Visited, (visited) => visited.landmark, {
+        cascade: true,
+    })
     visited: Visited[];
 }

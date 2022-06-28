@@ -7,13 +7,14 @@ export const MainContainer = styled.div`
 `;
 
 export const StartButton = styled.button`
+    font-family: 'Jeju Gothic', sans-serif;
     box-sizing: border-box;
 
     position: absolute;
     width: 15rem;
     height: 5rem;
-    left: 42%;
-    top: 62%;
+    margin-top: 25rem;
+    justify-content: center;
 
     background: rgba(17, 1, 1, 0.5);
 
@@ -113,6 +114,7 @@ export const BurgerMenu = styled.nav`
 export const FirstPage = styled.section`
     height: 100vh;
     display: flex;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const PhotoContainer = styled.div`
@@ -140,10 +142,7 @@ export const HeadCopy = styled.div`
 
     line-height: 60px;
     position: absolute;
-    text-align: center;
-
-    top: 45%;
-    left: 32%;
+    justify-content: center;
 
     z-index: 10;
 `;
@@ -154,6 +153,7 @@ export const SecondPage = styled.section`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const SecondPageHeadCopy = styled.section`
@@ -164,6 +164,8 @@ export const SecondPageHeadCopy = styled.section`
     line-height: 80px;
     font-weight: bold;
     margin-bottom: 5%;
+
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const SecondPageBodyCopy = styled.section`
@@ -186,6 +188,7 @@ export const SecondPageBodyCopy2 = styled.section`
 `;
 
 export const StartButton2 = styled.button`
+    font-family: 'Jeju Gothic', sans-serif;
     box-sizing: border-box;
 
     position: relative;
@@ -211,6 +214,7 @@ export const ThirdPage = styled.section`
     justify-content: center;
     flex-direction: column;
     background-color: #d2eef6;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const ThirdPageHeadCopy = styled.section`
@@ -315,6 +319,7 @@ export const FourthPage = styled.section`
     justify-content: center;
     flex-direction: column;
     background-color: white;
+    font-family: 'Jeju Gothic', sans-serif;
 `;
 
 export const FourthPageHeadCopy = styled.section`

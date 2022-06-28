@@ -1,12 +1,16 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     Patch,
     Post,
+    Put,
     Res,
+    UploadedFile,
     UseGuards,
+    UseInterceptors,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
@@ -14,6 +18,7 @@ import { Response } from 'express';
 import {
     ApiBearerAuth,
     ApiBody,
+    ApiConsumes,
     ApiHeader,
     ApiResponse,
     ApiTags,
@@ -28,12 +33,20 @@ import { getUserRequest } from 'src/common/decorator/request.decorator';
 import { LocalGuard } from 'src/auth/guard/local.guard';
 import { JwtRefreshGuard } from 'src/auth/guard/jwt-refresh.guard';
 import { currentUserInfo } from './dto/current-user.dto';
-import { insertEmail } from './dto/find.password.input.dto';
+import { resetPassword } from './dto/find.password.input.dto';
+import { EmailService } from 'src/email/email.service';
+import { updateUserDto } from './dto/update.user.dto';
+import { deleteUser } from './dto/delete-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { updatePassword } from './dto/update-password.dto';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-    constructor(private readonly userService: UsersService) {}
+    constructor(
+        private readonly userService: UsersService,
+        private readonly emailService: EmailService,
+    ) {}
 
     @Post('registration') // http method
     @UsePipes(ValidationPipe) // validation pipe
@@ -107,8 +120,80 @@ export class UsersController {
     }
 
     @Post('reset/password')
-    @ApiBody({ type: insertEmail })
-    async sendMailForResetPassword(@Body() email: insertEmail) {
-        await this.userService.sendMailForResetPassword(email);
+    @ApiBody({ type: resetPassword })
+    async sendMailForResetPassword(@Body() resetInfo: resetPassword) {
+        await this.userService.sendMailForResetPassword(resetInfo);
+    }
+
+    @Put('update')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string',
+                },
+                prePassword: {
+                    type: 'string',
+                },
+                file: {
+                    type: 'string',
+                    format: 'binary',
+                },
+            },
+        },
+    })
+    @UseGuards(JwtGuard)
+    @UsePipes(ValidationPipe)
+    @ApiBearerAuth()
+    @ApiConsumes('multipart/form-data')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            limits: {
+                files: 1,
+                fileSize: 7000 * 7000,
+            },
+        }),
+    )
+    @ApiResponse({ type: 'string' })
+    async updateUserInfo(
+        @UploadedFile() file: Express.Multer.File,
+        @Body() updateUser: updateUserDto,
+        @getUserRequest() user: Users,
+        @Res() res: Response,
+    ) {
+        const update = await this.userService.updateUserInfo(
+            updateUser,
+            user.user_id,
+            file,
+        );
+        res.status(HttpStatus.OK).json(update);
+    }
+
+    @Put('update/password')
+    @ApiBearerAuth()
+    @ApiBody({ type: updatePassword })
+    @UseGuards(JwtGuard)
+    async updatePassword(
+        @Body() updatePassword: updatePassword,
+        @getUserRequest() user: Users,
+    ) {
+        await this.userService.updatePassword(updatePassword, user.user_id);
+    }
+
+    @Delete('delete')
+    @ApiBody({ type: deleteUser })
+    @ApiBearerAuth()
+    @UseGuards(JwtGuard)
+    async delete(
+        @Body() userPassword: deleteUser,
+        @getUserRequest() user: Users,
+        @Res() res: Response,
+    ) {
+        const deleteUser = await this.userService.deleteUser(
+            userPassword,
+            user.user_id,
+        );
+        res.status(HttpStatus.OK).json(deleteUser);
     }
 }

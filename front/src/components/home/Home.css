@@ -29,3 +29,22 @@
     height: 100%;
     object-fit: cover;
 }
+.mySwiper {
+    background-size: cover;
+}
+.swal2-title {
+    font-family: 'Jeju Gothic', sans-serif;
+    font-size: 2rem;
+}
+.swal2-html-container {
+    font-family: 'Jeju Gothic', sans-serif;
+    font-size: 1rem;
+}
+.swal2-styled.swal2-cancel {
+    font-family: 'Jeju Gothic', sans-serif;
+    font-size: 1rem;
+}
+.swal2-styled.swal2-confirm {
+    font-family: 'Jeju Gothic', sans-serif;
+    font-size: 1rem;
+}
