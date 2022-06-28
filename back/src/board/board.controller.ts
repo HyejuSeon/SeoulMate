@@ -46,17 +46,15 @@ export class BoardController {
     @ApiResponse({
         type: getBoard,
     })
-    @ApiBearerAuth()
-    @UseGuards(JwtGuard)
     async getLandmarkDetail(
         @Param('boardId') boardId: string,
         @Res() res: Response,
-        @getUserRequest() user: Users,
     ) {
         const board = await this.boardService.getBoard(boardId);
-        const result = { ...board, userId: user.user_id };
+        const { user_id, ...result } = board;
+        const response = { userId: user_id['user_id'], ...result };
 
-        res.status(HttpStatus.OK).json(result);
+        res.status(HttpStatus.OK).json(response);
     }
 
     @Post('list')
