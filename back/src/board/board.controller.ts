@@ -52,7 +52,11 @@ export class BoardController {
     ) {
         const board = await this.boardService.getBoard(boardId);
         const { user_id, ...result } = board;
-        const response = { userId: user_id['user_id'], ...result };
+        const response = {
+            userId: user_id['user_id'],
+            profile_image: user_id['profile_image'],
+            ...result,
+        };
 
         res.status(HttpStatus.OK).json(response);
     }
