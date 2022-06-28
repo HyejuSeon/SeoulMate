@@ -1,13 +1,14 @@
 import { Button, Stack} from '@mui/material';
+import { useState } from "react"
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
-import * as Api from '../../api'
+import * as API from '../../api'
 import { useContext } from 'react';
 import { DispatchContext } from '../../App';
 import { LOGOUT } from '../../reducer';
 import styled from "styled-components";
 
-function UserInfo({updateUser}){
+function UserInfo({user, updateUser}){
     const navigate = useNavigate()
     const dispatch = useContext(DispatchContext)
     
@@ -37,7 +38,7 @@ function UserInfo({updateUser}){
                 else{
                     try{
                         //password 변경하기 
-                        const res = await Api.put("users/update/password", {password: newPassword})
+                        const res = await API.put("users/update/password", {password: newPassword})
                         updateUser(res.data)
                         Swal.fire({
                             title: '비밀번호 변경',
@@ -54,37 +55,35 @@ function UserInfo({updateUser}){
     }
 
     function DeleteUser(){
+        console.log(user)
         Swal.fire({
-            title: '계정 탈퇴',
-            text: "정말 탈퇴 하시겠습니까?",
-            icon: 'warning',
+            title: '계정삭제',
+            text: "기존의 비밀번호를 적어주세요",
+            icon: 'info',
+            input: 'password',
+            inputPlaceholder: "기존 비밀번호",
             showConfirmButton: true,
-            confirmButtonText: '네',
+            confirmButtonText: '변경',
             showCancelButton: true,
-            cancelButtonText: '아니요',
-            focusCancel: true,
+            cancelButtonText: '취소',
             showCloseButton: true,
         }).then(async function(result) {
-            if(result.isConfirmed){
-                try{
-                    //user 계정 삭제 
-                    await Api.delete("users")
-                    sessionStorage.removeItem("userToken")
-                    dispatch({
-                        type: LOGOUT      
-                    })
+            const checkPassword = result.value
 
-                    Swal.fire({
-                        title: '회원 탈퇴되었습니다!',
-                        text: '다음에 만나요',
-                        icon: 'success'
-                    })
-                    
-                    navigate('/')
-                } catch(err){
-                    console.log('회원 관리 오류')
+            if(result.isConfirmed){
+                    try{
+                        //password 회원탈퇴하기
+                        await API.delpw("users/delete", {password: checkPassword})
+                        Swal.fire({
+                            title: '회원탈퇴 완료',
+                            icon: 'success'
+                        })
+                    }
+                    catch(err){
+                        console.log('회원 관리 오류')
                 }
-            }
+                
+            }            
         })
     }
 
