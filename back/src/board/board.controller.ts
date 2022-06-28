@@ -51,7 +51,10 @@ export class BoardController {
         @Res() res: Response,
     ) {
         const board = await this.boardService.getBoard(boardId);
-        res.status(HttpStatus.OK).json(board);
+        const { user_id, ...result } = board;
+        const response = { userId: user_id['user_id'], ...result };
+
+        res.status(HttpStatus.OK).json(response);
     }
 
     @Post('list')
