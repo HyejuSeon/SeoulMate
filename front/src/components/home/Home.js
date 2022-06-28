@@ -111,7 +111,7 @@ const Home = () => {
 
     const UserImageRender = sencondPageImgs.map((item, idx) => {
         return (
-            <ThirdPageContentWrapper>
+            <ThirdPageContentWrapper key={idx}>
                 <ThirdPageImgContainer>
                     <img
                         src={item.landmark_img}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as API from '../../api';
 import BoardContent from './BoardContent';
 import { Container, Grid } from '@mui/material';

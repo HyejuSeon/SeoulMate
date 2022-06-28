@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import { userInfoState, tokenState, userState } from '../atom';
 
 const StyledMenu = styled.nav`
@@ -97,9 +97,9 @@ const Menu = ({ open }) => {
                         <span role="img" aria-label="price" />
                         로그아웃
                     </a>
-                    <a href="/">
+                    <a href="/board">
                         <span role="img" aria-label="contact" />
-                        Contact
+                        게시판
                     </a>
                 </>
             ) : (
@@ -113,9 +113,9 @@ const Menu = ({ open }) => {
                         <span role="img" aria-label="price" />
                         회원가입
                     </a>
-                    <a href="/">
+                    <a href="/board">
                         <span role="img" aria-label="contact" />
-                        Contact
+                        게시판
                     </a>
                 </>
             )}
