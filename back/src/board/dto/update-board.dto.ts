@@ -15,13 +15,6 @@ export class updateBoard {
     title?: string;
 
     @ApiProperty({
-        description: '랜드마크 주변 맛집 ',
-        required: false,
-    })
-    @IsString()
-    restaurant?: string;
-
-    @ApiProperty({
         description: '게시글 내용',
         required: false,
     })

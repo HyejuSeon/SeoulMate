@@ -127,6 +127,7 @@ export class UsersService {
         const user = await this.userRepository.findOneBy({ user_id: userId });
         user.exp = user.exp + exp;
         // 등급도 조건에 따라 변경해줘야 함
+        user.rating = Number(user.exp / 200);
         await this.userRepository.save(user);
     }
 }
