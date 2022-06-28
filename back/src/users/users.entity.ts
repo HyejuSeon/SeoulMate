@@ -43,7 +43,9 @@ export class Users extends BaseEntity {
     @Exclude() // 민감한 데이터는 응답에서 제외 가능
     hashedRefreshToken?: string;
 
-    @OneToMany(() => Visited, (visited) => visited.user)
+    @OneToMany(() => Visited, (visited) => visited.user, {
+        cascade: true,
+    })
     visited: Visited[];
 
     @OneToMany(() => Boards, (board) => board.user_id, {

@@ -72,4 +72,18 @@ export class LandmarksService {
             console.log(error);
         }
     }
+
+    async getLandmarkByLandmarkName(param): Promise<any> {
+        try {
+            const landmark = await this.landmarksRepository
+                .createQueryBuilder('landmark')
+                .select('landmark_id')
+                .where('landmark.name = :name', { name: param.landmark_name })
+                .getRawOne();
+
+            return landmark;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }

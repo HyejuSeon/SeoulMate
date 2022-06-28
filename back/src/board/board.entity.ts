@@ -19,9 +19,6 @@ export class Boards extends BaseEntity {
     title: string;
 
     @Column()
-    restaurant: string;
-
-    @Column()
     content: string;
 
     @Column()
