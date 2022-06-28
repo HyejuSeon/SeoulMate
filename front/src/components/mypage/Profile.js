@@ -83,7 +83,6 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
         </Grid>
       <Typography
                 variant="h6"
-                sx={12}
                 component="div"
               >
               </Typography>
