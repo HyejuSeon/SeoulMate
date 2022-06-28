@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+
 const Container = styled.footer`
     height: 60px;
     width: 100%;
@@ -18,6 +19,12 @@ const Container = styled.footer`
 `;
 
 function Footer() {
+    if (window.location.pathname === '/login') {
+        return null
+        } else if (window.location.pathname === '/register') {
+        return null
+    }
+
     return (
         <>
             <Container>

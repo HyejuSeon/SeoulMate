@@ -37,10 +37,10 @@ export const UploadPlaceholder = styled.div`
 `;
 export const UploadContent = styled.img`
     border-radius: 1.25rem;
-    height: 15rem;
+    width: 35rem;
+    height: 20rem;
     margin-bottom: 1rem;
     object-fit: cover;
-    width: 15rem;
     &:hover {
         cursor: pointer;
         opacity: 0.8;
