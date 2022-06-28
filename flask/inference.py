@@ -2,10 +2,11 @@ import torch
 from flask import Flask, request
 import pickle
 from PIL import Image
-from urllib import request
+import urllib
 from io import BytesIO
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
 def predict(img):
     img = Image.open(BytesIO(img))
@@ -18,10 +19,10 @@ model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
 @app.route('/', methods=['POST'])
 def inference():
     if request.method == 'POST':
-        file = request.files['file']
-        file = request.urlopen(file).read()
+        url = request.json['url']
+        img = urllib.request.urlopen(url).read()
 
-        predicted = predict(file)
+        predicted = predict(img)
 
         # num to kor 
         with open('num_to_ko.pkl', 'rb') as f:
