@@ -24,14 +24,14 @@ export class Visited {
 
     @ManyToOne(() => Landmark, (landmark) => landmark.visited, {
         eager: true,
-        // onDelete: 'CASCADE',
+        onDelete: 'CASCADE',
     })
     @JoinColumn({ name: 'landmark_id' })
     landmark: Landmark;
 
     @ManyToOne(() => Users, (user) => user.visited, {
         eager: true,
-        // onDelete: 'CASCADE',
+        onDelete: 'CASCADE',
     })
     @JoinColumn({ name: 'user_id' })
     user: Users;
