@@ -55,6 +55,26 @@ export class VisitedController {
         res.status(HttpStatus.OK).json(result);
     }
 
+    @Get('/count/:landmark_name')
+    @ApiOperation({ summary: '방문지 조회 with landmark_name' })
+    @ApiResponse({
+        status: 200,
+        description: 'Return visited by landmark_name',
+    })
+    async getVisitedByLandmarkName(
+        @Res() res: any,
+        @Param()
+        landmark_name: string,
+    ): Promise<void> {
+        const landmark = await this.landmarksService.getLandmarkByLandmarkName(
+            landmark_name,
+        );
+
+        const result = await this.visitedService.getCount(landmark.landmark_id);
+
+        res.status(HttpStatus.OK).json(result);
+    }
+
     @Get('/images/:imageId')
     @ApiOperation({ summary: '방문지 사진 받아오기' })
     @ApiResponse({

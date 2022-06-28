@@ -30,6 +30,8 @@ export class Landmark {
     @Column({ nullable: true })
     latitude: string;
 
-    @OneToMany(() => Visited, (visited) => visited.landmark)
+    @OneToMany(() => Visited, (visited) => visited.landmark, {
+        cascade: true,
+    })
     visited: Visited[];
 }
