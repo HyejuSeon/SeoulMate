@@ -1,6 +1,5 @@
 /*global kakao */
 import React, { useEffect, useState } from "react";
-import { markerdata } from "./makerData";
 import * as API from "../../api";
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../atom';
