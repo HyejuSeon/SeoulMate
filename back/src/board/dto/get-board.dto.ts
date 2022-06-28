@@ -2,6 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class getBoard {
     @ApiProperty()
+    userId: string;
+
+    @ApiProperty()
+    profile_image: string;
+
+    @ApiProperty()
     board_id: string;
 
     @ApiProperty({
