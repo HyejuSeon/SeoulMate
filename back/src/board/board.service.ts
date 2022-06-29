@@ -44,6 +44,7 @@ export class BoardService {
         const perPages = pagination.perPage || 5;
         const pages = pagination.page || 1;
         const [boards, count] = await this.boardRepository.findAndCount({
+            relations: ['user_id'],
             skip: perPages * (pages - 1),
             take: perPages,
         });
