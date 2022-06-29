@@ -11,5 +11,6 @@ import { VisitedService } from './visited.service';
     imports: [DatabaseModule, StorageModule, LandmarksModule, UsersModule],
     controllers: [VisitedController],
     providers: [VisitedService, ...visitedProviders],
+    exports: [VisitedService]
 })
 export class VisitedModule {}
