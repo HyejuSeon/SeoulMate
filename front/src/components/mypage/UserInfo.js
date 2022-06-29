@@ -70,13 +70,12 @@ function UserInfo({user, updateUser}){
             showCancelButton: true,
             cancelButtonText: '취소',
             showCloseButton: true,
-        }).then(async function(result) {
-            const password = result.value
-
-            if(result.isConfirmed){
+        }).then(async function(e) {
+            const password = {password: e.value}
+            if(e.isConfirmed){
                     try{
                         //password 회원탈퇴하기
-                        await API.delpw('users/delete', {password})
+                        await API.delpw('users/delete', password)
                         Swal.fire({
                             title: '회원탈퇴 완료',
                             icon: 'success'

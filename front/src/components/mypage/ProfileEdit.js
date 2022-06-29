@@ -40,11 +40,11 @@ const CssTextField = withStyles({
         },
       };
       formData.append("profile_image", imageInfo);
+      console.log(imageInfo)
       // 이미지를 넣었을 경우에만 업로드 api 호출
       const ImageEdit =
         imageInfo &&
         (await axios.post(
-          ``,
           formData,
           config
         ));
@@ -60,11 +60,12 @@ const CssTextField = withStyles({
   
       Edit()
         .then((res) => {
+          console.log(res)
           const InfoData = res[0].data;
           const ImageData = res[1]?.data?.updatedUser; // 이미지 안넣었을 땐 res[1]이 null 값.
 
   
-          ImageData ? updateUser(ImageData) : updateUser({name : form.name});
+          ImageData ? updateUser(ImageData) : updateUser(InfoData);
           alert("회원정보가 정상적으로 변경되었습니다!");
   
           toggleEditForm();
