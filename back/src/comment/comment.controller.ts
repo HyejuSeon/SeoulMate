@@ -21,7 +21,7 @@ import { postCommentDto } from './dto/post.comment.dto';
 import { updateCommentDto } from './dto/update.comment.dto';
 
 @ApiTags('comment')
-@Controller('comment')
+@Controller('api/comment')
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 

@@ -24,7 +24,7 @@ import { searchBoardDto } from './dto/search-board.dto';
 import { updateBoard } from './dto/update-board.dto';
 
 @ApiTags('board')
-@Controller('board')
+@Controller('api/board')
 export class BoardController {
     constructor(private readonly boardService: BoardService) {}
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BACKEND_PORT_NUMBER = '5001';
-const serverUrl = 'http://' + window.location.hostname + ':' + BACKEND_PORT_NUMBER + '/';
+// const BACKEND_PORT_NUMBER = '5001';
+const serverUrl = 'https://' + window.location.hostname + '/api/';
 
 // 어느 요청이나 공통인 baseUrl이므로 구성 기본값으로 설정.
 axios.defaults.baseURL = serverUrl;

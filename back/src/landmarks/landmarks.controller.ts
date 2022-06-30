@@ -12,7 +12,7 @@ import { queryLandmarkDto } from './dto/query.landmark.dto';
 import { LandmarksService } from './landmarks.service';
 
 @ApiTags('landmarks')
-@Controller('landmarks')
+@Controller('api/landmarks')
 export class LandmarksController {
     constructor(private landmarksService: LandmarksService) {}
 

@@ -4,7 +4,7 @@ import { LandmarksService } from 'src/landmarks/landmarks.service';
 import { AiService } from './ai.service';
 
 @ApiTags('ai')
-@Controller('ai')
+@Controller('api/ai')
 export class AiController {
     constructor(
         private readonly aiService: AiService,

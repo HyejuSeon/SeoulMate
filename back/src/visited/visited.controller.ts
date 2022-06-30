@@ -31,7 +31,7 @@ import { LandmarksService } from 'src/landmarks/landmarks.service';
 import { UsersService } from 'src/users/users.service';
 
 @ApiTags('visited')
-@Controller('visited')
+@Controller('api/visited')
 export class VisitedController {
     constructor(
         private visitedService: VisitedService,

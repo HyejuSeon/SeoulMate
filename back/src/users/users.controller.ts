@@ -41,7 +41,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { updatePassword } from './dto/update-password.dto';
 
 @ApiTags('users')
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
     constructor(
         private readonly userService: UsersService,
