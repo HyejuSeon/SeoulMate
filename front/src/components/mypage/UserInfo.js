@@ -13,51 +13,6 @@ function UserInfo({user, updateUser}){
     const navigate = useNavigate()
     const dispatch = useContext(DispatchContext)
     
-    function updatePassword() {
-        Swal.fire({
-            title: '비밀번호 변경',
-            text: "변경하고 싶은 비밀번호를 아래에 작성해주세요!",
-            icon: 'info',
-            input: 'password',
-            inputPlaceholder: "새로운 비밀번호",
-            showConfirmButton: true,
-            confirmButtonText: '변경',
-            inputAttributes: {
-                autocomplete: 'off'
-            },
-            showCancelButton: true,
-            cancelButtonText: '취소',
-            showCloseButton: true,
-        }).then(async function(result) {
-            const newPassword = result.value
-
-            if(result.isConfirmed){
-                if(!newPassword)
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: '다시한번 확인 해주세요',
-                        
-                    })
-                else{
-                    try{
-                        //password 변경하기 
-                        const res = await API.put("users/update/password", {password: newPassword})
-                        updateUser(res.data)
-                        Swal.fire({
-                            title: '비밀번호 변경',
-                            icon: 'success'
-                        })
-                    }
-                    catch(err){
-                        console.log('회원 관리 오류')
-                    }
-                }
-                
-            }            
-        })
-    }
-
     function DeleteUser(){
         console.log(user)
         Swal.fire({

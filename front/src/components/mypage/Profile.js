@@ -112,7 +112,7 @@ const CardBox = styled.div`
 
 const UpperBox = styled.div`
   height: 150px;
-  background: #000000;
+  background: #CCE5FF;
 `;
 
 const LowerBox = styled.div`
