@@ -40,10 +40,13 @@ export class AiController {
         try {
             
             const {result} = await this.aiService.getData(url);
-            const param = {landmark_name: result}
-            const data = await this.landmarksService.getLandmarkByLandmarkName(param)
+            if(result) {
+                const param = {landmark_name: result}
+                const data = await this.landmarksService.getLandmarkByLandmarkName(param)
+                res.status(HttpStatus.OK).json(data);
+            }
+            res.status(HttpStatus.NOT_FOUND).json({errorMessage:"NOT_FOUND"});
             
-            res.status(HttpStatus.OK).json(data);
 
         } catch (err) {
             console.log(err);
