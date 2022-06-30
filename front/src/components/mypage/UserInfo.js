@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { DispatchContext } from '../../App';
 import { LOGOUT } from '../../reducer';
 import styled from "styled-components";
+import errorHandler from "../../errorHandler";
 
 function UserInfo({user, updateUser}){
     const navigate = useNavigate()
@@ -91,11 +92,50 @@ function UserInfo({user, updateUser}){
             }            
         })
     }
-
-
+    function editps(){
+    Swal.fire({
+        title: '비밀번호 변경',
+        html: `<input type="text" id="prePassword" class="swal2-input" placeholder="이전 비밀번호">
+        <input type="password" id="newPassword" class="swal2-input" placeholder="변경하고 싶은 비밀번호">`,
+        confirmButtonText: '변경',
+        focusConfirm: false,
+        preConfirm: () => {
+          const prePassword = Swal.getPopup().querySelector('#prePassword').value
+          const newPassword = Swal.getPopup().querySelector('#newPassword').value
+          if (!prePassword || !newPassword) {
+            Swal.showValidationMessage(`Please enter login and password`)
+          }
+          return { prePassword: prePassword, newPassword: newPassword }
+        }
+      }).then(async function(result) {
+        const Apassword = {prePassword: result.value.prePassword, newPassword:result.value.newPassword }
+        console.log(Apassword)
+        if(result.isConfirmed) {
+            try{
+                //password 회원탈퇴하기
+                await API.put('users/update/password', Apassword)
+                Swal.fire({
+                    title: '비밀변호 변경 완료',
+                    icon: 'success'
+                })
+            }
+            catch(err){
+                Swal.fire({
+                    title: '비밀번호변경이 정상적으로 이루어지지 않았습니다. ',
+                    icon: 'fail'
+                })
+        }
+            console.log("성공")
+        }
+        Swal.fire(`
+        prePassword: ${result.value.prePassword}
+        newPassword: ${result.value.newPassword}
+        `)
+      })
+    }
     return (
         <Stack direction="row" spacing={2}>
-        <Button onClick={() => updatePassword()} variant="contained" color="success" sx={{
+        <Button onClick={() => editps()} variant="contained" color="success" sx={{
                 marginLeft: "190px",
                 width: "100px",
                 height: "50px",

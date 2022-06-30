@@ -6,7 +6,6 @@ import Style from '../../styledCompo/MypageStyle/Mypage.module.css'
 import { useNavigate } from 'react-router-dom';
 import UserInfo from "./UserInfo.js";
 
-
 function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
   const navigate = useNavigate()
   const percentage = 66;

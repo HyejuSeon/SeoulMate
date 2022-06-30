@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import axios from "axios";
+import errorHandler from "../../errorHandler";
 const CssTextField = withStyles({
     root: {
       "& label.Mui-focused": {
@@ -25,30 +26,22 @@ const CssTextField = withStyles({
       name: user?.name,
       prePassword:"",
     });
+
+    const [imageform, setImageForm] = useState({})
   
     const handleSubmit = async (e) => {
       e.preventDefault();
   
       // user 수정 api 호출
       const UserInfoEdit = await Api.put('users/update', form);
-  
-      let formData = new FormData();
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-        },
-      };
-      formData.append("profile_image", imageInfo);
-      console.log(imageInfo)
+    
+        // let formData = new FormData();
+        // formData.append("profile_image", imageInfo);
+        // console.log("imageInfo", imageInfo)
       // 이미지를 넣었을 경우에만 업로드 api 호출
       const ImageEdit =
-        imageInfo &&
-        (await axios.post(
-          formData,
-          config
-        ));
-          
+        (imageInfo && setImageForm({...form, profile_image:imageInfo}))
+        
       const Edit = async () => {
         try {
           return await Promise.all([UserInfoEdit, ImageEdit]);
@@ -60,9 +53,9 @@ const CssTextField = withStyles({
   
       Edit()
         .then((res) => {
-          console.log(res)
           const InfoData = res[0].data;
           const ImageData = res[1]?.data?.updatedUser; // 이미지 안넣었을 땐 res[1]이 null 값.
+          
 
   
           ImageData ? updateUser(ImageData) : updateUser(InfoData);
@@ -71,7 +64,7 @@ const CssTextField = withStyles({
           toggleEditForm();
         })
         .catch((error) => {
-          alert("회원 정보 수정 오류", error.response.data);
+          errorHandler('이미지수정오류', "이미지 파일이 너무 큽니다. 다시 확인해주세요")
           console.log("error", error.response.data);
         });
     };
