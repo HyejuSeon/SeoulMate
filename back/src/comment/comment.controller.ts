@@ -15,6 +15,7 @@ import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { getUserRequest } from 'src/common/decorator/request.decorator';
 import { Users } from 'src/users/users.entity';
+import { UsersService } from 'src/users/users.service';
 import { CommentService } from './comment.service';
 import { getCommentDto } from './dto/get.comment.dto';
 import { postCommentDto } from './dto/post.comment.dto';
@@ -23,7 +24,8 @@ import { updateCommentDto } from './dto/update.comment.dto';
 @ApiTags('comment')
 @Controller('comment')
 export class CommentController {
-    constructor(private readonly commentService: CommentService) {}
+    constructor(private readonly commentService: CommentService,
+        private readonly usersService: UsersService) {}
 
     @Post()
     @ApiBody({ type: postCommentDto })
@@ -35,7 +37,10 @@ export class CommentController {
         @Res() res: any,
     ) {
         const created = await this.commentService.create(body, user.user_id);
-        res.status(HttpStatus.OK).json(created);
+        const userInfo = await this.usersService.getUserByUserId(user.user_id);
+        const payload = { ...created, name: userInfo[0].name, profile_image : userInfo[0].profile_image}
+        
+        res.status(HttpStatus.OK).json(payload);
     }
 
     @Get('/:comment_id')
