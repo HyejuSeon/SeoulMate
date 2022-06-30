@@ -123,9 +123,7 @@ const Home = () => {
                     {item.description.substring(0, 40)}...{' '}
                 </ThirdPageContentDescription>
                 <ThirdPageContentDescription2>
-                    <ThirdPageContentUserInfo>
-                        방문객 수: {item.visitedCount}
-                    </ThirdPageContentUserInfo>
+                    <ThirdPageContentUserInfo>{item.name}</ThirdPageContentUserInfo>
                     <ThirdPageContentLocationInfo>
                         <img src={place} alt="location" style={{ width: '30px', height: '30px' }} />
                         {item.add}

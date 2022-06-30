@@ -19,7 +19,7 @@ export const UploadResultLeft = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 45rem;
-    height: 50rem;
+    height: 55rem;
 
     margin-left: 18rem;
 
@@ -86,7 +86,7 @@ export const UploadResultContentPeopleContainer = styled.section`
     width: 23rem;
     height: 3rem;
 
-    margin-left: 12rem;
+    margin-left: 14rem;
     margin-top: 2rem;
     /* background-color: yellow; */
 

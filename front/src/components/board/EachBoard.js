@@ -36,6 +36,10 @@ import {
     BoardContentWrapper,
     BoardContent,
     BoardContentContainer,
+    BoardInfoWrapper,
+    BoardUserImg,
+    BoardUserName,
+    BoardDate,
 } from './EachBoardStyle';
 
 import description from '../../img/description.png';
@@ -58,6 +62,8 @@ const EachBoard = () => {
     const [title, setTitle] = useState(eachBoardInfo.title);
     const [content, setContent] = useState(eachBoardInfo.content);
 
+    const [userEmail, setUserEmail] = useState('');
+
     useEffect(() => {
         const getEachBoard = async () => {
             const res = await API.get(`board/${getBoardId}`);
@@ -68,10 +74,20 @@ const EachBoard = () => {
         getEachBoard();
     }, []);
 
+    // useEffect(() => {
+    //     const getEachBoardUser = async () => {
+    //         const res = await API.get('users/current/info');
+    //         setUserEmail(res.data);
+    //         console.log('데이터', res.data);
+    //     };
+    //     getEachBoardUser();
+    // }, []);
+
     console.log('넘겨받은거', allBoardContent);
     console.log('게시글 받아온거', eachBoardInfo);
     console.log('게시글 제목', title);
     console.log('게시글 내용', content);
+    // console.log('userEmail', userEmail);
 
     const boardDelHandler = async () => {
         await API.delData(`board/delete?boardId=${getBoardId}`);
@@ -109,7 +125,7 @@ const EachBoard = () => {
                             </UploadResultContentInfo>
                             <UploadResultContentPeopleContainer>
                                 <UploadResultPeopleImg src={Luggage} />
-                                24명의 랜드마커들이 다녀갔습니다
+                                {eachBoardInfo.visitedCount}명의 랜드마커들이 다녀갔습니다
                             </UploadResultContentPeopleContainer>
                         </UploadResultContentContainer>
                         {/* <BoardComment></BoardComment> */}
@@ -191,6 +207,13 @@ const EachBoard = () => {
             <UploadResultLeft>
                 <ImgContainer src={eachBoardInfo.landmark_img_id} alt="" />
                 <BoardWrapper>
+                    <BoardInfoWrapper>
+                        <BoardUserImg src={eachBoardInfo.profile_image} alt="" />
+                        <BoardUserName>sdsd</BoardUserName>
+                        <BoardDate>
+                            게시글 작성 날짜: {eachBoardInfo?.created_at?.substring(0, 10)}
+                        </BoardDate>
+                    </BoardInfoWrapper>
                     <BoardTitleWrapper>
                         <BoardTitle>제목</BoardTitle>
                         <BoardTitleContainer>{eachBoardInfo.title}</BoardTitleContainer>
@@ -200,9 +223,10 @@ const EachBoard = () => {
                         <BoardContentContainer>{eachBoardInfo.content}</BoardContentContainer>
                     </BoardContentWrapper>
                 </BoardWrapper>
+                <BoardComment />
                 <UploadResultContentPeopleContainer>
                     <UploadResultPeopleImg src={Luggage} />
-                    24명의 랜드마커들이 다녀갔습니다
+                    {eachBoardInfo.visitedCount}명의 랜드마커들이 다녀갔습니다
                 </UploadResultContentPeopleContainer>
             </UploadResultLeft>
             <UploadResultRight>

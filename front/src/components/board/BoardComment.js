@@ -1,98 +1,100 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import * as API from '../../api';
 import { ValidationTextField } from '../upload/MuiCustom';
+import { useParams } from 'react-router-dom';
 
-const BoardComment = ({ id }) => {
+const BoardComment = () => {
+    const board_id = useParams();
+    // console.log(board_id.board_id);
+
+    const [value, setValue] = useState('');
+    const [editingValue, setEditingValue] = useState('');
     const [comments, setComments] = useState([]);
-    const [content, setContent] = useState(null);
-    const [lastComent, setLastComent] = useState('');
-    const inputComment = useRef(null);
+    const [allComments, setAllComments] = useState([]);
+    const onChange = ({ target: { value } }) => setEditingValue(value);
 
-    const getComments = async () => {
-        try {
-            const { data } = await API.post('comments', { video_id: id });
-            setComments(data.comments.reverse());
-            return data;
-        } catch (e) {
-            console.error(e);
+    const onBlur = () => {
+        setValue(editingValue);
+    };
+    const onKeyDown = (event) => {
+        if (event.key === 'Enter' || event.key === 'Escape') {
+            event.target.blur();
         }
+    };
+
+    const handleSubmit = (event) => {
+        setComments([...comments, { content: value }]);
+        event.preventDefault();
     };
 
     useEffect(() => {
-        getComments().then((res) => console.log(res));
-    }, [id, lastComent]);
+        console.log(value);
+    }, [value]);
 
-    const contentHandler = (e) => {
-        setContent(e.target.value);
+    const commentUploadHandler = async (e) => {
+        const variable = {
+            content: value,
+            board_id: board_id.board_id,
+        };
+        await API.post('comment', variable);
+        setAllComments([...allComments, { content: value }]);
     };
 
-    const onEnterKeypress = (e) => {
-        if (e.key === 'Enter') {
-            commentWriteHandler();
-        }
-    };
+    useEffect(() => {
+        const getAllComments = async () => {
+            const res = await API.getQuery(`comment?board_id=${board_id.board_id}`);
+            console.log('res', res);
+            console.log('res.data', res.data);
+            setAllComments(res.data.payloads);
+        };
+        getAllComments();
+    }, []);
 
-    const commentWriteHandler = async () => {
-        if (!sessionStorage.getItem('userToken')) {
-            return alert('로그인이 필요한 서비스입니다.');
-        } else if (!content || content === '') {
-            return alert('댓글 내용을 작성해주세요.');
-        }
-        try {
-            const { data } = await API.get('verify');
-            console.log('data.userId', data.userId);
-            await API.post('comment', {
-                writer: data.userId,
-                video_id: id,
-                content: content,
-            })
-                .then((res) => {
-                    console.log('댓글 등록 완료!');
-                    setContent(null);
-                    inputComment.current.value = '';
-                    getComments();
-                    setLastComent(content);
-                })
-                .catch((e) => console.error(e));
-        } catch (e) {
-            console.error(e);
-        }
-    };
+    console.log('댓글', allComments);
+    const boardCommentRender = allComments.map((item, comments_comment_id) => {
+        return (
+            <div key={comments_comment_id}>
+                <li key={comments_comment_id}>{item.content}</li>
+                <button
+                    onClick={async (e) => {
+                        await API.delete('comment', item.comments_comment_id);
+                        await await API.getQuery(`comment?board_id=${board_id.board_id}`).then(
+                            (res) => {
+                                setAllComments(res.data.payloads);
+                            },
+                        );
 
-    return (
-        <>
-            <ValidationTextField
-                label="댓글추가"
-                variant="outlined"
-                fullWidth
-                placeholder="내용을 입력해주세요."
-                onChange={contentHandler}
-                inputRef={inputComment}
-                onKeyPress={onEnterKeypress}
-            />
-            <div className="commentButtonWrapper">
-                <button onClick={commentWriteHandler}>작성</button>
+                        // setAllComments(
+                        //     allComments.filter(
+                        //         (i) => i.comments_comment_id !== item.comments_comment_id,
+                        //     ),
+                        // );
+                    }}
+                >
+                    삭제
+                </button>
+                '<button>수정</button>
             </div>
-            {comments.length !== 0 ? (
-                comments.map((comment) => {
-                    console.log('comment', comment);
-                    return (
-                        <>
-                            <div className="commentsWrapper">
-                                {/* <img src="/static/images/avatar/1.jpg" /> */}
-                                <div className="writerInfo">
-                                    <div>{comment?.writer?.name}</div>
-                                    <div>{comment.content}</div>
-                                </div>
-                            </div>
-                        </>
-                    );
-                })
-            ) : (
-                <div className="noneComment">댓글이 아직 없습니다.</div>
-            )}
-        </>
+        );
+    });
+    return (
+        <div>
+            {boardCommentRender}
+            <div className="Comment">
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        value={editingValue}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        onKeyDown={onKeyDown}
+                    />
+                    <button type="submit" onClick={commentUploadHandler}>
+                        작성
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 };
 
