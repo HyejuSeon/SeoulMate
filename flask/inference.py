@@ -27,8 +27,11 @@ def inference():
         # num to kor 
         with open('num_to_ko.pkl', 'rb') as f:
             num2ko = pickle.load(f)
-        result = num2ko[int(predicted.pandas().xyxy[0]['class'])]
-
+        print(predicted.pandas().xyxy[0]['class'])
+        if predicted.pandas().xyxy[0]['class'].empty:
+            result = ''
+        else:
+            result = num2ko[int(predicted.pandas().xyxy[0]['class'])]
         json = {
             'result': result
         }
