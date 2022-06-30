@@ -12,7 +12,7 @@ export class AiController {
         private readonly landmarksService: LandmarksService,
     ) {}
 
-    @Post()
+    @Post('/random')
     @ApiOperation({ summary: '목데이터 랜덤 결과 반환' })
     @ApiResponse({
         status: 200,
@@ -29,7 +29,7 @@ export class AiController {
         }
     }
 
-    @Post()
+    @Post("/")
     @ApiOperation({ summary: 'ai 분석 결과 반환' })
     @ApiBody({ type: insertAI })
     @ApiResponse({
@@ -38,8 +38,12 @@ export class AiController {
     })
     async aiAnalyze(@Res() res: any, @Body() url: insertAI): Promise<void> {
         try {
-            const result = await this.aiService.getData(url);
-            res.status(HttpStatus.OK).json(result);
+            
+            const {result} = await this.aiService.getData(url);
+            const param = {landmark_name: result}
+            const data = await this.landmarksService.getLandmarkByLandmarkName(param)
+            
+            res.status(HttpStatus.OK).json(data);
 
         } catch (err) {
             console.log(err);
