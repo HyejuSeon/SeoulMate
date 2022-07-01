@@ -2,6 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class getBoard {
     @ApiProperty()
+    userId: string;
+
+    @ApiProperty()
+    profile_image: string;
+
+    @ApiProperty()
+    email: string;
+
+    @ApiProperty()
     board_id: string;
 
     @ApiProperty({
@@ -29,4 +38,7 @@ export class getBoard {
         description: '게시글 생성 날짜',
     })
     created_at: string;
+
+    @ApiProperty()
+    visitedCount: string;
 }
