@@ -7,6 +7,8 @@ import { ROUTES } from '../../Route';
 import styled from 'styled-components';
 import style from '../../styledCompo/LoginStyle/Login.moudule.css';
 import CssTextField from './CssTextField';
+import Swal from 'sweetalert2'
+import errorHandler from "../../errorHandler";
 // import recoil
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { userState, userInfoState, tokenState } from '../../atom';
@@ -38,21 +40,19 @@ function Login() {
             setUserInfo(user);
             setToken(user.accessToken);
 
-            console.log(setUser);
-            console.log(setToken);
-            console.log('a');
 
             const jwtToken = user.accessToken;
             sessionStorage.setItem('userToken', jwtToken);
-
+            Swal.fire({
+                position: 'top-center',
+                title: '로그인 성공!',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            })
             navigate('/');
-
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                payload: user,
-            });
         } catch (error) {
-            alert(error.response.data);
+            errorHandler('로그인 오류', "아이디 혹은 비밀번호가 잘못되었습니다. 다시 확인해주세요!")
         }
     };
     return (

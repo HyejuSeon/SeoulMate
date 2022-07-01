@@ -1,0 +1,25 @@
+.title {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Jeju Gothic', sans-serif;
+    font-size: 1rem;
+    background-color: #da5050;
+    color: #fff;
+}
+
+.pic {
+    width: 16rem;
+    height: 9rem;
+}
+.add {
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Jeju Gothic', sans-serif;
+    font-size: 1rem;
+
+    color: black;
+}

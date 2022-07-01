@@ -4,6 +4,8 @@ import * as API from "../../api";
 import { useRecoilValue } from 'recoil';
 import { tokenState } from '../../atom';
 
+
+
 export default function Map() {
 
 
@@ -14,29 +16,6 @@ export default function Map() {
   const userB = useRecoilValue(tokenState);
   const [kakaouser, setkakaoUser] = useState();
 
-//   const mapscript = () => {
-//     let container = document.getElementById("map");
-//     let options = {
-//       center: new kakao.maps.LatLng(37.624915253753194, 127.15122688059974),
-//       level: 5,
-//     };
-
-  
-//     //map
-//     const map = new kakao.maps.Map(container, options);
-    
-//     markerdata.forEach((el) => {
-//       // 마커를 생성합니다
-//       new kakao.maps.Marker({
-//         //마커가 표시 될 지도
-//         map: map,
-//         //마커가 표시 될 위치
-//         position: new kakao.maps.LatLng(el.lat, el.lng),
-//         //마커에 hover시 나타날 title
-//         title: el.title,
-//       });
-//     });
-//   };
 
   async function getUserData() {
     try {
@@ -51,21 +30,11 @@ useEffect(() => {
   getUserData();
 }, []);
 
-// useEffect(()=>{
-//   try {
-//     const res = API.get("visited?user_id=d810a62e-7100-4fa8-9383-11c0cf9db695");
-//     setkakaoUser(res.data)
-//     } catch (err) {
-//     console.log("err");
-//     }
-// }, [])
-
-
 function userInfo () {
   let container = document.getElementById("map");
   let options = {
-    center: new kakao.maps.LatLng(37.624915253753194, 127.15122688059974),
-    level: 5,
+    center: new kakao.maps.LatLng(37.5666805, 126.9784147),
+    level: 7,
   };
   if (user) {
     const map = new kakao.maps.Map(container, options);
@@ -86,10 +55,12 @@ function userInfo () {
     console.log("서울마커:", b)
   }
 }
+
+
 userInfo()
 
 
 
-  return <div id="map" style={{ width: "100vw", height: "100vh" }}></div>;
+  return <div id="map" style={{ width: "60vw", height: "60vh" }}></div>;
   
 }

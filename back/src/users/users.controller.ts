@@ -181,7 +181,7 @@ export class UsersController {
         await this.userService.updatePassword(updatePassword, user.user_id);
     }
 
-    @Delete('delete')
+    @Post('delete')
     @ApiBody({ type: deleteUser })
     @ApiBearerAuth()
     @UseGuards(JwtGuard)
@@ -190,6 +190,7 @@ export class UsersController {
         @getUserRequest() user: Users,
         @Res() res: Response,
     ) {
+        console.log(userPassword)
         const deleteUser = await this.userService.deleteUser(
             userPassword,
             user.user_id,
