@@ -9,7 +9,7 @@ export const BoardWrapper = styled.section`
     min-height: 100vh;
     min-width: 95vw;
 
-    font-family: 'Jeju Gothic', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 
     /* background: black; */
 `;

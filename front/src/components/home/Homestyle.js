@@ -214,7 +214,7 @@ export const ThirdPage = styled.section`
     justify-content: center;
     flex-direction: column;
     background-color: #d2eef6;
-    font-family: 'Jeju Gothic', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 `;
 
 export const ThirdPageHeadCopy = styled.section`

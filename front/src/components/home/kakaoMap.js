@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as API from '../../api';
+import './kakaoMapStyle.css';
 
 const { kakao } = window;
 
@@ -25,13 +26,10 @@ const KakaoMap = () => {
         const positions = res.data.map((item, idx) => {
             return {
                 content: `
-                <p></p>
-                <div>${item.landmark.name}</div>
-                <p></p>
-                <img src=${item.landmark_img} width='225rem' height='115rem'/>
-                <p></p>
-                <div>${item.landmark.add}</div>
-                <p></p>`,
+                <div class="title">${item.landmark.name}</div>
+                <img class="pic" src=${item.landmark_img} />
+                <div class="add">${item.landmark.add}</div>`,
+
                 latlng: new kakao.maps.LatLng(
                     `${item.landmark.latitude}`,
                     `${item.landmark.longitude}`,

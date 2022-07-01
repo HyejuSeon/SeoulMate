@@ -17,6 +17,19 @@ export const ValidationTextField = styled(TextField)({
         },
     },
 });
+export const CommentTextField = styled(TextField)({
+    marginTop: '1rem',
+    width: '100%',
+
+    '& .MuiOutlinedInput-root': {
+        '&:hover fieldset': {
+            borderColor: 'green',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: '#699C1D',
+        },
+    },
+});
 
 export const SearchTextField = styled(TextField)({
     width: '100%',

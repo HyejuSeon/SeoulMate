@@ -12,7 +12,11 @@ import {
     BoardCommentImg,
     BoardCommentBox,
     BoardBtnBox,
+    BoardBtnContainer,
+    ToggleButton,
 } from './BoardCommentStyle';
+
+import add from '../../img/Add.png';
 
 const BoardComment = () => {
     const board_id = useParams();
@@ -29,6 +33,7 @@ const BoardComment = () => {
             board_id: board_id.board_id,
         };
         await API.post('comment', variable);
+        setComments('');
     };
 
     useEffect(() => {
@@ -37,7 +42,7 @@ const BoardComment = () => {
             setAllComments(res.data.payloads);
         };
         getAllComments();
-    }, [board_id.board_id, editable]);
+    }, [board_id.board_id, comments]);
 
     console.log('댓글', allComments);
 
@@ -47,11 +52,11 @@ const BoardComment = () => {
                 return (
                     <>
                         {editable === true ? (
-                            <div key={idx}>
-                                <input
+                            <BoardBtnContainer key={idx}>
+                                <CommentTextField
                                     type="text"
-                                    label="댓글"
-                                    // value={item.comments_content}
+                                    label="댓글수정"
+                                    size="small"
                                     onChange={(e) => {
                                         setEditComments(e.target.value);
                                     }}
@@ -62,6 +67,11 @@ const BoardComment = () => {
                                         await API.patch('comment', {
                                             comment_id: item.comment_id,
                                             content: editComments,
+                                        });
+                                        await API.getQuery(
+                                            `comment?board_id=${board_id.board_id}`,
+                                        ).then((res) => {
+                                            setAllComments(res.data.payloads);
                                         });
                                         await setEditable(false);
                                     }}
@@ -75,7 +85,7 @@ const BoardComment = () => {
                                 >
                                     취소
                                 </button>
-                            </div>
+                            </BoardBtnContainer>
                         ) : (
                             <BoardCommentContainer key={idx}>
                                 <BoardCommentImg src={item.profile_image} />
@@ -111,18 +121,24 @@ const BoardComment = () => {
             })}
 
             <div className="Comment">
-                <form>
-                    <input
+                <BoardBtnContainer>
+                    <CommentTextField
                         type="text"
                         value={comments}
+                        label="댓글"
+                        id="outlined-size-small"
+                        defaultValue="Small"
+                        size="small"
                         onChange={(e) => {
                             setComments(e.target.value);
                         }}
+                        InputProps={{
+                            endAdornment: comments && (
+                                <ToggleButton src={add} onClick={commentUploadHandler} />
+                            ),
+                        }}
                     />
-                    <button type="submit" onClick={commentUploadHandler}>
-                        작성
-                    </button>
-                </form>
+                </BoardBtnContainer>
             </div>
         </>
     );

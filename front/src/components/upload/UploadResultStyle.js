@@ -8,7 +8,7 @@ export const UploadResultWrapper = styled.div`
     min-height: 100vh;
     min-width: 95vw;
 
-    font-family: 'Jeju Gothic', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 
     /* background: yellow; */
 `;
@@ -19,7 +19,7 @@ export const UploadResultLeft = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 45rem;
-    height: 55rem;
+    height: auto;
 
     margin-left: 18rem;
 
@@ -169,6 +169,7 @@ export const UploadResultDescriptionContainer = styled.div`
     height: 10rem;
     display: flex;
     align-items: center;
+    line-height: 1.5rem;
     /* background: grey; */
 `;
 

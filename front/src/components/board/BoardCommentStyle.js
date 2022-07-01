@@ -51,3 +51,25 @@ export const BoardCommentBtn = styled.button`
     font-size: 1.5rem;
     color: white;
 `;
+
+export const BoardBtnContainer = styled.div`
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    /* background-color: gray; */
+    justify-content: space-around;
+    margin-top: 1rem;
+`;
+
+export const ToggleButton = styled.img`
+    /* margin-top: 0.6rem; */
+    margin-right: 0.2rem;
+    right: 34rem;
+    width: 2rem;
+    height: 2rem;
+    /* position: absolute; */
+    cursor: pointer;
+`;
