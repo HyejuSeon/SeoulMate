@@ -17,7 +17,7 @@ export const tokenState = atom({
     effects_UNSTABLE: [persistAtom],
 });
 
-// 유저 정보
+// 유저 정보.
 export const userInfoState = atom({
     key: 'userInfoState',
     default: undefined,
