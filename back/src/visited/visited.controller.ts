@@ -55,7 +55,7 @@ export class VisitedController {
         res.status(HttpStatus.OK).json(result);
     }
 
-    @Get('/getAll')
+    @Get('/getall')
     @ApiOperation({ summary: '방문지 모든 데이터 조회' })
     @ApiResponse({
         status: 200,
