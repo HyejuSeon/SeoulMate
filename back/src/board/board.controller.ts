@@ -22,11 +22,17 @@ import { getBoard } from './dto/get-board.dto';
 import { getBoards } from './dto/board-list.dto';
 import { searchBoardDto } from './dto/search-board.dto';
 import { updateBoard } from './dto/update-board.dto';
+import { LandmarksService } from 'src/landmarks/landmarks.service';
+import { VisitedService } from 'src/visited/visited.service';
 
 @ApiTags('board')
 @Controller('board')
 export class BoardController {
-    constructor(private readonly boardService: BoardService) {}
+    constructor(
+        private readonly boardService: BoardService,
+        private readonly landmarksService: LandmarksService,
+        private readonly visitedService: VisitedService,
+    ) {}
 
     @Post()
     @ApiBody({ type: writeBoard })
@@ -52,7 +58,18 @@ export class BoardController {
     ) {
         const board = await this.boardService.getBoard(boardId);
         const { user_id, ...result } = board;
-        const response = { userId: user_id['user_id'], ...result };
+        const param = { landmark_name: board.landmark_name };
+        const { landmark_id } =
+            await this.landmarksService.getLandmarkByLandmarkName(param);
+        const count = await this.visitedService.getCount(landmark_id);
+
+        const response = {
+            userId: user_id['user_id'],
+            profile_image: user_id['profile_image'],
+            email: user_id['email'],
+            ...result,
+            ...count,
+        };
 
         res.status(HttpStatus.OK).json(response);
     }
