@@ -120,8 +120,8 @@ async function delpw(endpoint, data) {
     const bodyData = JSON.stringify(data);
     console.log(`%cdelpw 요청: ${serverUrl + endpoint}`, 'color: #059c4b;');
     console.log(`%cdelpw 요청 데이터: ${bodyData}`, 'color: #059c4b;');
-    console.log('endpoint:', endpoint);
-    return axios.delete(endpoint, bodyData, {
+    console.log('endpoint:', endpoint)
+    return axios.post(endpoint, bodyData, {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
