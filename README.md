@@ -62,17 +62,153 @@ Seoul Mate의 메인 페이지에서는 방문자가 많은 랜드마크를 보�
 ## 시용한 데이터
 
 -   [AI 허브 랜드마크 이미지](https://aihub.or.kr/aidata/8009)
+
     > 인공지능 기반의 컴퓨터 비전 기술 및 서비스 개발에 활용하기 위해 국내 특성(지리 공간적, 기능적)이 반영된 국내 도심 민간건물, 공공기관, 관광명소, 편의시설 등 국내 도시별 주요 랜드마크 이미지 데이터 구축(출처: AI허브)
+
+-   데이터셋 Training 폴더 구조
+
+```
+├─[원천]서울특별시_001
+│  ├─3.1독립선언기념탑
+│  ├─4.19학생혁명기념탑
+│  ├─경복궁
+│  └─ ...
+├─[원천]서울특별시_002
+│  ├─동십자각
+│  ├─망원정지
+│  ├─명동성당
+│  └─ ...
+│ ...
+├─[라벨]서울특별시
+│  └─서울특별시
+│      ├─150년수령느티나무
+│      ├─3.1독립선언기념탑
+│      ├─4.19학생혁명기념탑
+│      └─ ...
+
+```
+
+-   annotation 파일
+
+```
+{
+    "info": {
+        "description": "2020 landmark Dataset",
+        "url": "https://aihub.or.kr/aidata/8009",
+        "version": "1.0",
+        "year": 2020
+    },
+    "licenses": [
+        {
+            "possession": "PCN컨소시엄",
+            "id": 1
+        }
+    ],
+    "images": [
+        {
+            "license": 1,
+            "file_name": "3.1독립선언기념탑_039_41544868.jpg",
+            "width": 4032,
+            "height": 2268,
+            "image_id": 41544868
+        }
+    ],
+    "annotations": [
+        {
+            "type": "Bounding box",
+            "category_id": 15919,
+            "bbox": [
+                1115.06,
+                768.19,
+                3113.64,
+                1877.7
+            ],
+            "image_id": 41544868,
+            "id": "41544868_1",
+            "truncated": "0",
+            "hidden": "0",
+            "light_reflex": "0",
+            "na": "1"
+        }
+    ],
+    "categories": [
+        {
+            "id": 15919,
+            "name": "3.1독립선언기념탑",
+            "supercategory": "지역상징성",
+            "metainfo": {
+                "location1": "서울특별시",
+                "location2": "서대문구",
+                "Type1": "지역상징성",
+                "Type2": "기념비",
+                "name_kr": "3.1독립선언기념탑",
+                "add": "서울특별시 서대문구 현저동 101"
+            }
+        }
+    ]
+}
+```
 
 ## 데이터 전처리
 
+### 데이터 선별
+
 데이터 셋에 아파트나 상가 건물과 같은 주요 랜드마크로 볼 수 없는 것들은 제외하고 관광지 위주의 랜드마크를 선정했습니다.
+
+ex) 제거한 데이터셋
+
+-   라온
+    <img src="uploads/cf6a42015f8acdfdff7a53fde3764651/image.png" width="300">
+    <img src="uploads/811e4472425895b2c9fc73d90d74a49a/image.png" width="300">
+
+<br>
+
+-   메트로팜
+    <img src="uploads/1a7b8c11385173222d9238560569e6a5/image.png" width="300">
+    <img src="uploads/5b5573968cfd8ceb03eeb702060f5667/image.png" width="300">
+
+<br>
+
+-   카이스트 서울캠퍼스
+    <img src="uploads/42ba42ad1b9df5c2fc5bbc281b7d1252/image.png" width="300">
+    <img src="uploads/698e9e303ac3419328dcc09757f152bf/image.png" width="300">
+
+### 노이즈 제거
+
+ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에서 간판 이미지는 노이즈라 판단하여 제거했습니다.
+
+-   정상 이미지
+    <img src="uploads/cb274e10b8155a4f851272df8883760f/image.png" width="300">
+    <img src="uploads/8e0e12657794ce666f8d5ab3cd9cde63/image.png" width="300">
+
+<br>
+
+<br>
+
+-   노이즈
+    <img src="uploads/45bd792e30e1d26e685fc02373a779f2/image.png" width="300">
+
+### EDA
+
+-   클래스 개수: 112개
+
+-   클래스 별 이미지 개수
+
+    Min: 69, Max: 263, Mean: 147
+
+<img src="uploads/7975fcbd29ae29a04ca105561fccbf77/image.png">
 
 ## 인공지능 모델
 
 ### YOLO: object detection
 
 랜드마크를 예측하는 인공지능 모델은 `YOLO`모델을 사용합니다. 모델의 inference 속도를 고려해 one stage detector로 실험을 진행합니다. 랜드마크를 object detection을 사용하여 boundary box를 예측, 하나의 랜드마크 객체를 탐지합니다.
+
+# 프로젝트 구조
+
+## 데이터베이스 구조도
+
+![스크린샷 2022-06-10 오후 11 35 45](https://user-images.githubusercontent.com/55802893/173089023-c08de090-9c8d-4d7e-97d3-a117cd58ad94.png)
 
 # 와이어 프레임
 
