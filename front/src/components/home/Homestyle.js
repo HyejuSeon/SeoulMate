@@ -239,19 +239,8 @@ export const ThirdPageContentContainer = styled.section`
     margin-bottom: 5%;
 `;
 export const ThirdPageImgContainer = styled.a`
-    width: 528px;
-    height: 295px;
-    cursor: pointer;
-
-    &:hover {
-        content: '';
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        opacity: 0.6;
-    }
+    width: 34rem;
+    height: 20rem;
 `;
 
 export const ThirdPageContentWrapper = styled.div`
@@ -294,7 +283,7 @@ export const ThirdPageContentUserInfo = styled.div`
     font-size: 0.8rem;
     font-weight: bold;
 
-    color: #373737;
+    color: white;
 
     margin-bottom: 5%;
 

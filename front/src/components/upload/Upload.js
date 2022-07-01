@@ -30,7 +30,7 @@ const Upload = () => {
 
     const [landmarkPicURL, setLandmarkPicURL] = useState();
 
-    const uploadAvatar = (e) => {
+    const uploadAvatar = async (e) => {
         const reader = new FileReader();
         if (e.target.files[0]) {
             reader.readAsDataURL(e.target.files[0]);
@@ -42,46 +42,76 @@ const Upload = () => {
         const formData = new FormData();
         formData.append('image', e.target.files[0]);
 
+        // const res = await API.sendImage('ai/images', formData);
+        // await setLandmarkPicURL(res.data.gcs_url);
+
+        // // await console.log('landmarkPicURL', res.data.gcs_url);
+
+        // await setTimeout(() => {
+        //     const response = API.post('ai', { url: res.data.gcs_url });
+        //     setTimeout(() => {
+        //         console.log(response.data);
+        //         setLandmarkInfo(response.data);
+        //     }, 1000);
+        // }, 5000);
+
+        // const landmarkInfo = await API.post('ai', { url: res.data.gcs_url });
+        // await console.log('landmarkInfo', landmarkInfo.data);
+        // await setLandmarkInfo(landmarkInfo.data);
+        // await formData.append('user_id', user.user_id);
+        // await formData.append('landmark_id', landmarkInfo.landmark_id);
+        // const imgPost = await API.sendImage('visited/images', formData);
+        // await setLandmarkPic(imgPost.data);
+
         API.sendImage('ai/images', formData)
             .then((response) => {
                 console.log(response.data);
-                setLandmarkPicURL(() => {
-                    return response.data.gcs_url;
+                return response.data.gcs_url;
+            })
+            .then((landmarkURL) => {
+                setTimeout(() => {
+                    API.post('ai', { url: landmarkURL })
+                        .then((response) => {
+                            console.log('response.data', response.data);
+                            formData.append('user_id', user.user_id);
+                            formData.append('landmark_id', response.data.landmark_id);
+                            setLandmarkInfo(() => {
+                                return response.data;
+                            });
+                        })
+                        .then((responseData) => {
+                            // formData.append('user_id', user.user_id);
+                            // formData.append('landmark_id', responseData);
+                            API.sendImage('visited/images', formData)
+                                .then((responseData) => {
+                                    setLandmarkPic(responseData.data);
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                });
+                        });
+                }, 3000).catch((error) => {
+                    console.log(error);
                 });
             })
             .catch((error) => {
                 console.log(error);
             });
-        setTimeout(() => {
-            API.post('ai', { url: landmarkPicURL })
-                .then((response) => {
-                    console.log('response.data', response.data);
-                    setLandmarkInfo(() => {
-                        return response.data;
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }, 500);
-        setTimeout(() => {
-            formData.append('user_id', user.user_id);
-            formData.append('landmark_id', landmarkInfo.landmark_id);
-            API.sendImage('visited/images', formData)
-                .then((response) => {
-                    setLandmarkPic(() => {
-                        return response.data;
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }, 1000);
+        setTimeout(() => {}, 500);
+        setTimeout(() => {}, 1000);
     };
 
-    useEffect(() => {
-        console.log('landmarkPicURL', landmarkPicURL);
-    }, [landmarkPicURL, setLandmarkPicURL]);
+    // useEffect(() => {
+    //     if (!landmarkPicURL) {
+    //         return;
+    //     } else {
+    //         API.post('ai', { url: landmarkPicURL });
+    //     }
+    // }, [landmarkPicURL]);
+
+    // useEffect(() => {
+    //     console.log('landmarkPicURL', landmarkPicURL);
+    // }, [landmarkPicURL]);
 
     useEffect(() => {
         console.log('info', landmarkInfo);

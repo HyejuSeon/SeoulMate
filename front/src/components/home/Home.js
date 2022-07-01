@@ -116,11 +116,11 @@ const Home = () => {
                     <img
                         src={item.landmark_img}
                         alt="user img"
-                        style={{ width: '528px', height: '295px' }}
+                        style={{ width: '34rem', height: '20rem' }}
                     />
                 </ThirdPageImgContainer>
                 <ThirdPageContentDescription>
-                    {item.description.substring(0, 40)}...{' '}
+                    {item.description.substring(0, 78)}...{' '}
                 </ThirdPageContentDescription>
                 <ThirdPageContentDescription2>
                     <ThirdPageContentUserInfo>{item.name}</ThirdPageContentUserInfo>
