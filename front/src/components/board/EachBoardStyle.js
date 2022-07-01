@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const BoardWrapper = styled.section`
     margin-top: -2rem;
     margin-left: -1rem;
-    height: 50rem;
+
     /* background: gray; */
 `;
 
@@ -36,6 +36,7 @@ export const BoardUserName = styled.div`
     align-items: center;
     min-width: 5rem;
     font-family: 'Jeju Gothic', sans-serif;
+    margin-left: 1rem;
 
     /* background: gray; */
 `;
@@ -45,7 +46,7 @@ export const BoardDate = styled.div`
     align-items: center;
     min-width: 5rem;
     font-family: 'Jeju Gothic', sans-serif;
-    margin-left: 14rem;
+    margin-left: 10rem;
 
     /* background: gray; */
 `;
@@ -86,7 +87,7 @@ export const BoardContentWrapper = styled.section`
     flex-direction: row;
 
     min-width: 35.2rem;
-    min-height: 14rem;
+    min-height: 3rem;
 
     /* background: blue; */
 `;
@@ -109,8 +110,19 @@ export const BoardContentContainer = styled.div`
     background: #ffffff;
     border: 1px solid #f0f0f0;
     border-radius: 20px;
-
+    line-height: 1.5rem;
     font-family: 'Jeju Gothic', sans-serif;
 
     /* background: red; */
+`;
+
+export const BoardCommentWrapper = styled.section`
+    width: 35rem;
+    min-height: 3rem;
+
+    /* margin-top: 1rem; */
+
+    display: flex;
+    flex-direction: column;
+    /* background-color: blue; */
 `;

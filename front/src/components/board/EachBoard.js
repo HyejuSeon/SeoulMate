@@ -40,6 +40,7 @@ import {
     BoardUserImg,
     BoardUserName,
     BoardDate,
+    BoardCommentWrapper,
 } from './EachBoardStyle';
 
 import description from '../../img/description.png';
@@ -62,8 +63,6 @@ const EachBoard = () => {
     const [title, setTitle] = useState(eachBoardInfo.title);
     const [content, setContent] = useState(eachBoardInfo.content);
 
-    const [userEmail, setUserEmail] = useState('');
-
     useEffect(() => {
         const getEachBoard = async () => {
             const res = await API.get(`board/${getBoardId}`);
@@ -72,16 +71,7 @@ const EachBoard = () => {
             setContent(res.data.content);
         };
         getEachBoard();
-    }, []);
-
-    // useEffect(() => {
-    //     const getEachBoardUser = async () => {
-    //         const res = await API.get('users/current/info');
-    //         setUserEmail(res.data);
-    //         console.log('데이터', res.data);
-    //     };
-    //     getEachBoardUser();
-    // }, []);
+    }, [getBoardId]);
 
     console.log('넘겨받은거', allBoardContent);
     console.log('게시글 받아온거', eachBoardInfo);
@@ -111,24 +101,32 @@ const EachBoard = () => {
                 <FrontSide style={{ padding: '0', boxShadow: 'none' }}>
                     <UploadResultLeft>
                         <ImgContainer src={eachBoardInfo.landmark_img_id} />
-                        <UploadResultContentContainer>
-                            <UploadResultContentInfoTitle>
-                                <span>사진 제목</span>
-                                <span>Date</span>
-                                <span>ID</span>
-                            </UploadResultContentInfoTitle>
-                            <UploadResultContentInfo>
-                                {' '}
-                                <span>광안대교</span>
-                                <span>{eachBoardInfo.created_at.substring(0, 10)}</span>
-                                <span>By Elice</span>
-                            </UploadResultContentInfo>
-                            <UploadResultContentPeopleContainer>
-                                <UploadResultPeopleImg src={Luggage} />
-                                {eachBoardInfo.visitedCount}명의 랜드마커들이 다녀갔습니다
-                            </UploadResultContentPeopleContainer>
-                        </UploadResultContentContainer>
-                        {/* <BoardComment></BoardComment> */}
+                        <BoardWrapper>
+                            <BoardInfoWrapper>
+                                <BoardUserImg src={eachBoardInfo.profile_image} alt="" />
+                                <BoardUserName>{eachBoardInfo.email}</BoardUserName>
+                                <BoardDate>
+                                    게시글 작성 날짜: {eachBoardInfo?.created_at?.substring(0, 10)}
+                                </BoardDate>
+                            </BoardInfoWrapper>
+                            <BoardTitleWrapper>
+                                <BoardTitle>제목</BoardTitle>
+                                <BoardTitleContainer>{eachBoardInfo.title}</BoardTitleContainer>
+                            </BoardTitleWrapper>
+                            <BoardContentWrapper>
+                                <BoardContent>내용</BoardContent>
+                                <BoardContentContainer>
+                                    {eachBoardInfo.content}
+                                </BoardContentContainer>
+                            </BoardContentWrapper>
+                        </BoardWrapper>
+                        <BoardCommentWrapper>
+                            <BoardComment />
+                        </BoardCommentWrapper>
+                        <UploadResultContentPeopleContainer>
+                            <UploadResultPeopleImg src={Luggage} />
+                            {eachBoardInfo.visitedCount}명의 랜드마커들이 다녀갔습니다
+                        </UploadResultContentPeopleContainer>
                         <UploadResultBtnContainer>
                             <UploadResultBtn
                                 onClick={() => {
@@ -209,7 +207,7 @@ const EachBoard = () => {
                 <BoardWrapper>
                     <BoardInfoWrapper>
                         <BoardUserImg src={eachBoardInfo.profile_image} alt="" />
-                        <BoardUserName>sdsd</BoardUserName>
+                        <BoardUserName>{eachBoardInfo.email}</BoardUserName>
                         <BoardDate>
                             게시글 작성 날짜: {eachBoardInfo?.created_at?.substring(0, 10)}
                         </BoardDate>
@@ -223,7 +221,9 @@ const EachBoard = () => {
                         <BoardContentContainer>{eachBoardInfo.content}</BoardContentContainer>
                     </BoardContentWrapper>
                 </BoardWrapper>
-                <BoardComment />
+                <BoardCommentWrapper>
+                    <BoardComment />
+                </BoardCommentWrapper>
                 <UploadResultContentPeopleContainer>
                     <UploadResultPeopleImg src={Luggage} />
                     {eachBoardInfo.visitedCount}명의 랜드마커들이 다녀갔습니다

@@ -1,100 +1,130 @@
 import React, { useState, useEffect } from 'react';
 import * as API from '../../api';
-import { ValidationTextField } from '../upload/MuiCustom';
+import { CommentTextField } from '../upload/MuiCustom';
 import { useParams } from 'react-router-dom';
+
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+
+import {
+    BoardCommentContainer,
+    BoardCommentImg,
+    BoardCommentBox,
+    BoardBtnBox,
+} from './BoardCommentStyle';
 
 const BoardComment = () => {
     const board_id = useParams();
-    // console.log(board_id.board_id);
 
-    const [value, setValue] = useState('');
-    const [editingValue, setEditingValue] = useState('');
     const [comments, setComments] = useState([]);
     const [allComments, setAllComments] = useState([]);
-    const onChange = ({ target: { value } }) => setEditingValue(value);
 
-    const onBlur = () => {
-        setValue(editingValue);
-    };
-    const onKeyDown = (event) => {
-        if (event.key === 'Enter' || event.key === 'Escape') {
-            event.target.blur();
-        }
-    };
-
-    const handleSubmit = (event) => {
-        setComments([...comments, { content: value }]);
-        event.preventDefault();
-    };
-
-    useEffect(() => {
-        console.log(value);
-    }, [value]);
+    const [editable, setEditable] = useState(false);
+    const [editComments, setEditComments] = useState('');
 
     const commentUploadHandler = async (e) => {
         const variable = {
-            content: value,
+            content: comments,
             board_id: board_id.board_id,
         };
         await API.post('comment', variable);
-        setAllComments([...allComments, { content: value }]);
     };
 
     useEffect(() => {
         const getAllComments = async () => {
             const res = await API.getQuery(`comment?board_id=${board_id.board_id}`);
-            console.log('res', res);
-            console.log('res.data', res.data);
             setAllComments(res.data.payloads);
         };
         getAllComments();
-    }, []);
+    }, [board_id.board_id, editable]);
 
     console.log('댓글', allComments);
-    const boardCommentRender = allComments.map((item, comments_comment_id) => {
-        return (
-            <div key={comments_comment_id}>
-                <li key={comments_comment_id}>{item.content}</li>
-                <button
-                    onClick={async (e) => {
-                        await API.delete('comment', item.comments_comment_id);
-                        await await API.getQuery(`comment?board_id=${board_id.board_id}`).then(
-                            (res) => {
-                                setAllComments(res.data.payloads);
-                            },
-                        );
 
-                        // setAllComments(
-                        //     allComments.filter(
-                        //         (i) => i.comments_comment_id !== item.comments_comment_id,
-                        //     ),
-                        // );
-                    }}
-                >
-                    삭제
-                </button>
-                '<button>수정</button>
-            </div>
-        );
-    });
     return (
-        <div>
-            {boardCommentRender}
+        <>
+            {allComments.map((item, idx) => {
+                return (
+                    <>
+                        {editable === true ? (
+                            <div key={idx}>
+                                <input
+                                    type="text"
+                                    label="댓글"
+                                    // value={item.comments_content}
+                                    onChange={(e) => {
+                                        setEditComments(e.target.value);
+                                    }}
+                                />
+
+                                <button
+                                    onClick={async () => {
+                                        await API.patch('comment', {
+                                            comment_id: item.comment_id,
+                                            content: editComments,
+                                        });
+                                        await setEditable(false);
+                                    }}
+                                >
+                                    확인
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setEditable(false);
+                                    }}
+                                >
+                                    취소
+                                </button>
+                            </div>
+                        ) : (
+                            <BoardCommentContainer key={idx}>
+                                <BoardCommentImg src={item.profile_image} />
+                                <BoardCommentBox>{item.content}</BoardCommentBox>
+                                <BoardBtnBox>
+                                    <IconButton aria-label="delete" size="medium">
+                                        <DeleteIcon
+                                            aria-label="delete"
+                                            size="medium"
+                                            variant="outlined"
+                                            onClick={async (e) => {
+                                                await API.del('comment', item.comment_id);
+                                                await API.getQuery(
+                                                    `comment?board_id=${board_id.board_id}`,
+                                                ).then((res) => {
+                                                    setAllComments(res.data.payloads);
+                                                });
+                                            }}
+                                        />
+                                    </IconButton>
+                                    <IconButton color="primary" aria-label="edit" size="small">
+                                        <EditIcon
+                                            onClick={() => {
+                                                setEditable(true);
+                                            }}
+                                        />
+                                    </IconButton>
+                                </BoardBtnBox>
+                            </BoardCommentContainer>
+                        )}
+                    </>
+                );
+            })}
+
             <div className="Comment">
-                <form onSubmit={handleSubmit}>
+                <form>
                     <input
                         type="text"
-                        value={editingValue}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        onKeyDown={onKeyDown}
+                        value={comments}
+                        onChange={(e) => {
+                            setComments(e.target.value);
+                        }}
                     />
                     <button type="submit" onClick={commentUploadHandler}>
                         작성
                     </button>
                 </form>
             </div>
-        </div>
+        </>
     );
 };
 
