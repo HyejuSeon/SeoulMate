@@ -36,13 +36,19 @@ const BoardComment = () => {
         setComments('');
     };
 
+    const getAllComments = async () => {
+        const res = await API.getQuery(`comment?board_id=${board_id.board_id}`);
+        // setAllComments(res.data.payloads);
+        setAllComments(
+            res.data.payloads.map((item) => {
+                return { ...item, visible: true };
+            }),
+        );
+    };
+
     useEffect(() => {
-        const getAllComments = async () => {
-            const res = await API.getQuery(`comment?board_id=${board_id.board_id}`);
-            setAllComments(res.data.payloads);
-        };
         getAllComments();
-    }, [board_id.board_id, comments]);
+    }, []);
 
     console.log('댓글', allComments);
 
@@ -51,7 +57,7 @@ const BoardComment = () => {
             {allComments.map((item, idx) => {
                 return (
                     <>
-                        {editable === true ? (
+                        {!item.visible ? (
                             <BoardBtnContainer key={idx}>
                                 <CommentTextField
                                     type="text"
@@ -63,25 +69,33 @@ const BoardComment = () => {
                                 />
 
                                 <button
-                                    onClick={async () => {
+                                    onClick={async (e) => {
+                                        // await setAllComments(res.data.payloads);
                                         await API.patch('comment', {
                                             comment_id: item.comment_id,
                                             content: editComments,
                                         });
-                                        await API.getQuery(
-                                            `comment?board_id=${board_id.board_id}`,
-                                        ).then((res) => {
-                                            setAllComments(res.data.payloads);
-                                        });
-                                        await setEditable(false);
+                                        getAllComments();
+                                        // const res = await API.getQuery(
+                                        //     `comment?board_id=${board_id.board_id}`,
+                                        // );
                                     }}
                                 >
                                     확인
                                 </button>
                                 <button
-                                    onClick={() => {
-                                        setEditable(false);
+                                    onClick={(e) => {
+                                        setAllComments(
+                                            allComments.map((item, CommentsIdx) => {
+                                                if (idx === CommentsIdx) {
+                                                    return { ...item, visible: true };
+                                                } else {
+                                                    return { ...item, visible: true };
+                                                }
+                                            }),
+                                        );
                                     }}
+                                    key={idx}
                                 >
                                     취소
                                 </button>
@@ -108,9 +122,18 @@ const BoardComment = () => {
                                     </IconButton>
                                     <IconButton color="primary" aria-label="edit" size="small">
                                         <EditIcon
-                                            onClick={() => {
-                                                setEditable(true);
+                                            onClick={(e) => {
+                                                setAllComments(
+                                                    allComments.map((item, allCommentsIdx) => {
+                                                        if (idx === allCommentsIdx) {
+                                                            return { ...item, visible: false };
+                                                        } else {
+                                                            return { ...item, visible: true };
+                                                        }
+                                                    }),
+                                                );
                                             }}
+                                            key={idx}
                                         />
                                     </IconButton>
                                 </BoardBtnBox>
