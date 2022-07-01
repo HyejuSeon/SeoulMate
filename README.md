@@ -18,12 +18,7 @@
 | Frontend                | ReactJS              |
 | Backend                 | NestJS<br>MySQL      |
 | Artificial intelligence | Python<br>Tensorflow |
-
-# <<<<<<< HEAD
-
-| Deploy | docker |
-
-> > > > > > > docs-readme
+| Deploy                  | docker               |
 
 # 협업 도구
 
