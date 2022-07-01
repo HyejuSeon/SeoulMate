@@ -42,27 +42,6 @@ const Upload = () => {
         const formData = new FormData();
         formData.append('image', e.target.files[0]);
 
-        // const res = await API.sendImage('ai/images', formData);
-        // await setLandmarkPicURL(res.data.gcs_url);
-
-        // // await console.log('landmarkPicURL', res.data.gcs_url);
-
-        // await setTimeout(() => {
-        //     const response = API.post('ai', { url: res.data.gcs_url });
-        //     setTimeout(() => {
-        //         console.log(response.data);
-        //         setLandmarkInfo(response.data);
-        //     }, 1000);
-        // }, 5000);
-
-        // const landmarkInfo = await API.post('ai', { url: res.data.gcs_url });
-        // await console.log('landmarkInfo', landmarkInfo.data);
-        // await setLandmarkInfo(landmarkInfo.data);
-        // await formData.append('user_id', user.user_id);
-        // await formData.append('landmark_id', landmarkInfo.landmark_id);
-        // const imgPost = await API.sendImage('visited/images', formData);
-        // await setLandmarkPic(imgPost.data);
-
         API.sendImage('ai/images', formData)
             .then((response) => {
                 console.log(response.data);
@@ -100,18 +79,6 @@ const Upload = () => {
         setTimeout(() => {}, 500);
         setTimeout(() => {}, 1000);
     };
-
-    // useEffect(() => {
-    //     if (!landmarkPicURL) {
-    //         return;
-    //     } else {
-    //         API.post('ai', { url: landmarkPicURL });
-    //     }
-    // }, [landmarkPicURL]);
-
-    // useEffect(() => {
-    //     console.log('landmarkPicURL', landmarkPicURL);
-    // }, [landmarkPicURL]);
 
     useEffect(() => {
         console.log('info', landmarkInfo);
