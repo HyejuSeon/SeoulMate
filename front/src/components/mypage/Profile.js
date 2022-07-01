@@ -29,7 +29,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
               toggleEditForm={toggleEditForm}
             />
           ) : (
-            <Grid item style={{borderStyle:"solid"}} xs={6} sx={{ textAlign: "center", marginTop: "9em" }}>
+            <Grid item xs={6} sx={{ textAlign: "center", marginTop: "9em" }}>
               <Typography variant="h3" component="div">
                 {user?.name} 
               </Typography>
@@ -52,8 +52,8 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
             </Grid>
           )}
 
-      <Grid item xs={6} style={{borderStyle:"solid"}} sx={{ textAlign: "center" }}>
-      <Grid item xs={6} style={{borderStyle:"solid"}} sx={{marginLeft:"6em"}}>
+      <Grid item xs={6}  sx={{ textAlign: "center" }}>
+      <Grid item xs={6}  sx={{marginLeft:"6em"}}>
         <CircularProgressbar value={percentage}
   text={`${percentage}%`}
   styles={buildStyles({
