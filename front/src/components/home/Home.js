@@ -149,7 +149,7 @@ const Home = () => {
             <SecondPage>
                 <SecondPageHeadCopy>
                     <br />
-                    랜드마크의 발견, SeoulMate.
+                    랜드마크의 발견, SeoulMate
                 </SecondPageHeadCopy>
                 <Swiper
                     pagination={true}

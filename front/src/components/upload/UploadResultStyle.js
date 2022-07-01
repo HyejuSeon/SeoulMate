@@ -32,11 +32,11 @@ export const UploadResultLeft = styled.div`
 `;
 
 export const ImgContainer = styled.img`
-    width: 35rem;
-    height: 20rem;
+    width: 36rem;
+    height: 23rem;
     margin-top: 3rem;
     padding-bottom: 3rem;
-    object-fit: cover;
+    object-fit: fit;
     /* &:hover {
         cursor: pointer;
         opacity: 0.8;
@@ -65,7 +65,7 @@ export const UploadResultContentInfoTitle = styled.div`
 `;
 
 export const UploadResultContentInfo = styled.div`
-    width: 35rem;
+    width: 36rem;
     height: 4rem;
 
     font-size: 1rem;

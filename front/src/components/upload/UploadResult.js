@@ -110,7 +110,7 @@ const UploadResult = () => {
                         <UploadResultContentContainer>
                             <UploadResultContentInfoTitle>
                                 <span>사진 제목</span>
-                                <span>Date</span>
+                                <span style={{ marginRight: '2rem' }}>Date</span>
                                 <span>ID</span>
                             </UploadResultContentInfoTitle>
                             <UploadResultContentInfo>
