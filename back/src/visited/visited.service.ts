@@ -51,6 +51,15 @@ export class VisitedService {
         }
     }
 
+    async getAllVisited(): Promise<any> {
+        try {
+            const result = await this.visitedRepository.find();
+            return result;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async getVisitedByIndex(index: number): Promise<any> {
         try {
             const result = await this.visitedRepository
