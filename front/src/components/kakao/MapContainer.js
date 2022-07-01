@@ -34,7 +34,7 @@ function userInfo () {
   let container = document.getElementById("map");
   let options = {
     center: new kakao.maps.LatLng(37.5666805, 126.9784147),
-    level: 5,
+    level: 7,
   };
   if (user) {
     const map = new kakao.maps.Map(container, options);
@@ -61,6 +61,6 @@ userInfo()
 
 
 
-  return <div id="map" style={{ width: "100vw", height: "100vh" }}></div>;
+  return <div id="map" style={{ width: "60vw", height: "60vh" }}></div>;
   
 }
