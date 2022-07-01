@@ -182,7 +182,6 @@ const UploadResult = () => {
             <UploadResultRight>
                 <UploadResultNameContainer>
                     <UploadResultNameImg src={name} />
-
                     {landmarkInfo.name}
                 </UploadResultNameContainer>
                 <UploadResultLocationContainer>

@@ -40,8 +40,13 @@ const BoardContent = (props) => {
     console.log('searchState', props.searchState);
     console.log('allBoardContent', allBoardContent);
 
+    const isNullSearchList = useMemo(
+        () => !searchResult.length && props.searchState,
+        [props.searchState, searchResult.length],
+    );
     return (
         <>
+            {isNullSearchList && <div>검색결과 없음</div>}
             {props.searchState === false
                 ? allBoardContent &&
                   allBoardContent.map((item, idx) => {
@@ -69,12 +74,12 @@ const BoardContent = (props) => {
                                           src={description}
                                           alt={description}
                                       />
-                                      광화문 설명: {item.description}
+                                      랜드마크 설명: {item.description.substring(0, 20)}..
                                   </UploadResultDescriptionContainer>
                               </UploadResultContentContainer>
                               <UploadResultContentPeopleContainer>
                                   <UploadResultPeopleImg src={Luggage} />
-                                  {item.visitedCount}명의 랜드마커들이 다녀갔습니다
+                                  5명의 랜드마커들이 다녀갔습니다
                               </UploadResultContentPeopleContainer>
                           </BoardContentContainer>
                       );
@@ -105,12 +110,12 @@ const BoardContent = (props) => {
                                           src={description}
                                           alt={description}
                                       />
-                                      광화문 설명: {item.description}
+                                      랜드마크 설명: {item.description.substring(0, 30)}
                                   </UploadResultDescriptionContainer>
                               </UploadResultContentContainer>
                               <UploadResultContentPeopleContainer>
                                   <UploadResultPeopleImg src={Luggage} />
-                                  {item.visitedCount}명의 랜드마커들이 다녀갔습니다
+                                  5명의 랜드마커들이 다녀갔습니다
                               </UploadResultContentPeopleContainer>
                           </BoardContentContainer>
                       );
