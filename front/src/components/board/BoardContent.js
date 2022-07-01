@@ -15,6 +15,7 @@ import {
     UploadResultLocationImg,
     UploadResultDescriptionContainer,
     UploadResultDescriptionImg,
+    EmptyContainer,
 } from './BoardContentStyle';
 import * as API from '../../api';
 
@@ -46,7 +47,9 @@ const BoardContent = (props) => {
     );
     return (
         <>
-            {isNullSearchList && <div>검색결과 없음</div>}
+            {isNullSearchList && (
+                <EmptyContainer>'{props.searchTerm}'에 대한 검색결과가 없습니다.</EmptyContainer>
+            )}
             {props.searchState === false
                 ? allBoardContent &&
                   allBoardContent.map((item, idx) => {

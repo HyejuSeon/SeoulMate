@@ -101,6 +101,10 @@ const Menu = ({ open }) => {
                         <span role="img" aria-label="contact" />
                         게시판
                     </a>
+                    <a href="/upload">
+                        <span role="img" aria-label="contact" />
+                        시작하기
+                    </a>
                 </>
             ) : (
                 <>

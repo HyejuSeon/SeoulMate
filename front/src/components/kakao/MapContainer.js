@@ -1,66 +1,56 @@
 /*global kakao */
-import React, { useEffect, useState } from "react";
-import * as API from "../../api";
+import React, { useEffect, useState } from 'react';
+import * as API from '../../api';
 import { useRecoilValue } from 'recoil';
 import { tokenState } from '../../atom';
 
-
-
 export default function Map() {
+    const [user, setUser] = useState();
 
+    const userB = useRecoilValue(tokenState);
+    const [kakaouser, setkakaoUser] = useState();
 
-  const [user, setUser] = useState();
-
-
-
-  const userB = useRecoilValue(tokenState);
-  const [kakaouser, setkakaoUser] = useState();
-
-
-  async function getUserData() {
-    try {
-    const res = await API.getQuery(`visited?user_id=${userB.user_id}`);
-    setUser(res.data)
-    } catch (err) {
-    console.log("err");
+    async function getUserData() {
+        try {
+            const res = await API.getQuery(`visited?user_id=${userB.user_id}`);
+            setUser(res.data);
+        } catch (err) {
+            console.log('err');
+        }
     }
-}
 
-useEffect(() => {
-  getUserData();
-}, []);
+    useEffect(() => {
+        getUserData();
+    }, []);
 
-function userInfo () {
-  let container = document.getElementById("map");
-  let options = {
-    center: new kakao.maps.LatLng(37.5666805, 126.9784147),
-    level: 7,
-  };
-  if (user) {
-    const map = new kakao.maps.Map(container, options);
-    const b = {
-      ...user.payloads.forEach((el)=> {
-        new kakao.maps.Marker({
-          //마커가 표시 될 지도
-          map: map,
-          //마커가 표시 될 위치
-          position: new kakao.maps.LatLng(el["landmark"].latitude, el["landmark"].longitude),
-          //마커에 hover시 나타날 title
-          title: el.name,
-        });
-      }
-
-      )
+    function userInfo() {
+        let container = document.getElementById('map');
+        let options = {
+            center: new kakao.maps.LatLng(37.5666805, 126.9784147),
+            level: 7,
+        };
+        if (user) {
+            const map = new kakao.maps.Map(container, options);
+            const b = {
+                ...user.payloads.forEach((el) => {
+                    new kakao.maps.Marker({
+                        //마커가 표시 될 지도
+                        map: map,
+                        //마커가 표시 될 위치
+                        position: new kakao.maps.LatLng(
+                            el['landmark'].latitude,
+                            el['landmark'].longitude,
+                        ),
+                        //마커에 hover시 나타날 title
+                        title: el.name,
+                    });
+                }),
+            };
+            console.log('서울마커:', b);
+        }
     }
-    console.log("서울마커:", b)
-  }
-}
 
+    userInfo();
 
-userInfo()
-
-
-
-  return <div id="map" style={{ width: "60vw", height: "60vh" }}></div>;
-  
+    return <div id="map" style={{ width: '60vw', height: '60vh' }}></div>;
 }

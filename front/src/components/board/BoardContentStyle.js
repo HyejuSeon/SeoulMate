@@ -110,3 +110,14 @@ export const UploadResultDescriptionImg = styled.img`
     margin-left: 3.4rem;
     padding-right: 2rem;
 `;
+
+export const EmptyContainer = styled.div`
+    width: 80rem;
+    height: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: gray; */
+
+    font-size: 2rem;
+`;

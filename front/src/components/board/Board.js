@@ -75,7 +75,7 @@ const Board = () => {
                 <BoardContainer>
                     <Container sx={{ marginTop: 1, flexGrow: 1 }}>
                         <Grid container>
-                            <BoardContent searchState={searchState} />
+                            <BoardContent searchState={searchState} searchTerm={searchTerm} />
                         </Grid>
                     </Container>
                 </BoardContainer>
