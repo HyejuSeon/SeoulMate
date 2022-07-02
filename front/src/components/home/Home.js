@@ -10,15 +10,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 // import required modules
 import { Navigation, Pagination } from 'swiper';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+
 import './Home.css';
 import place from '../../img/Place.png';
 import KakaoMap from './kakaoMap';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { userInfoState, tokenState, userState } from '../../atom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../atom';
 
 import {
     StartButton,
@@ -52,7 +49,7 @@ import img_4 from '../../img/landMark4.jpg';
 const Home = () => {
     const navigate = useNavigate();
     const user = useRecoilValue(userInfoState);
-    console.log('user:', user);
+    // console.log('user:', user);
 
     const [sencondPageImgs, setSecondPageImgs] = useState([]);
 
@@ -64,7 +61,7 @@ const Home = () => {
         getSecondPageImg();
     }, []);
 
-    console.log('탑4', sencondPageImgs);
+    // console.log('탑4', sencondPageImgs);
     const start = () => {
         user
             ? navigate('/upload')

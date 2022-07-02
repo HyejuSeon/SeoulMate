@@ -69,7 +69,7 @@ const Menu = ({ open }) => {
         }
     };
     useEffect(stateInitialization, [setTokenState, setUserInfostate, setUserState, userToken]);
-    console.log('loginState', loginState);
+    // console.log('loginState', loginState);
 
     const logout = () => {
         // sessionStorage 에 저장했던 JWT 토큰을 삭제함.

@@ -34,7 +34,7 @@ const Board = () => {
     };
 
     useEffect(() => {
-        console.log('검색결과', searchResult);
+        // console.log('검색결과', searchResult);
     }, [searchResult]);
 
     const clearInput = useRef();

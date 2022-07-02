@@ -61,7 +61,7 @@ function ProfileEdit({ toggleEditForm, updateUser, user }) {
             })
             .catch((error) => {
                 errorHandler('이미지수정오류', '이미지 파일이 너무 큽니다. 다시 확인해주세요');
-                console.log('error', error.response.data);
+                // console.log('error', error.response.data);
             });
     };
 

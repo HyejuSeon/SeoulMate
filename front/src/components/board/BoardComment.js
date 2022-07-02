@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import * as API from '../../api';
-import { CommentTextField } from '../upload/MuiCustom';
+import { CommentTextField, CommentTextEditField } from '../upload/MuiCustom';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../atom';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+
+import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
 
 import {
     BoardCommentContainer,
@@ -14,11 +18,16 @@ import {
     BoardBtnBox,
     BoardBtnContainer,
     ToggleButton,
+    BoardImgBox,
+    BoardUserNameBox,
 } from './BoardCommentStyle';
 
 import add from '../../img/Add.png';
 
 const BoardComment = () => {
+    const user = useRecoilValue(userInfoState);
+    // console.log('user:', user);
+
     const board_id = useParams();
 
     const [comments, setComments] = useState([]);
@@ -33,6 +42,7 @@ const BoardComment = () => {
             board_id: board_id.board_id,
         };
         await API.post('comment', variable);
+        getAllComments();
         setComments('');
     };
 
@@ -50,7 +60,7 @@ const BoardComment = () => {
         getAllComments();
     }, []);
 
-    console.log('댓글', allComments);
+    // console.log('댓글', allComments);
 
     return (
         <>
@@ -59,7 +69,7 @@ const BoardComment = () => {
                     <>
                         {!item.visible ? (
                             <BoardBtnContainer key={idx}>
-                                <CommentTextField
+                                <CommentTextEditField
                                     type="text"
                                     label="댓글수정"
                                     size="small"
@@ -67,66 +77,17 @@ const BoardComment = () => {
                                         setEditComments(e.target.value);
                                     }}
                                 />
-
-                                <button
-                                    onClick={async (e) => {
-                                        // await setAllComments(res.data.payloads);
-                                        await API.patch('comment', {
-                                            comment_id: item.comment_id,
-                                            content: editComments,
-                                        });
-                                        getAllComments();
-                                        // const res = await API.getQuery(
-                                        //     `comment?board_id=${board_id.board_id}`,
-                                        // );
-                                    }}
-                                >
-                                    확인
-                                </button>
-                                <button
-                                    onClick={(e) => {
-                                        setAllComments(
-                                            allComments.map((item, CommentsIdx) => {
-                                                if (idx === CommentsIdx) {
-                                                    return { ...item, visible: true };
-                                                } else {
-                                                    return { ...item, visible: true };
-                                                }
-                                            }),
-                                        );
-                                    }}
-                                    key={idx}
-                                >
-                                    취소
-                                </button>
-                            </BoardBtnContainer>
-                        ) : (
-                            <BoardCommentContainer key={idx}>
-                                <BoardCommentImg src={item.profile_image} />
-                                <BoardCommentBox>{item.content}</BoardCommentBox>
                                 <BoardBtnBox>
                                     <IconButton aria-label="delete" size="medium">
-                                        <DeleteIcon
+                                        <ThreeSixtyIcon
                                             aria-label="delete"
                                             size="medium"
                                             variant="outlined"
-                                            onClick={async (e) => {
-                                                await API.del('comment', item.comment_id);
-                                                await API.getQuery(
-                                                    `comment?board_id=${board_id.board_id}`,
-                                                ).then((res) => {
-                                                    setAllComments(res.data.payloads);
-                                                });
-                                            }}
-                                        />
-                                    </IconButton>
-                                    <IconButton color="primary" aria-label="edit" size="small">
-                                        <EditIcon
                                             onClick={(e) => {
                                                 setAllComments(
-                                                    allComments.map((item, allCommentsIdx) => {
-                                                        if (idx === allCommentsIdx) {
-                                                            return { ...item, visible: false };
+                                                    allComments.map((item, CommentsIdx) => {
+                                                        if (idx === CommentsIdx) {
+                                                            return { ...item, visible: true };
                                                         } else {
                                                             return { ...item, visible: true };
                                                         }
@@ -136,7 +97,64 @@ const BoardComment = () => {
                                             key={idx}
                                         />
                                     </IconButton>
+                                    <IconButton color="primary" aria-label="edit" size="small">
+                                        <EditIcon
+                                            onClick={async (e) => {
+                                                // await setAllComments(res.data.payloads);
+                                                await API.patch('comment', {
+                                                    comment_id: item.comment_id,
+                                                    content: editComments,
+                                                });
+                                                getAllComments();
+                                                // const res = await API.getQuery(
+                                                //     `comment?board_id=${board_id.board_id}`,
+                                                // );
+                                            }}
+                                        />
+                                    </IconButton>
                                 </BoardBtnBox>
+                            </BoardBtnContainer>
+                        ) : (
+                            <BoardCommentContainer key={idx}>
+                                <BoardImgBox>
+                                    <BoardCommentImg src={item.profile_image} />
+                                    <BoardUserNameBox>{item.name}</BoardUserNameBox>
+                                </BoardImgBox>
+                                <BoardCommentBox>{item.content}</BoardCommentBox>
+                                {/* {item.created_at.substring(0, 10)} */}
+                                {user?.user_id === item.user_id ? (
+                                    <BoardBtnBox>
+                                        <IconButton aria-label="delete" size="medium">
+                                            <DeleteIcon
+                                                aria-label="delete"
+                                                size="medium"
+                                                variant="outlined"
+                                                onClick={async (e) => {
+                                                    await API.del('comment', item.comment_id);
+                                                    getAllComments();
+                                                }}
+                                            />
+                                        </IconButton>
+                                        <IconButton color="primary" aria-label="edit" size="small">
+                                            <EditIcon
+                                                onClick={(e) => {
+                                                    setAllComments(
+                                                        allComments.map((item, allCommentsIdx) => {
+                                                            if (idx === allCommentsIdx) {
+                                                                return { ...item, visible: false };
+                                                            } else {
+                                                                return { ...item, visible: true };
+                                                            }
+                                                        }),
+                                                    );
+                                                }}
+                                                key={idx}
+                                            />
+                                        </IconButton>
+                                    </BoardBtnBox>
+                                ) : (
+                                    <></>
+                                )}
                             </BoardCommentContainer>
                         )}
                     </>

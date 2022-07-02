@@ -1,20 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { landmarkInfoState, userInfoState } from '../../atom';
+import { userInfoState } from '../../atom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 
 import * as API from '../../api';
 import { ValidationTextField } from '../upload/MuiCustom';
 import BoardComment from './BoardComment';
+import Swal from 'sweetalert2';
 
 import {
     UploadResultWrapper,
     UploadResultLeft,
     ImgContainer,
     UploadResultContentContainer,
-    UploadResultContentInfoTitle,
-    UploadResultContentInfo,
     UploadResultContentPeopleContainer,
     UploadResultPeopleImg,
     UploadResultBtnContainer,
@@ -50,7 +49,7 @@ import Luggage from '../../img/Luggage.png';
 
 const EachBoard = () => {
     const user = useRecoilValue(userInfoState);
-    console.log('user:', user);
+    // console.log('user:', user);
     const [eachBoardInfo, setEachBoardInfo] = useState('');
     const moment = require('moment');
     const today = moment();
@@ -73,15 +72,29 @@ const EachBoard = () => {
         getEachBoard();
     }, [getBoardId]);
 
-    console.log('넘겨받은거', allBoardContent);
-    console.log('게시글 받아온거', eachBoardInfo);
-    console.log('게시글 제목', title);
-    console.log('게시글 내용', content);
+    // console.log('넘겨받은거', allBoardContent);
+    // console.log('게시글 받아온거', eachBoardInfo);
+    // console.log('게시글 제목', title);
+    // console.log('게시글 내용', content);
     // console.log('userEmail', userEmail);
 
     const boardDelHandler = async () => {
-        await API.delData(`board/delete?boardId=${getBoardId}`);
-        navigate('/board');
+        Swal.fire({
+            title: '게시글 삭제',
+            text: '게시글을 삭제하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+            confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+            cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+            confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+            cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 만약 모달창에서 confirm 버튼을 눌렀다면
+                API.delData(`board/delete?boardId=${getBoardId}`);
+                navigate('/board');
+            }
+        });
     };
 
     const updateHandleSubmit = async (e) => {

@@ -13,7 +13,7 @@ const KakaoMap = () => {
 
     const mapscript = async () => {
         const res = await API.get('visited/getall');
-        console.log('res.data', res.data);
+        // console.log('res.data', res.data);
 
         const container = document.getElementById('myMap');
         const options = {
@@ -37,7 +37,7 @@ const KakaoMap = () => {
             };
         });
 
-        console.log(positions);
+        // console.log(positions);
         for (var i = 0; i < positions.length; i++) {
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({

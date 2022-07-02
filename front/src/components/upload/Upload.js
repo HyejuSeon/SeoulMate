@@ -44,19 +44,22 @@ const Upload = () => {
 
         API.sendImage('ai/images', formData)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 return response.data.gcs_url;
             })
             .then((landmarkURL) => {
                 setTimeout(() => {
                     API.post('ai', { url: landmarkURL })
                         .then((response) => {
-                            console.log('response.data', response.data);
+                            // console.log('response.data', response.data);
                             formData.append('user_id', user.user_id);
                             formData.append('landmark_id', response.data.landmark_id);
                             setLandmarkInfo(() => {
                                 return response.data;
                             });
+                        })
+                        .catch((err) => {
+                            console.error(err.response);
                         })
                         .then((responseData) => {
                             // formData.append('user_id', user.user_id);
@@ -67,6 +70,12 @@ const Upload = () => {
                                 })
                                 .catch((error) => {
                                     console.log(error);
+                                    Swal.fire({
+                                        title: 'AI가 분석할 수 없는 사진입니다. 다른 사진을 업로드 해주세요.',
+                                        icon: 'warning',
+                                        confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+                                        confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+                                    });
                                 });
                         });
                 }, 3000).catch((error) => {
@@ -74,26 +83,27 @@ const Upload = () => {
                 });
             })
             .catch((error) => {
-                console.log(error);
+                console.log('error', error);
             });
         setTimeout(() => {}, 500);
         setTimeout(() => {}, 1000);
     };
 
-    useEffect(() => {
-        console.log('info', landmarkInfo);
-        console.log('pic', landmarkPic);
-    }, [landmarkInfo, landmarkPic]);
+    // useEffect(() => {
+    //     console.log('info', landmarkInfo);
+    //     console.log('pic', landmarkPic);
+    // }, [landmarkInfo, landmarkPic]);
 
     const uploadHandler = () => {
-        avatar
+        // 서버에 이미지 올라갈때까지 기다리게...정보 다 들어오면 이동
+        avatar && landmarkPic && landmarkInfo
             ? setTimeout(() => {
                   navigate('/uploadResult', {
                       state: { landmarkInfo: landmarkInfo, landmarkPic: landmarkPic },
                   });
               }, 500)
             : Swal.fire({
-                  title: '먼저 사진을 업로드 하세요',
+                  title: '먼저 사진을 업로드 하고, AI의 분석 결과를 기다려주세요.',
                   icon: 'warning',
                   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
                   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정

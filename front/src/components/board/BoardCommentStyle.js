@@ -11,7 +11,21 @@ export const BoardCommentContainer = styled.div`
     justify-content: space-around;
     margin-top: 1rem;
 `;
+export const BoardImgBox = styled.div`
+    width: 5rem;
+    height: 2rem;
+    margin-left: 0.5rem;
 
+    /* background-color: red; */
+`;
+export const BoardUserNameBox = styled.div`
+    width: 5rem;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    /* background-color: blue; */
+`;
 export const BoardCommentImg = styled.img`
     display: flex;
     justify-content: center;
@@ -20,7 +34,7 @@ export const BoardCommentImg = styled.img`
     width: 2rem;
     height: 2rem;
     /* background: blue; */
-    margin-left: 1rem;
+    margin-left: 1.6rem;
 `;
 export const BoardCommentBox = styled.div`
     width: 30rem;
