@@ -7,6 +7,7 @@ import { getBoards } from './dto/board-list.dto';
 import { searchBoardDto } from './dto/search-board.dto';
 import { updateBoard } from './dto/update-board.dto';
 import { UsersService } from 'src/users/users.service';
+import { LandmarksService } from 'src/landmarks/landmarks.service';
 
 @Injectable()
 export class BoardService {
@@ -14,11 +15,18 @@ export class BoardService {
         @Inject('BOARDS_REPOSITORY')
         private boardRepository: Repository<Boards>,
         private userService: UsersService,
+        private landmarkService: LandmarksService,
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
+        const landmark = await this.landmarkService.getLandmarkByLandmarkName({
+            landmark_name: insertBoard.landmark_name,
+        });
+
         const newBoard = {
             ...insertBoard,
+            location: landmark.location,
+            description: landmark.description,
             user_id: userId,
         };
         await this.userService.getExperience(userId, 20);
@@ -44,6 +52,7 @@ export class BoardService {
         const perPages = pagination.perPage || 5;
         const pages = pagination.page || 1;
         const [boards, count] = await this.boardRepository.findAndCount({
+            relations: ['user_id'],
             skip: perPages * (pages - 1),
             take: perPages,
         });

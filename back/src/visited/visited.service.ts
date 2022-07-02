@@ -11,11 +11,7 @@ export class VisitedService {
         private visitedRepository: Repository<Visited>,
     ) {}
 
-    async getVisited(
-        query: returnVisitedDto,
-    ): Promise<
-        any
-    > {
+    async getVisited(query: returnVisitedDto): Promise<any> {
         try {
             const { page, perPage, landmark_id, user_id } = query;
             if (landmark_id === undefined && user_id === undefined) {
@@ -46,6 +42,15 @@ export class VisitedService {
             const totalPages = Math.ceil(count / perPage);
             const payloads = visited;
             return { payloads, totalPages };
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async getAllVisited(): Promise<any> {
+        try {
+            const result = await this.visitedRepository.find();
+            return result;
         } catch (err) {
             console.log(err);
         }

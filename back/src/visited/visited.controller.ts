@@ -68,6 +68,17 @@ export class VisitedController {
         res.status(HttpStatus.OK).json({ payloads: Result, totalPages });
     }
 
+    @Get('/getall')
+    @ApiOperation({ summary: '방문지 모든 데이터 조회' })
+    @ApiResponse({
+        status: 200,
+        description: 'Return All visited data',
+    })
+    async getAllVisited(@Res() res: any): Promise<void> {
+        const result = await this.visitedService.getAllVisited();
+        res.status(HttpStatus.OK).json(result);
+    }
+
     @Get('/count/:landmark_name')
     @ApiOperation({ summary: '방문지 조회 with landmark_name' })
     @ApiResponse({
