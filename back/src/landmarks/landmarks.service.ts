@@ -79,9 +79,8 @@ export class LandmarksService {
         try {
             const landmark = await this.landmarksRepository
                 .createQueryBuilder('landmark')
-                .select('landmark_id')
                 .where('landmark.name = :name', { name: param.landmark_name })
-                .getRawOne();
+                .getOne();
 
             return landmark;
         } catch (error) {
