@@ -19,15 +19,14 @@ export class BoardService {
     ) {}
 
     async create(insertBoard: writeBoard, userId: string) {
-        console.log(insertBoard.landmark_name);
-
         const landmark = await this.landmarkService.getLandmarkByLandmarkName({
-            lanmark_name: insertBoard.landmark_name,
+            landmark_name: insertBoard.landmark_name,
         });
-        console.log(landmark);
 
         const newBoard = {
             ...insertBoard,
+            location: landmark.location,
+            description: landmark.description,
             user_id: userId,
         };
         await this.userService.getExperience(userId, 20);

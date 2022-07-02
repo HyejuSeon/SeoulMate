@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { initLandmarkDto } from './dto/init.landmark.dto';
 import { queryLandmarkDto } from './dto/query.landmark.dto';
 import { Landmark } from './landmarks.entity';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs');
 
 @Injectable()
@@ -46,7 +47,7 @@ export class LandmarksService {
         }
     }
 
-    async getLandmarksPaginated(query: queryLandmarkDto): Promise<{}> {
+    async getLandmarksPaginated(query: queryLandmarkDto): Promise<any> {
         try {
             const { page, perPage, ...conditions } = query;
             const landmarks = await this.landmarksRepository.findAndCount({
@@ -74,8 +75,6 @@ export class LandmarksService {
     }
 
     async getLandmarkByLandmarkName(param): Promise<any> {
-        console.log(param);
-
         try {
             const landmark = await this.landmarksRepository
                 .createQueryBuilder('landmark')

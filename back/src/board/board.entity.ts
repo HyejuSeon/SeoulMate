@@ -30,7 +30,7 @@ export class Boards extends BaseEntity {
     @Column()
     location: string;
 
-    @Column()
+    @Column({ type: 'longtext', nullable: true })
     description: string;
 
     @CreateDateColumn()
