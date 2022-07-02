@@ -9,7 +9,13 @@ import { boardProviders } from './board.provider';
 import { BoardService } from './board.service';
 
 @Module({
-    imports: [DatabaseModule, StorageModule, UsersModule, LandmarksModule, VisitedModule],
+    imports: [
+        DatabaseModule,
+        StorageModule,
+        UsersModule,
+        LandmarksModule,
+        VisitedModule,
+    ],
     providers: [...boardProviders, BoardService],
     controllers: [BoardController],
 })
