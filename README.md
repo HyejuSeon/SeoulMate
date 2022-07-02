@@ -157,36 +157,36 @@ Seoul Mate의 메인 페이지에서는 방문자가 많은 랜드마크를 보�
 
 ex) 제거한 데이터셋
 
--   라온
-    <img src="uploads/cf6a42015f8acdfdff7a53fde3764651/image.png" width="300">
-    <img src="uploads/811e4472425895b2c9fc73d90d74a49a/image.png" width="300">
+-   라온  
+    <img src="https://user-images.githubusercontent.com/55802893/176853812-5a0cfccb-9435-4c65-bb64-c428b6010760.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176853824-ff67c750-41d6-4f80-a102-e22ac006afc7.jpeg" width="300">
 
 <br>
 
--   메트로팜
-    <img src="uploads/1a7b8c11385173222d9238560569e6a5/image.png" width="300">
-    <img src="uploads/5b5573968cfd8ceb03eeb702060f5667/image.png" width="300">
+-   메트로팜  
+    <img src="https://user-images.githubusercontent.com/55802893/176853957-554283da-7a16-43a5-9c5a-1f02aa23ed6f.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176853964-71a31d32-b058-4bae-aeb5-31614a10265b.jpeg" width="300">
 
 <br>
 
--   카이스트 서울캠퍼스
-    <img src="uploads/42ba42ad1b9df5c2fc5bbc281b7d1252/image.png" width="300">
-    <img src="uploads/698e9e303ac3419328dcc09757f152bf/image.png" width="300">
+-   카이스트 서울캠퍼스  
+    <img src="https://user-images.githubusercontent.com/55802893/176854153-f10dcad4-9fad-47df-a1b3-990801b7a179.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176854161-6830347a-b61b-4373-87ea-784be7266f60.jpeg" width="300">
 
 ### 노이즈 제거
 
 ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에서 간판 이미지는 노이즈라 판단하여 제거했습니다.
 
--   정상 이미지
-    <img src="uploads/cb274e10b8155a4f851272df8883760f/image.png" width="300">
-    <img src="uploads/8e0e12657794ce666f8d5ab3cd9cde63/image.png" width="300">
+-   정상 이미지  
+    <img src="https://user-images.githubusercontent.com/55802893/176854289-8121f4f6-0d25-4185-9b04-10f35d7ca0ee.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176854300-9abf89d9-d59d-4377-a672-f73abf6898d8.jpeg" width="300">
 
 <br>
 
 <br>
 
--   노이즈
-    <img src="uploads/45bd792e30e1d26e685fc02373a779f2/image.png" width="300">
+-   노이즈  
+    <img src="https://user-images.githubusercontent.com/55802893/176854439-fdb8920c-e505-4c78-92e9-363a2aaba6fb.jpeg" width="300">
 
 ### EDA
 
@@ -196,7 +196,15 @@ ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에�
 
     Min: 69, Max: 263, Mean: 147
 
-<img src="uploads/7975fcbd29ae29a04ca105561fccbf77/image.png">
+<img src="https://user-images.githubusercontent.com/55802893/176854556-859245ef-406e-4a0a-a983-52ec85f58db4.png">
+
+-   장소 별 클래스 개수  
+    <img src="https://user-images.githubusercontent.com/55802893/176854863-1c1734e8-abec-4c42-9a40-db1dc231ee07.png">
+-   subcategory 별 클래스 개수
+    <img src="https://user-images.githubusercontent.com/55802893/176854752-c34dd273-5691-4a23-a361-7871edadcbd5.png">
+
+-   supercategory 별 클래스 개수
+    <img src="https://user-images.githubusercontent.com/55802893/176855666-b5895483-40a4-4bb0-8c3e-4f5b049250df.png">
 
 ## 인공지능 모델
 
@@ -208,7 +216,7 @@ ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에�
 
 ## 데이터베이스 구조도
 
-![스크린샷 2022-06-10 오후 11 35 45](https://user-images.githubusercontent.com/55802893/173089023-c08de090-9c8d-4d7e-97d3-a117cd58ad94.png)
+![스크린샷 2022-07-02 오전 10 52 32](https://user-images.githubusercontent.com/55802893/176982480-eb10aba0-2e5e-4a88-80df-db7fef956b54.png)
 
 # 와이어 프레임
 
