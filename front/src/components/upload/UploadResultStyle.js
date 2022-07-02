@@ -8,7 +8,7 @@ export const UploadResultWrapper = styled.div`
     min-height: 100vh;
     min-width: 95vw;
 
-    font-family: 'Jeju Gothic', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 
     /* background: yellow; */
 `;
@@ -19,7 +19,7 @@ export const UploadResultLeft = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 45rem;
-    height: 45rem;
+    height: auto;
 
     margin-left: 18rem;
 
@@ -32,11 +32,11 @@ export const UploadResultLeft = styled.div`
 `;
 
 export const ImgContainer = styled.img`
-    width: 35rem;
-    height: 20rem;
+    width: 36rem;
+    height: 23rem;
     margin-top: 3rem;
     padding-bottom: 3rem;
-    object-fit: cover;
+    object-fit: fit;
     /* &:hover {
         cursor: pointer;
         opacity: 0.8;
@@ -65,7 +65,7 @@ export const UploadResultContentInfoTitle = styled.div`
 `;
 
 export const UploadResultContentInfo = styled.div`
-    width: 35rem;
+    width: 36rem;
     height: 4rem;
 
     font-size: 1rem;
@@ -86,7 +86,7 @@ export const UploadResultContentPeopleContainer = styled.section`
     width: 23rem;
     height: 3rem;
 
-    margin-left: 12rem;
+    margin-left: 14rem;
     margin-top: 2rem;
     /* background-color: yellow; */
 
@@ -121,6 +121,7 @@ export const UploadResultBtn = styled.button`
     box-shadow: 0px 20px 35px rgba(241, 165, 1, 0.15);
     border-radius: 10px;
     cursor: pointer;
+    border: none;
 `;
 
 export const UploadResultRight = styled.div`
@@ -169,6 +170,7 @@ export const UploadResultDescriptionContainer = styled.div`
     height: 10rem;
     display: flex;
     align-items: center;
+    line-height: 1.5rem;
     /* background: grey; */
 `;
 

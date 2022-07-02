@@ -10,15 +10,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 // import required modules
 import { Navigation, Pagination } from 'swiper';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+
 import './Home.css';
 import place from '../../img/Place.png';
 import KakaoMap from './kakaoMap';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { userInfoState, tokenState, userState } from '../../atom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../atom';
 
 import {
     StartButton,
@@ -52,7 +49,7 @@ import img_4 from '../../img/landMark4.jpg';
 const Home = () => {
     const navigate = useNavigate();
     const user = useRecoilValue(userInfoState);
-    console.log('user:', user);
+    // console.log('user:', user);
 
     const [sencondPageImgs, setSecondPageImgs] = useState([]);
 
@@ -64,7 +61,7 @@ const Home = () => {
         getSecondPageImg();
     }, []);
 
-    console.log('탑4', sencondPageImgs);
+    // console.log('탑4', sencondPageImgs);
     const start = () => {
         user
             ? navigate('/upload')
@@ -116,17 +113,17 @@ const Home = () => {
                     <img
                         src={item.landmark_img}
                         alt="user img"
-                        style={{ width: '528px', height: '295px' }}
+                        style={{ width: '34rem', height: '20rem' }}
                     />
                 </ThirdPageImgContainer>
                 <ThirdPageContentDescription>
-                    랜드마크 설명 너무 이뻐요 멋있어요 블라블라{' '}
+                    {item.description.substring(0, 78)}...{' '}
                 </ThirdPageContentDescription>
                 <ThirdPageContentDescription2>
-                    <ThirdPageContentUserInfo>유저이름</ThirdPageContentUserInfo>
+                    <ThirdPageContentUserInfo>{item.name}</ThirdPageContentUserInfo>
                     <ThirdPageContentLocationInfo>
                         <img src={place} alt="location" style={{ width: '30px', height: '30px' }} />
-                        랜드마크 주소 정보 서울 특별시 어쩌구저쩌구
+                        {item.add}
                     </ThirdPageContentLocationInfo>
                 </ThirdPageContentDescription2>
             </ThirdPageContentWrapper>
@@ -149,7 +146,7 @@ const Home = () => {
             <SecondPage>
                 <SecondPageHeadCopy>
                     <br />
-                    랜드마크의 발견, SeoulMate.
+                    랜드마크의 발견, SeoulMate
                 </SecondPageHeadCopy>
                 <Swiper
                     pagination={true}

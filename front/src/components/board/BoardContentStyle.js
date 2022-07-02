@@ -97,10 +97,19 @@ export const UploadResultLocationImg = styled.img`
 `;
 
 export const UploadResultDescriptionContainer = styled.div`
-    width: 45rem;
+    width: 35rem;
     height: 10rem;
     display: flex;
     align-items: center;
+    /* background: grey; */
+`;
+
+export const BoardUploadResultDescriptionContainer = styled.div`
+    width: 30rem;
+    height: 13rem;
+    display: flex;
+    align-items: center;
+    line-height: 1.4rem;
     /* background: grey; */
 `;
 
@@ -109,4 +118,15 @@ export const UploadResultDescriptionImg = styled.img`
     height: 3rem;
     margin-left: 3.4rem;
     padding-right: 2rem;
+`;
+
+export const EmptyContainer = styled.div`
+    width: 80rem;
+    height: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: gray; */
+
+    font-size: 2rem;
 `;

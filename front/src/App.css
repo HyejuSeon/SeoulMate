@@ -1,5 +1,15 @@
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@800&display=swap');
 
 .App {
-    font-family: 'Jeju Gothic', sans-serif;
+    font-family: 'Jeju Gothic', 'Nanum Gothic', sans-serif;
 }
+
+/* html,
+body {
+    -ms-overflow-style: none;
+    word-break: keep-all;
+}
+::-webkit-scrollbar {
+    display: none;
+} */
