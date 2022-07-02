@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import { useRecoilValue } from 'recoil';
 import * as API from '../../api';
+import Swal from 'sweetalert2';
 
 import { userInfoState } from '../../atom';
 import { ValidationTextField } from './MuiCustom';
@@ -38,7 +39,6 @@ import Luggage from '../../img/Luggage.png';
 const UploadResult = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [restaurant, setRestaurant] = useState('test');
 
     const [landmarkInfo, setLandmarkInfo] = useState('test');
     const [landmarkPicInfo, setLandmarkPicInfo] = useState('test');
@@ -53,8 +53,8 @@ const UploadResult = () => {
     useEffect(() => {
         setLandmarkInfo(landmarkLocation.state.landmarkInfo);
         setLandmarkPicInfo(landmarkLocation.state.landmarkPic);
-        console.log('landmarkInfo 업로드에서 넘어온 랜드마크 정보', landmarkInfo);
-        console.log('landmarkPicInfo 업로드에서 넘어온 사진 정보', landmarkPicInfo);
+        // console.log('landmarkInfo 업로드에서 넘어온 랜드마크 정보', landmarkInfo);
+        // console.log('landmarkPicInfo 업로드에서 넘어온 사진 정보', landmarkPicInfo);
     }, [
         landmarkInfo,
         landmarkLocation.state.landmarkInfo,
@@ -71,12 +71,12 @@ const UploadResult = () => {
 
         const variable = {
             title: title,
-            restaurant: restaurant,
+            // restaurant: restaurant,
             content: content,
             landmark_img_id: landmarkPicInfo.landmark_img,
             landmark_name: landmarkInfo.name,
-            location: landmarkInfo.add,
-            description: landmarkInfo.description.substring(10),
+            // location: landmarkInfo.add,
+            // description: landmarkInfo.description.substring(10),
         };
 
         try {
@@ -97,9 +97,9 @@ const UploadResult = () => {
         getBoardContent();
     }, []);
 
-    useEffect(() => {
-        console.log('content.payload', contents);
-    }, [contents]);
+    // useEffect(() => {
+    //     console.log('content.payload', contents);
+    // }, [contents]);
 
     return (
         <UploadResultWrapper>
@@ -110,7 +110,7 @@ const UploadResult = () => {
                         <UploadResultContentContainer>
                             <UploadResultContentInfoTitle>
                                 <span>사진 제목</span>
-                                <span>Date</span>
+                                <span style={{ marginRight: '2rem' }}>Date</span>
                                 <span>ID</span>
                             </UploadResultContentInfoTitle>
                             <UploadResultContentInfo>
@@ -132,7 +132,27 @@ const UploadResult = () => {
                             >
                                 게시글 작성하기
                             </UploadResultBtn>
-                            <UploadResultBtn>기록하기</UploadResultBtn>
+                            <UploadResultBtn
+                                onClick={() => {
+                                    Swal.fire({
+                                        title: '다녀온 랜드마크가 기록되었습니다',
+                                        text: '마이페이지로 이동하시겠습니까?',
+                                        icon: 'warning',
+                                        showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+                                        confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+                                        cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+                                        confirmButtonText: '예', // confirm 버튼 텍스트 지정
+                                        cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // 만약 모달창에서 confirm 버튼을 눌렀다면
+                                            navigate('/mypage');
+                                        }
+                                    });
+                                }}
+                            >
+                                기록하기
+                            </UploadResultBtn>
                             <UploadResultBtn onClick={() => navigate('/Upload')}>
                                 뒤로가기
                             </UploadResultBtn>
@@ -182,7 +202,6 @@ const UploadResult = () => {
             <UploadResultRight>
                 <UploadResultNameContainer>
                     <UploadResultNameImg src={name} />
-
                     {landmarkInfo.name}
                 </UploadResultNameContainer>
                 <UploadResultLocationContainer>
