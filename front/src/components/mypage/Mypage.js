@@ -1,8 +1,7 @@
-import { Container, Typography, Button } from "@mui/material"
-import { useContext, useEffect, useState } from "react"
+import { Container, Typography} from "@mui/material"
+import { useEffect, useState } from "react"
 import InfoIcon from '@mui/icons-material/Info';
 import Profile from "./Profile"
-import { UserStateContext } from "../../App"
 import * as API from "../../api";
 import MapContainer from "../kakao/MapContainer";
 import { useSetRecoilState, useRecoilState } from "recoil";
@@ -17,9 +16,7 @@ const [token, setToken] = useRecoilState(tokenState);
 const [recoilUser, setRecoilUser] = useRecoilState(userState);
 
 
-console.log("userInfo:", userInfo)
 
-const isLoggedin = sessionStorage.getItem("userToken")
 
 const [user, setUser] = useState(null);
 const [editOpen, setEditOpen] = useState(false);
@@ -39,7 +36,6 @@ async function getUserData() {
   try {
     const res = await API.get("users/current/info");
     setUser(res.data);
-    console.log(user)
   } catch (err) {
     console.log("err");
   }
@@ -83,8 +79,9 @@ const logout = () => {
       variant="h3"
       component="div"
       sx={{ fontSize: "30px", mt: 6, mb: 2 }}
+      fontFamily= {"Jeju Gothic"}
     >
-      <InfoIcon sx={{ mx: 1.2, my: -1, fontSize: "40px", color: "gray" }} />
+      <InfoIcon sx={{ mx: 1.2, my: -1,  fontSize: "40px", color: "gray"}}  />
       내가 다녀온 곳
       
       <MapContainer>

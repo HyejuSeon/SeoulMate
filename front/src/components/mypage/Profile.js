@@ -1,4 +1,4 @@
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import styled from "styled-components";
 import ProfileEdit from "./ProfileEdit.js";
@@ -8,14 +8,13 @@ import UserInfo from "./UserInfo.js";
 
 function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
   const navigate = useNavigate()
-  const percentage = 66;
+  const percentage = 0;
     return (
     <CardBox>
         <UpperBox>
         {/* 프로필 편집폼이 열리면 이미지 안보이게 함 */}
         {!editOpen && (
           <div className={Style.imageBox} onClick={() => toggleEditForm()}>
-            <img src="https://gradium.co.kr/wp-content/uploads/kiwi-2.jpg" className={Style.profileImg} alt="프로필 이미지"/>
               <span className={Style.editButton}>편집하기</span>
             </div>
         )}
@@ -30,7 +29,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
             />
           ) : (
             <Grid item xs={6} sx={{ textAlign: "center", marginTop: "9em" }}>
-              <Typography variant="h3" component="div">
+              <Typography variant="h3" component="div" fontFamily={'Jeju Gothic'}>
                 {user?.name} 
               </Typography>
 
@@ -38,6 +37,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
                 variant="h6"
                 sx={{ marginTop: "20px" }}
                 component="div"
+                fontFamily={'Jeju Gothic'}
               >
                 {user?.email}
               </Typography>
@@ -54,15 +54,14 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
 
       <Grid item xs={6}  sx={{ textAlign: "center" }}>
       <Grid item xs={6}  sx={{marginLeft:"6em"}}>
-        <CircularProgressbar value={percentage}
-  text={`${percentage}%`}
+        <CircularProgressbar value={percentage} 
+  text={`레벨${percentage}`} 
   styles={buildStyles({
     // Rotation of path and trail, in number of turns (0-1)
     rotation: 0.25,
 
     // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
     strokeLinecap: 'butt',
-
     // Text size
     textSize: '16px',
 
@@ -78,7 +77,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
     trailColor: '#d6d6d6',
     backgroundColor: '#3e98c7',
   })}
-/>;
+/>
         </Grid>
       <Typography
                 variant="h6"
@@ -107,16 +106,18 @@ const CardBox = styled.div`
   border: 1px solid #E4E4E4;
   border-radius: 30px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
-  font-family: "Elice Digital Baeum", sans-serif;
+  font-family: 'Jeju Gothic', sans-serif;
 `;
 
 const UpperBox = styled.div`
   height: 150px;
   background: #CCE5FF;
+  font-family: 'Jeju Gothic', sans-serif;
 `;
 
 const LowerBox = styled.div`
   height: 300px;
+  font-family: 'Jeju Gothic', sans-serif;
 `;
 
 

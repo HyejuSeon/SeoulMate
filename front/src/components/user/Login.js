@@ -3,9 +3,8 @@ import { Box } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Api from '../../api';
 import { DispatchContext } from '../../App.js';
-import { ROUTES } from '../../Route';
 import styled from 'styled-components';
-import style from '../../styledCompo/LoginStyle/Login.moudule.css';
+import style from '../../styledCompo/LoginStyle/Login.module.css';
 import CssTextField from './CssTextField';
 import Swal from 'sweetalert2'
 import errorHandler from "../../errorHandler";
@@ -20,8 +19,6 @@ function Login() {
     const setUser = useSetRecoilState(userState);
     const setToken = useSetRecoilState(tokenState);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-
-    const dispatch = useContext(DispatchContext);
 
     const [form, setForm] = useState({
         email: '',
@@ -137,17 +134,3 @@ export default Login;
 
 const LoginBody = styled.form``;
 
-const LoginBodyUpper = styled.div`
-    display: flex;
-`;
-
-const LoginTitle = styled.div`
-    font-size: 20px;
-    font-weight: 600;
-    padding-top: 14px;
-`;
-const LoginTitle2 = styled.div`
-    font-size: 18px;
-    font-weight: 600;
-    padding-top: 4px;
-`;

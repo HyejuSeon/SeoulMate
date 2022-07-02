@@ -51,8 +51,21 @@ export class VisitedController {
         @Query()
         query: returnVisitedDto,
     ): Promise<void> {
-        const result = await this.visitedService.getVisited(query);
-        res.status(HttpStatus.OK).json(result);
+        const { payloads, totalPages } = await this.visitedService.getVisited(
+            query,
+        );
+
+        const Result = await Promise.all(
+            payloads.map(async (payload) => {
+                const landmark =
+                    await this.landmarksService.getLandmarkByLandmarkId(
+                        payload.landmark_id,
+                    );
+                payload.landmark = landmark;
+                return payload;
+            }),
+        );
+        res.status(HttpStatus.OK).json({ payloads: Result, totalPages });
     }
 
     @Get('/count/:landmark_name')
