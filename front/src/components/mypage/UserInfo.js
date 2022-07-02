@@ -92,14 +92,16 @@ function UserInfo({user, updateUser}){
         <Stack direction="row" spacing={2}>
         <Button onClick={() => editps()} variant="contained" color="success" sx={{
                 marginLeft: "190px",
-                width: "100px",
+                width: "120px",
                 height: "50px",
+                fontFamily: 'Jeju Gothic',
                 verticalAlign: 'top',
-                fontSize: "10px", 
+                fontSize: "12px", 
                 }}>비밀번호 변경</Button>
         <Button onClick={() => DeleteUser()} variant="contained" color="error" sx={{
                 marginLeft: "190px",
-                width: "100px",
+                width: "120px",
+                fontFamily: 'Jeju Gothic',
                 height: "50px",
                 verticalAlign: 'top', 
                 }}>계정 삭제</Button>

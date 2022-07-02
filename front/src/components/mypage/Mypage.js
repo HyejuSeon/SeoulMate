@@ -83,11 +83,14 @@ const logout = () => {
       variant="h3"
       component="div"
       sx={{ fontSize: "30px", mt: 6, mb: 2 }}
+      fontFamily= {"Jeju Gothic"}
     >
-      <InfoIcon sx={{ mx: 1.2, my: -1, fontSize: "40px", color: "gray" }} />
+      <InfoIcon sx={{ mx: 1.2, my: -1,  fontSize: "40px", color: "gray"}}  />
       내가 다녀온 곳
       
-      <MapContainer>
+      <MapContainer
+      user={user}
+      >
         
       </MapContainer>
     </Typography>

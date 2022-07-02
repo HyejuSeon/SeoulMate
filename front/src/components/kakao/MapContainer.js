@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import * as API from "../../api";
 import { useRecoilValue } from 'recoil';
-import { tokenState } from '../../atom';
+import { tokenState, userState } from '../../atom';
 
 
 
@@ -12,8 +12,8 @@ export default function Map() {
   const [user, setUser] = useState();
 
 
-
   const userB = useRecoilValue(tokenState);
+  console.log("userB",userB)
   const [kakaouser, setkakaoUser] = useState();
 
 

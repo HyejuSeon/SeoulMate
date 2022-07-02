@@ -1,5 +1,5 @@
 import { useState } from "react";
-import * as Api from "../../api";
+import * as API from "../../api";
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
@@ -33,14 +33,18 @@ const CssTextField = withStyles({
       e.preventDefault();
   
       // user 수정 api 호출
-      const UserInfoEdit = await Api.put('users/update', form);
+      const UserInfoEdit = await API.put('users/update', form);
     
-        // let formData = new FormData();
-        // formData.append("profile_image", imageInfo);
-        // console.log("imageInfo", imageInfo)
+        let formData = new FormData();
+        formData.append("name", form.name)
+        formData.append("prePassword", form.prePassword)
+        formData.append("profile_image", imageInfo);
+        // console.log("formData", formData)
       // 이미지를 넣었을 경우에만 업로드 api 호출
-      const ImageEdit =
-        (imageInfo && setImageForm({...form, profile_image:imageInfo}))
+      console.log("42번 imageInfo", imageInfo)
+        const ImageEdit = API.put('users/update', {...form, 
+          file:"https://storage.googleapis.com/landmark_service_images/visited/1656677066968_a132cd26-3b3e-4ef5-8579-fbf6ab4f2303_landMark2jpg"});
+    
         
       const Edit = async () => {
         try {
@@ -50,10 +54,11 @@ const CssTextField = withStyles({
           throw error;
         }
       };
-  
       Edit()
         .then((res) => {
+          console.log("res:", res)
           const InfoData = res[0].data;
+          console.log("res[1]",res[1])
           const ImageData = res[1]?.data?.updatedUser; // 이미지 안넣었을 땐 res[1]이 null 값.
           
 
@@ -105,18 +110,6 @@ const CssTextField = withStyles({
               }
             />
   
-            <Stack direction="column" spacing={1} sx={UploadBox}>
-              <UploadFileIcon sx={{ alignItems: "center", color: "gray" }} />
-              <Typography sx={{ opacity: 1 }}>이미지를 업로드 하세요!</Typography>
-  
-              <input
-                style={{ padding: "10px 0 0 85px" }}
-                type="file"
-                name="attachment"
-                accept="image/*"
-                onChange={(e) => setImageInfo(e.target.files[0])}
-              />
-            </Stack>
           </Stack>
   
           <Stack
@@ -156,3 +149,4 @@ const CssTextField = withStyles({
     justifyContent: "center",
     p: 1,
   };
+  

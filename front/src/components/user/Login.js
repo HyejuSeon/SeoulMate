@@ -5,7 +5,7 @@ import * as Api from '../../api';
 import { DispatchContext } from '../../App.js';
 import { ROUTES } from '../../Route';
 import styled from 'styled-components';
-import style from '../../styledCompo/LoginStyle/Login.moudule.css';
+import style from '../../styledCompo/LoginStyle/Login.module.css';
 import CssTextField from './CssTextField';
 import Swal from 'sweetalert2'
 import errorHandler from "../../errorHandler";
