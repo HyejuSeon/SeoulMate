@@ -1,8 +1,8 @@
 /*global kakao */
 import React, { useEffect, useState } from "react";
 import * as API from "../../api";
-import { useRecoilValue } from 'recoil';
-import { tokenState, userState } from '../../atom';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { tokenState, userState, userInfoState } from '../../atom';
 
 
 
@@ -10,17 +10,17 @@ export default function Map() {
 
 
   const [user, setUser] = useState();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
 
-  const userB = useRecoilValue(tokenState);
-  console.log("userB",userB)
-  const [kakaouser, setkakaoUser] = useState();
+  const userB = useRecoilValue(userInfoState);
 
 
   async function getUserData() {
     try {
     const res = await API.getQuery(`visited?user_id=${userB.user_id}`);
     setUser(res.data)
+    console.log("user:", user)
     } catch (err) {
     console.log("err");
     }
@@ -30,11 +30,11 @@ useEffect(() => {
   getUserData();
 }, []);
 
-function userInfo () {
+function userInfoo () {
   let container = document.getElementById("map");
   let options = {
     center: new kakao.maps.LatLng(37.5666805, 126.9784147),
-    level: 7,
+    level: 8,
   };
   if (user) {
     const map = new kakao.maps.Map(container, options);
@@ -57,10 +57,10 @@ function userInfo () {
 }
 
 
-userInfo()
+userInfoo()
 
 
 
-  return <div id="map" style={{ width: "60vw", height: "60vh" }}></div>;
+  return <div id="map" style={{ width: "50vw", height: "60vh", marginLeft:"100px"}}></div>;
   
 }

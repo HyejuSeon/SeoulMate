@@ -1,20 +1,13 @@
 import { Button, Stack} from '@mui/material';
-import { useState } from "react"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2'
 import * as API from '../../api'
-import { useContext } from 'react';
-import { DispatchContext } from '../../App';
-import { LOGOUT } from '../../reducer';
-import styled from "styled-components";
-import errorHandler from "../../errorHandler";
+
 
 function UserInfo({user, updateUser}){
     const navigate = useNavigate()
-    const dispatch = useContext(DispatchContext)
     
     function DeleteUser(){
-        console.log(user)
         Swal.fire({
             title: '계정삭제',
             text: "기존의 비밀번호를 적어주세요",
@@ -32,6 +25,7 @@ function UserInfo({user, updateUser}){
                     try{
                         //password 회원탈퇴하기
                         await API.delpw('users/delete', password)
+                        navigate('/login');
                         Swal.fire({
                             title: '회원탈퇴 완료',
                             icon: 'success'
@@ -64,7 +58,6 @@ function UserInfo({user, updateUser}){
         }
       }).then(async function(result) {
         const Apassword = {prePassword: result.value.prePassword, newPassword:result.value.newPassword }
-        console.log(Apassword)
         if(result.isConfirmed) {
             try{
                 //password 회원탈퇴하기
@@ -80,7 +73,6 @@ function UserInfo({user, updateUser}){
                     icon: 'fail'
                 })
         }
-            console.log("성공")
         }
         Swal.fire(`
         prePassword: ${result.value.prePassword}
@@ -91,7 +83,7 @@ function UserInfo({user, updateUser}){
     return (
         <Stack direction="row" spacing={2}>
         <Button onClick={() => editps()} variant="contained" color="success" sx={{
-                marginLeft: "190px",
+                marginLeft: "90px",
                 width: "120px",
                 height: "50px",
                 fontFamily: 'Jeju Gothic',
@@ -99,7 +91,7 @@ function UserInfo({user, updateUser}){
                 fontSize: "12px", 
                 }}>비밀번호 변경</Button>
         <Button onClick={() => DeleteUser()} variant="contained" color="error" sx={{
-                marginLeft: "190px",
+                marginLeft: "90px",
                 width: "120px",
                 fontFamily: 'Jeju Gothic',
                 height: "50px",

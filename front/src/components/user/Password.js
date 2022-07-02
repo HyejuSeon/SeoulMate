@@ -1,17 +1,16 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-import { ROUTES } from "../../Route";
+
 import style from "../../styledCompo/PasswordStyle/Password.module.css"
 import * as API from "../../api";
 import CssTextField from "./CssTextField";
 
 
 function Password() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
@@ -21,7 +20,6 @@ function Password() {
       const res = await API.post("users/reset/password", {
         email,
       });
-      console.log(res);
       Swal.fire({
         position: "top-center",
         title: "비밀번호 리셋 성공!",
@@ -79,17 +77,3 @@ export default Password;
 
 const PasswordBody = styled.form``;
 
-const PasswordBodyUpper = styled.div`
-  display: flex;
-`;
-
-const PasswordTitle = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  padding-top: 14px;
-`;
-const PasswordTitle2 = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  padding-top: 4px;
-`;

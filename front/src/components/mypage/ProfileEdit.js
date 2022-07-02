@@ -1,10 +1,9 @@
 import { useState } from "react";
+import Swal from 'sweetalert2'
 import * as API from "../../api";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack} from "@mui/material";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
-import axios from "axios";
 import errorHandler from "../../errorHandler";
 const CssTextField = withStyles({
     root: {
@@ -20,14 +19,14 @@ const CssTextField = withStyles({
   
   function ProfileEdit({ toggleEditForm, updateUser, user }) {
   
-    const [imageInfo, setImageInfo] = useState(null);
+    // const [imageInfo, setImageInfo] = useState(null);
   
     const [form, setForm] = useState({
       name: user?.name,
       prePassword:"",
     });
 
-    const [imageform, setImageForm] = useState({})
+    // const [imageform, setImageForm] = useState({})
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -35,20 +34,20 @@ const CssTextField = withStyles({
       // user 수정 api 호출
       const UserInfoEdit = await API.put('users/update', form);
     
-        let formData = new FormData();
-        formData.append("name", form.name)
-        formData.append("prePassword", form.prePassword)
-        formData.append("profile_image", imageInfo);
-        // console.log("formData", formData)
-      // 이미지를 넣었을 경우에만 업로드 api 호출
-      console.log("42번 imageInfo", imageInfo)
-        const ImageEdit = API.put('users/update', {...form, 
-          file:"https://storage.googleapis.com/landmark_service_images/visited/1656677066968_a132cd26-3b3e-4ef5-8579-fbf6ab4f2303_landMark2jpg"});
+      //   let formData = new FormData();
+      //   formData.append("name", form.name)
+      //   formData.append("prePassword", form.prePassword)
+      //   formData.append("profile_image", imageInfo);
+      //   // console.log("formData", formData)
+      // // 이미지를 넣었을 경우에만 업로드 api 호출
+      // console.log("42번 imageInfo", imageInfo)
+      //   const ImageEdit = API.put('users/update', {...form, 
+      //     file:"https://storage.googleapis.com/landmark_service_images/visited/1656677066968_a132cd26-3b3e-4ef5-8579-fbf6ab4f2303_landMark2jpg"});
     
         
       const Edit = async () => {
         try {
-          return await Promise.all([UserInfoEdit, ImageEdit]);
+          return await Promise.all([UserInfoEdit]);
         } catch (error) {
           // errorHandler("회원 정보 수정 오류", error.response.data)
           throw error;
@@ -56,15 +55,19 @@ const CssTextField = withStyles({
       };
       Edit()
         .then((res) => {
-          console.log("res:", res)
           const InfoData = res[0].data;
-          console.log("res[1]",res[1])
           const ImageData = res[1]?.data?.updatedUser; // 이미지 안넣었을 땐 res[1]이 null 값.
           
 
   
           ImageData ? updateUser(ImageData) : updateUser(InfoData);
-          alert("회원정보가 정상적으로 변경되었습니다!");
+          Swal.fire({
+            position: 'top-center',
+            title: '회원정보가 정상적으로 변경되었습니다!',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+        })
   
           toggleEditForm();
         })
@@ -137,16 +140,7 @@ const CssTextField = withStyles({
           </Stack>
         </form>
       </Grid>
-    );
+    )
   }
   export default ProfileEdit;
-  
-  const UploadBox = {
-    border: "1px dashed gray",
-    bgcolor: "rgba(0, 0, 0, 0.03)",
-    width: "280px",
-    alignItems: "center",
-    justifyContent: "center",
-    p: 1,
-  };
   

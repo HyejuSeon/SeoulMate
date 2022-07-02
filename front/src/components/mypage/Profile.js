@@ -1,4 +1,4 @@
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import styled from "styled-components";
 import ProfileEdit from "./ProfileEdit.js";
@@ -56,14 +56,13 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
       <Grid item xs={6}  sx={{ textAlign: "center" }}>
       <Grid item xs={6}  sx={{marginLeft:"6em"}}>
         <CircularProgressbar value={percentage} 
-  text={`레벨${percentage}`}
+  text={`레벨${percentage}`} 
   styles={buildStyles({
     // Rotation of path and trail, in number of turns (0-1)
     rotation: 0.25,
 
     // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
     strokeLinecap: 'butt',
-
     // Text size
     textSize: '16px',
 
@@ -79,7 +78,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
     trailColor: '#d6d6d6',
     backgroundColor: '#3e98c7',
   })}
-/>;
+/>
         </Grid>
       <Typography
                 variant="h6"
