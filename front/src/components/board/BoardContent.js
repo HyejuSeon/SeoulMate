@@ -107,7 +107,7 @@ const BoardContent = (props) => {
                                           src={description}
                                           alt={description}
                                       />
-                                      랜드마크 설명: {item.description.substring(0, 30)}
+                                      랜드마크 설명: {item.description?.substring(0, 30)}
                                   </UploadResultDescriptionContainer>
                               </UploadResultContentContainer>
                           </BoardContentContainer>
