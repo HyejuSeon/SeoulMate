@@ -15,7 +15,7 @@ function Profile({setEditOpen, editOpen, toggleEditForm, user, updateUser }) {
         {/* 프로필 편집폼이 열리면 이미지 안보이게 함 */}
         {!editOpen && (
           <div className={Style.imageBox} onClick={() => toggleEditForm()}>
-            <img src="https://gradium.co.kr/wp-content/uploads/kiwi-2.jpg" className={Style.profileImg} alt="프로필 이미지"/>
+            <img src="" className={Style.profileImg} alt="프로필 이미지"/>
               <span className={Style.editButton}>편집하기</span>
             </div>
         )}
