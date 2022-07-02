@@ -117,7 +117,7 @@ const Home = () => {
                     />
                 </ThirdPageImgContainer>
                 <ThirdPageContentDescription>
-                    {item.description.substring(0, 78)}...{' '}
+                    {item.description?.substring(0, 78)}...{' '}
                 </ThirdPageContentDescription>
                 <ThirdPageContentDescription2>
                     <ThirdPageContentUserInfo>{item.name}</ThirdPageContentUserInfo>
