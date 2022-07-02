@@ -13,12 +13,12 @@
 
 # 기술 스택
 
-| Position                | Languages & Tools    |
-| ----------------------- | -------------------- |
-| Frontend                | ReactJS              |
-| Backend                 | NestJS<br>MySQL      |
-| Artificial intelligence | Python<br>Tensorflow |
-| Deploy                  | docker               |
+| Position                | Languages & Tools    | README                        |
+| ----------------------- | -------------------- | ----------------------------- |
+| Frontend                | ReactJS              | [FrontEnd](./front/README.md) |
+| Backend                 | NestJS<br>MySQL      | [BackEnd](./back/README.md)   |
+| Artificial intelligence | Python<br>Tensorflow | [Ai](./ai/README.md)          |
+| Deploy                  | docker               |                               |
 
 # 협업 도구
 
