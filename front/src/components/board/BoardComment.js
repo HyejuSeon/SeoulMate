@@ -33,7 +33,6 @@ const BoardComment = () => {
     const [comments, setComments] = useState([]);
     const [allComments, setAllComments] = useState([]);
 
-    const [editable, setEditable] = useState(false);
     const [editComments, setEditComments] = useState('');
 
     const commentUploadHandler = async (e) => {
@@ -58,6 +57,7 @@ const BoardComment = () => {
 
     useEffect(() => {
         getAllComments();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // console.log('댓글', allComments);

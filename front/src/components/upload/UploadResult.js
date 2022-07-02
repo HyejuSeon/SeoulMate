@@ -39,7 +39,6 @@ import Luggage from '../../img/Luggage.png';
 const UploadResult = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [restaurant, setRestaurant] = useState('test');
 
     const [landmarkInfo, setLandmarkInfo] = useState('test');
     const [landmarkPicInfo, setLandmarkPicInfo] = useState('test');

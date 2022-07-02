@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import * as API from '../../api';
 import './kakaoMapStyle.css';
 
 const { kakao } = window;
 
 const KakaoMap = () => {
-    const [allLandmarks, setAllLandmarks] = useState([]);
-
     useEffect(() => {
         mapscript();
     }, []);

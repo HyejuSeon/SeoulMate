@@ -51,9 +51,7 @@ const EachBoard = () => {
     const user = useRecoilValue(userInfoState);
     // console.log('user:', user);
     const [eachBoardInfo, setEachBoardInfo] = useState('');
-    const moment = require('moment');
-    const today = moment();
-    const date = today.format('YYYY-MM-DD');
+
     const ref = useRef();
     const navigate = useNavigate();
     const allBoardContent = useLocation();

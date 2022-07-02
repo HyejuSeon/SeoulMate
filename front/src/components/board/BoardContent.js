@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { searchLandmarkInfoState, landmarkPicState } from '../../atom';
+import { searchLandmarkInfoState } from '../../atom';
 
 import {
     BoardContentContainer,
     ImgContainer,
     UploadResultContentContainer,
-    UploadResultContentPeopleContainer,
-    UploadResultPeopleImg,
     UploadResultNameContainer,
     UploadResultNameImg,
     UploadResultLocationContainer,
@@ -23,7 +21,6 @@ import * as API from '../../api';
 import description from '../../img/description.png';
 import name from '../../img/name.png';
 import location from '../../img/location.png';
-import Luggage from '../../img/Luggage.png';
 
 const BoardContent = (props) => {
     const navigate = useNavigate();

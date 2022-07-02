@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../api';
 import Swal from 'sweetalert2';
@@ -27,8 +27,6 @@ const Upload = () => {
 
     const [landmarkPic, setLandmarkPic] = useRecoilState(landmarkPicState);
     const [landmarkInfo, setLandmarkInfo] = useState('');
-
-    const [landmarkPicURL, setLandmarkPicURL] = useState();
 
     const uploadAvatar = async (e) => {
         const reader = new FileReader();
