@@ -35,3 +35,7 @@
     └── visited
         └── dto
 ```
+
+### API 문서(swagger)
+
+[swagger API 문서](http://kdt-ai4-team07.elicecoding.com:5001/api/#/)
