@@ -28,6 +28,30 @@ export const StartButton = styled.button`
     color: #e1f0fb;
 
     z-index: 10;
+
+    @media screen and (max-width: 1200px) {
+        width: 8rem;
+        height: 2rem;
+        margin-top: 25rem;
+        display: flex;
+        font-size: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    @media screen and (max-width: 992px) {
+        width: 5rem;
+        height: 1rem;
+        margin-top: 15rem;
+        display: flex;
+        font-size: 0.5rem;
+    }
+    @media screen and (max-width: 576px) {
+        width: 5rem;
+        height: 1rem;
+        margin-top: 10rem;
+        display: flex;
+        font-size: 0.5rem;
+    }
 `;
 
 export const StyledBurger = styled.button`
@@ -145,6 +169,30 @@ export const HeadCopy = styled.div`
     justify-content: center;
 
     z-index: 10;
+
+    @media screen and (max-width: 1200px) {
+        /* width: 8rem;
+        height: 2rem;
+        margin-top: 25rem;
+        display: flex; */
+        font-size: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    @media screen and (max-width: 992px) {
+        /* width: 5rem;
+        height: 1rem;
+        margin-top: 15rem; */
+        display: flex;
+        font-size: 0.7rem;
+    }
+    @media screen and (max-width: 576px) {
+        /* width: 5rem;
+        height: 1rem;
+        margin-top: 10rem; */
+        display: flex;
+        font-size: 0.5rem;
+    }
 `;
 
 export const SecondPage = styled.section`
