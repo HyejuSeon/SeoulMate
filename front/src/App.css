@@ -4,3 +4,12 @@
 .App {
     font-family: 'Jeju Gothic', 'Nanum Gothic', sans-serif;
 }
+
+/* html,
+body {
+    -ms-overflow-style: none;
+    word-break: keep-all;
+}
+::-webkit-scrollbar {
+    display: none;
+} */

@@ -121,6 +121,7 @@ export const UploadResultBtn = styled.button`
     box-shadow: 0px 20px 35px rgba(241, 165, 1, 0.15);
     border-radius: 10px;
     cursor: pointer;
+    border: none;
 `;
 
 export const UploadResultRight = styled.div`

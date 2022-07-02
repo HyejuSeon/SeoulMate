@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+
 import * as API from '../../api';
 import BoardContent from './BoardContent';
 import { Container, Grid } from '@mui/material';
@@ -18,7 +18,6 @@ import { useRecoilState } from 'recoil';
 import { searchLandmarkInfoState } from '../../atom';
 
 const Board = () => {
-    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchState, setSearchState] = useState(false);
 
@@ -34,7 +33,7 @@ const Board = () => {
     };
 
     useEffect(() => {
-        console.log('검색결과', searchResult);
+        // console.log('검색결과', searchResult);
     }, [searchResult]);
 
     const clearInput = useRef();

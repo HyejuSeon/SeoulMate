@@ -30,6 +30,19 @@ export const CommentTextField = styled(TextField)({
         },
     },
 });
+export const CommentTextEditField = styled(TextField)({
+    marginTop: '0rem',
+    width: '100%',
+
+    '& .MuiOutlinedInput-root': {
+        '&:hover fieldset': {
+            borderColor: 'green',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: '#699C1D',
+        },
+    },
+});
 
 export const SearchTextField = styled(TextField)({
     width: '100%',
