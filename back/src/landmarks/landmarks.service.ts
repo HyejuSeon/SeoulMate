@@ -74,6 +74,8 @@ export class LandmarksService {
     }
 
     async getLandmarkByLandmarkName(param): Promise<any> {
+        console.log(param);
+
         try {
             const landmark = await this.landmarksRepository
                 .createQueryBuilder('landmark')
