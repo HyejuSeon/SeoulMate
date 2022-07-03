@@ -13,11 +13,12 @@
 
 # 기술 스택
 
-| Position                | Languages & Tools    |
-| ----------------------- | -------------------- |
-| Frontend                | ReactJS              |
-| Backend                 | NestJS<br>MySQL      |
-| Artificial intelligence | Python<br>Tensorflow |
+| Position                | Languages & Tools    | README                        |
+| ----------------------- | -------------------- | ----------------------------- |
+| Frontend                | ReactJS              | [FrontEnd](./front/README.md) |
+| Backend                 | NestJS<br>MySQL      | [BackEnd](./back/README.md)   |
+| Artificial intelligence | Python<br>Tensorflow | [Ai](./ai/README.md)          |
+| Deploy                  | docker               |                               |
 
 # 협업 도구
 
@@ -48,13 +49,13 @@ Seoul Mate에서는 랜드마크의 사진을 찍어 업로드 하게 되면 어
 
 ### 스탬프와 경험치: 서브 기능
 
-Seoule Mate에서는 랜드마크를 방문 후 사진을 찍어 기록할 수 있습니다. 사용자는 사진을 찍어 어떤 랜드마크인지 알 수 있으며, 스탬프로 기록됩니다. 사용자는 사진을 찍은 후 게시글에 공유할 수 있습니다.
+Seoule Mate에서는 랜드마크를 방문 후 사진을 찍어 기록할 수 있습니다. 사용자는 사진을 찍어 어떤 랜드마크인지 알 수 있으며, 방문한 랜드마크가 기록됩니다. 사용자는 사진을 찍은 후 게시글에 공유할 수 있습니다.
 
-스탬프를 기록하면 경험치가 오르고 경험치에 따른 등급이 주어지게 됩니다. 게시글을 작성하면 추가 경험치를 얻을 수 있습니다.
+게시글을 작성하면 경험치가 오르고 경험치에 따른 등급이 주어지게 됩니다.
 
 ### 서울에 어떤 랜드마크가 있을까?: 서브 기능
 
-Seoul Mate의 메인 페이지에서는 서울에 어떤 랜드마크가 있는지 지도에 나타내 줍니다. 사용자는 주변에 어떤 랜드마크가 있는지 알 수 있습니다.
+Seoul Mate의 메인 페이지에서는 방문자가 많은 랜드마크를 보여주며, 서비스에서 제공하는 랜드마크의 위치가 지도로 제공됩니다.
 
 # 사용된 데이터와 인공지능 모델
 
@@ -156,36 +157,36 @@ Seoul Mate의 메인 페이지에서는 서울에 어떤 랜드마크가 있는�
 
 ex) 제거한 데이터셋
 
--   라온
-    <img src="uploads/cf6a42015f8acdfdff7a53fde3764651/image.png" width="300">
-    <img src="uploads/811e4472425895b2c9fc73d90d74a49a/image.png" width="300">
+-   라온  
+    <img src="https://user-images.githubusercontent.com/55802893/176853812-5a0cfccb-9435-4c65-bb64-c428b6010760.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176853824-ff67c750-41d6-4f80-a102-e22ac006afc7.jpeg" width="300">
 
 <br>
 
--   메트로팜
-    <img src="uploads/1a7b8c11385173222d9238560569e6a5/image.png" width="300">
-    <img src="uploads/5b5573968cfd8ceb03eeb702060f5667/image.png" width="300">
+-   메트로팜  
+    <img src="https://user-images.githubusercontent.com/55802893/176853957-554283da-7a16-43a5-9c5a-1f02aa23ed6f.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176853964-71a31d32-b058-4bae-aeb5-31614a10265b.jpeg" width="300">
 
 <br>
 
--   카이스트 서울캠퍼스
-    <img src="uploads/42ba42ad1b9df5c2fc5bbc281b7d1252/image.png" width="300">
-    <img src="uploads/698e9e303ac3419328dcc09757f152bf/image.png" width="300">
+-   카이스트 서울캠퍼스  
+    <img src="https://user-images.githubusercontent.com/55802893/176854153-f10dcad4-9fad-47df-a1b3-990801b7a179.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176854161-6830347a-b61b-4373-87ea-784be7266f60.jpeg" width="300">
 
 ### 노이즈 제거
 
 ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에서 간판 이미지는 노이즈라 판단하여 제거했습니다.
 
--   정상 이미지
-    <img src="uploads/cb274e10b8155a4f851272df8883760f/image.png" width="300">
-    <img src="uploads/8e0e12657794ce666f8d5ab3cd9cde63/image.png" width="300">
+-   정상 이미지  
+    <img src="https://user-images.githubusercontent.com/55802893/176854289-8121f4f6-0d25-4185-9b04-10f35d7ca0ee.jpeg" width="300">
+    <img src="https://user-images.githubusercontent.com/55802893/176854300-9abf89d9-d59d-4377-a672-f73abf6898d8.jpeg" width="300">
 
 <br>
 
 <br>
 
--   노이즈
-    <img src="uploads/45bd792e30e1d26e685fc02373a779f2/image.png" width="300">
+-   노이즈  
+    <img src="https://user-images.githubusercontent.com/55802893/176854439-fdb8920c-e505-4c78-92e9-363a2aaba6fb.jpeg" width="300">
 
 ### EDA
 
@@ -195,7 +196,15 @@ ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에�
 
     Min: 69, Max: 263, Mean: 147
 
-<img src="uploads/7975fcbd29ae29a04ca105561fccbf77/image.png">
+<img src="https://user-images.githubusercontent.com/55802893/176854556-859245ef-406e-4a0a-a983-52ec85f58db4.png">
+
+-   장소 별 클래스 개수  
+    <img src="https://user-images.githubusercontent.com/55802893/176854863-1c1734e8-abec-4c42-9a40-db1dc231ee07.png">
+-   subcategory 별 클래스 개수
+    <img src="https://user-images.githubusercontent.com/55802893/176854752-c34dd273-5691-4a23-a361-7871edadcbd5.png">
+
+-   supercategory 별 클래스 개수
+    <img src="https://user-images.githubusercontent.com/55802893/176855666-b5895483-40a4-4bb0-8c3e-4f5b049250df.png">
 
 ## 인공지능 모델
 
@@ -207,8 +216,61 @@ ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에�
 
 ## 데이터베이스 구조도
 
-![스크린샷 2022-06-10 오후 11 35 45](https://user-images.githubusercontent.com/55802893/173089023-c08de090-9c8d-4d7e-97d3-a117cd58ad94.png)
+![스크린샷 2022-07-02 오전 10 52 32](https://user-images.githubusercontent.com/55802893/176982480-eb10aba0-2e5e-4a88-80df-db7fef956b54.png)
 
 # 와이어 프레임
 
 [Figma url](https://www.figma.com/file/Lj4EZbN2ulqhSmT0cPGU0O/Elice-AI-Project-team-7?node-id=157%3A1148)
+
+# 어려웠던 점 및 해결 방법
+
+## FrontEnd
+
+### 조원일
+
+1.  1차 프로젝트 때 썼던 axios 통신 관련 api 스켈레톤 코드를 썼습니다
+    백엔드에서 데이터를 받는 양식에 따라 프론트에서 데이터를 보내주는 방식이 달라져서
+    기존 스켈레톤 코드로는 제대로 작동이 안되는 것들이 많아 axios 통신 양식에 대해 깊이 있게 공부하게 되었습니다
+
+2.  하나의 핸들러에서 여러개의 api통신을 연달아 수행 할 때
+    데이터를 받아 다음 api통신 req 데이터에 넘겨줘야 하는 코드를 짜고 있었는데
+    자바스크립트의 비동기 처리 방식 및 백에서 데이터를 처리하는 속도 등 여러가지 고려사항들이 많았습니다.
+    asyc/await로 동기 처리를 하는 방법을 확실히 알 수 있게 되었고,
+    setTimeout으로 특정 과정에 딜레이를 줘서 데이터를 처리하는 등 다양한 방법에 대해 알 수 있었습니다.
+
+3.  recoil로 전역 관리를 하는 데이터가 있었는데, defalut값을 설정 안해줘서 작동이 제대로 안되었었습니다. 에러메세지가 딱히 뜨지 않아 코드를 하나하나 세세하게 살펴보다가 꼭 defalut 값을 설정해줘야 된다는 사실을 알게되었습니다.
+
+4.  전체 댓글 데이터를 불러와서 하나씩 맵핑하여 뿌려주는 코드를 작성 중
+    댓글 수정 시 원하는 댓글 데이터만 상태값을 변경해야하는 상황이 있었습니다.
+    맵핑 시 idx값을 지정해주고, 각 댓글 데이터에 editable이라는 새로운 KEY값을 넣어주어
+    각 댓글 데이터 별로 상태관리를 할 수 있었습니다
+
+### 박지수
+
+1. 카카오맵 API를 사용해 유저정보를 불러오던중
+   user정보가 제대로 불러와 지지 않았다.
+   아직까지 user api를 제대로 이해하지 못해
+   user정보를 불러오기 위해 api로 직접 호출하는 대신 recoil을 사용하여 유저정보를 호출하였습니다
+
+2. 프로필 수정시 랜더링이 일어나지 않고 새로 고침을 해야 랜더링이 일어났습니다.
+   이 부분은 아직까지 userEffect부분을 활용하는데 문제가 있었습니다.
+   프론트엔드 오피스아워 시간을 활용해서 userEffect와 비동기 처리를 제대로 이해하고 적용해서 새로고침을 하지 않아도
+   비동기적으로 수정할 수 있었습니다.
+
+## BackEnd
+
+### 이상원
+
+1. Node js에서 사용했던 로그인 검증 미들웨어를 Nest js의 auth guard로 변경하는 과정에서 학습이 필요했습니다. 공식 문서를 보고 오피스아워 시간을 활용해 정확히 이해하고 로그인 검증 기능을 구현할 수 있었습니다.
+2. 데이터베이스로 MYSQL을 사용했습니다. 테이블 간의 관계성을 이용한 설계에 어려움이 있었습니다. 설계 이후에도 typeorm에서 외래키 설정과 cascade 옵션을 주는 부분에서 공식 문서를 활용해 여러번 테스트를 하여 해결했습니다.
+
+## Artificial Intelligence
+
+### 선혜주
+
+1. 데이터를 정제하는 작업과 불균형 문제를 다루는게 시간이 많이 걸려서 어려움이 있었습니다. 인공지능 파트 팀원과 분배하여 작업하였고,
+   불균형 문제는 focal loss 사용하여 해결했습니다.
+
+### 임동현
+
+1. 많이 해보지 않은 분야라서 하나부터 열까지 다 어려웠습니다. 오피스 아워 질문이나 열심히 구글링을 통해 하나하나 배워가면서 많은 오류를 해결 하였습니다.

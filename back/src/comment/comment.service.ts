@@ -34,7 +34,7 @@ export class CommentService {
                     .createQueryBuilder('comments')
                     .where('comments.board_id= :board_id', { board_id })
                     .orWhere('comments.user_id= :user_id', { user_id })
-                    .getRawMany();
+                    .getMany();
                 return { payloads: [...comments], totalPages: 1 };
             }
 

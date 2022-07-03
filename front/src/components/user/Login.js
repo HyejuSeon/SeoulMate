@@ -3,10 +3,11 @@ import { Box } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Api from '../../api';
 import { DispatchContext } from '../../App.js';
-import { ROUTES } from '../../Route';
 import styled from 'styled-components';
-import style from '../../styledCompo/LoginStyle/Login.moudule.css';
+import style from '../../styledCompo/LoginStyle/Login.module.css';
 import CssTextField from './CssTextField';
+import Swal from 'sweetalert2'
+import errorHandler from "../../errorHandler";
 // import recoil
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { userState, userInfoState, tokenState } from '../../atom';
@@ -18,8 +19,6 @@ function Login() {
     const setUser = useSetRecoilState(userState);
     const setToken = useSetRecoilState(tokenState);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-
-    const dispatch = useContext(DispatchContext);
 
     const [form, setForm] = useState({
         email: '',
@@ -38,21 +37,19 @@ function Login() {
             setUserInfo(user);
             setToken(user.accessToken);
 
-            console.log(setUser);
-            console.log(setToken);
-            console.log('a');
 
             const jwtToken = user.accessToken;
             sessionStorage.setItem('userToken', jwtToken);
-
+            Swal.fire({
+                position: 'top-center',
+                title: '로그인 성공!',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            })
             navigate('/');
-
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                payload: user,
-            });
         } catch (error) {
-            alert(error.response.data);
+            errorHandler('로그인 오류', "아이디 혹은 비밀번호가 잘못되었습니다. 다시 확인해주세요!")
         }
     };
     return (
@@ -137,17 +134,3 @@ export default Login;
 
 const LoginBody = styled.form``;
 
-const LoginBodyUpper = styled.div`
-    display: flex;
-`;
-
-const LoginTitle = styled.div`
-    font-size: 20px;
-    font-weight: 600;
-    padding-top: 14px;
-`;
-const LoginTitle2 = styled.div`
-    font-size: 18px;
-    font-weight: 600;
-    padding-top: 4px;
-`;

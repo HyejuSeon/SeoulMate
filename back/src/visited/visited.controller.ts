@@ -51,7 +51,31 @@ export class VisitedController {
         @Query()
         query: returnVisitedDto,
     ): Promise<void> {
-        const result = await this.visitedService.getVisited(query);
+        const { payloads, totalPages } = await this.visitedService.getVisited(
+            query,
+        );
+
+        const Result = await Promise.all(
+            payloads.map(async (payload) => {
+                const landmark =
+                    await this.landmarksService.getLandmarkByLandmarkId(
+                        payload.landmark_id,
+                    );
+                payload.landmark = landmark;
+                return payload;
+            }),
+        );
+        res.status(HttpStatus.OK).json({ payloads: Result, totalPages });
+    }
+
+    @Get('/getall')
+    @ApiOperation({ summary: '방문지 모든 데이터 조회' })
+    @ApiResponse({
+        status: 200,
+        description: 'Return All visited data',
+    })
+    async getAllVisited(@Res() res: any): Promise<void> {
+        const result = await this.visitedService.getAllVisited();
         res.status(HttpStatus.OK).json(result);
     }
 
