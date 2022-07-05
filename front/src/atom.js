@@ -14,10 +14,10 @@ export const userState = atom({
 export const tokenState = atom({
     key: 'tokenState',
     default: { token: null },
-    // effects_UNSTABLE: [persistAtom],
+    effects_UNSTABLE: [persistAtom],
 });
 
-// 유저 정보
+// 유저 정보.
 export const userInfoState = atom({
     key: 'userInfoState',
     default: undefined,

@@ -1,27 +1,26 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { searchLandmarkInfoState, landmarkPicState } from '../../atom';
+import { searchLandmarkInfoState } from '../../atom';
 
 import {
     BoardContentContainer,
     ImgContainer,
     UploadResultContentContainer,
-    UploadResultContentPeopleContainer,
-    UploadResultPeopleImg,
     UploadResultNameContainer,
     UploadResultNameImg,
     UploadResultLocationContainer,
     UploadResultLocationImg,
     UploadResultDescriptionContainer,
     UploadResultDescriptionImg,
+    EmptyContainer,
+    BoardUploadResultDescriptionContainer,
 } from './BoardContentStyle';
 import * as API from '../../api';
 
 import description from '../../img/description.png';
 import name from '../../img/name.png';
 import location from '../../img/location.png';
-import Luggage from '../../img/Luggage.png';
 
 const BoardContent = (props) => {
     const navigate = useNavigate();
@@ -37,11 +36,18 @@ const BoardContent = (props) => {
         getBoardContent();
     }, []);
 
-    console.log('searchState', props.searchState);
-    console.log('allBoardContent', allBoardContent);
+    // console.log('searchState', props.searchState);
+    // console.log('allBoardContent', allBoardContent);
 
+    const isNullSearchList = useMemo(
+        () => !searchResult.length && props.searchState,
+        [props.searchState, searchResult.length],
+    );
     return (
         <>
+            {isNullSearchList && (
+                <EmptyContainer>'{props.searchTerm}'에 대한 검색결과가 없습니다.</EmptyContainer>
+            )}
             {props.searchState === false
                 ? allBoardContent &&
                   allBoardContent.map((item, idx) => {
@@ -64,18 +70,14 @@ const BoardContent = (props) => {
                                       <UploadResultLocationImg src={location} alt={location} />
                                       랜드마크 주소: {item.location}
                                   </UploadResultLocationContainer>
-                                  <UploadResultDescriptionContainer>
+                                  <BoardUploadResultDescriptionContainer>
                                       <UploadResultDescriptionImg
                                           src={description}
                                           alt={description}
                                       />
-                                      광화문 설명: {item.description}
-                                  </UploadResultDescriptionContainer>
+                                      랜드마크 설명: {item.description?.substring(0, 100)}..
+                                  </BoardUploadResultDescriptionContainer>
                               </UploadResultContentContainer>
-                              <UploadResultContentPeopleContainer>
-                                  <UploadResultPeopleImg src={Luggage} />
-                                  {item.visitedCount}명의 랜드마커들이 다녀갔습니다
-                              </UploadResultContentPeopleContainer>
                           </BoardContentContainer>
                       );
                   })
@@ -105,13 +107,9 @@ const BoardContent = (props) => {
                                           src={description}
                                           alt={description}
                                       />
-                                      광화문 설명: {item.description}
+                                      랜드마크 설명: {item.description?.substring(0, 30)}
                                   </UploadResultDescriptionContainer>
                               </UploadResultContentContainer>
-                              <UploadResultContentPeopleContainer>
-                                  <UploadResultPeopleImg src={Luggage} />
-                                  {item.visitedCount}명의 랜드마커들이 다녀갔습니다
-                              </UploadResultContentPeopleContainer>
                           </BoardContentContainer>
                       );
                   })}

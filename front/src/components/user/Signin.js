@@ -1,9 +1,8 @@
 import {Box} from '@mui/material';
 import { useState } from "react"
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
-import {ROUTES} from '../../Route'
 import styled from 'styled-components';
 import style from '../../styledCompo/SigninStyle/Signin.module.css';
 import * as Api from '../../api'
@@ -135,13 +134,4 @@ export default Signin;
 const SigninBody = styled.form`
 `;
 
-const SigninBodyUpper = styled.div`
-    display: flex;  
-`;
-
-const SigninTitle = styled.div`
-    font-size: 20px;
-    font-weight: 600;
-    padding-top: 14px;
-`;
 

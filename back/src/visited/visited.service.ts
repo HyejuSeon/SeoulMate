@@ -11,11 +11,7 @@ export class VisitedService {
         private visitedRepository: Repository<Visited>,
     ) {}
 
-    async getVisited(
-        query: returnVisitedDto,
-    ): Promise<
-        { payloads: Visited[]; totalPages: number } | { ErrorMessage: string }
-    > {
+    async getVisited(query: returnVisitedDto): Promise<any> {
         try {
             const { page, perPage, landmark_id, user_id } = query;
             if (landmark_id === undefined && user_id === undefined) {
@@ -24,28 +20,37 @@ export class VisitedService {
                 );
             }
             if (page === undefined || perPage === undefined) {
-                const comments = await this.visitedRepository
-                    .createQueryBuilder('comments')
-                    .where('comments.landmark_id= :landmark_id', {
+                const visited = await this.visitedRepository
+                    .createQueryBuilder('visited')
+                    .where('visited.landmark_id= :landmark_id', {
                         landmark_id,
                     })
-                    .orWhere('comments.user_id= :user_id', { user_id })
-                    .getRawMany();
-                return { payloads: [...comments], totalPages: 1 };
+                    .orWhere('visited.user_id= :user_id', { user_id })
+                    .getMany();
+                return { payloads: [...visited], totalPages: 1 };
             }
 
             const skip = perPage * (page - 1);
-            const [comments, count] = await this.visitedRepository
-                .createQueryBuilder('comments')
-                .where('comments.landmark_id= :landmark_id', { landmark_id })
-                .orWhere('comments.user_id= :user_id', { user_id })
+            const [visited, count] = await this.visitedRepository
+                .createQueryBuilder('visited')
+                .where('visited.landmark_id= :landmark_id', { landmark_id })
+                .orWhere('visited.user_id= :user_id', { user_id })
                 .take(perPage)
                 .skip(skip)
                 .getManyAndCount();
 
             const totalPages = Math.ceil(count / perPage);
-            const payloads = comments;
+            const payloads = visited;
             return { payloads, totalPages };
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async getAllVisited(): Promise<any> {
+        try {
+            const result = await this.visitedRepository.find();
+            return result;
         } catch (err) {
             console.log(err);
         }

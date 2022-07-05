@@ -69,7 +69,7 @@ const Menu = ({ open }) => {
         }
     };
     useEffect(stateInitialization, [setTokenState, setUserInfostate, setUserState, userToken]);
-    console.log('loginState', loginState);
+    // console.log('loginState', loginState);
 
     const logout = () => {
         // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
@@ -101,6 +101,10 @@ const Menu = ({ open }) => {
                         <span role="img" aria-label="contact" />
                         게시판
                     </a>
+                    <a href="/upload">
+                        <span role="img" aria-label="contact" />
+                        시작하기
+                    </a>
                 </>
             ) : (
                 <>
@@ -112,10 +116,6 @@ const Menu = ({ open }) => {
                     <a href="/register">
                         <span role="img" aria-label="price" />
                         회원가입
-                    </a>
-                    <a href="/board">
-                        <span role="img" aria-label="contact" />
-                        게시판
                     </a>
                 </>
             )}

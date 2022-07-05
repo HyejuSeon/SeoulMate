@@ -28,6 +28,30 @@ export const StartButton = styled.button`
     color: #e1f0fb;
 
     z-index: 10;
+
+    @media screen and (max-width: 1200px) {
+        width: 8rem;
+        height: 2rem;
+        margin-top: 25rem;
+        display: flex;
+        font-size: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    @media screen and (max-width: 992px) {
+        width: 5rem;
+        height: 1rem;
+        margin-top: 15rem;
+        display: flex;
+        font-size: 0.5rem;
+    }
+    @media screen and (max-width: 576px) {
+        width: 5rem;
+        height: 1rem;
+        margin-top: 10rem;
+        display: flex;
+        font-size: 0.5rem;
+    }
 `;
 
 export const StyledBurger = styled.button`
@@ -145,6 +169,30 @@ export const HeadCopy = styled.div`
     justify-content: center;
 
     z-index: 10;
+
+    @media screen and (max-width: 1200px) {
+        /* width: 8rem;
+        height: 2rem;
+        margin-top: 25rem;
+        display: flex; */
+        font-size: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    @media screen and (max-width: 992px) {
+        /* width: 5rem;
+        height: 1rem;
+        margin-top: 15rem; */
+        display: flex;
+        font-size: 0.7rem;
+    }
+    @media screen and (max-width: 576px) {
+        /* width: 5rem;
+        height: 1rem;
+        margin-top: 10rem; */
+        display: flex;
+        font-size: 0.5rem;
+    }
 `;
 
 export const SecondPage = styled.section`
@@ -214,7 +262,7 @@ export const ThirdPage = styled.section`
     justify-content: center;
     flex-direction: column;
     background-color: #d2eef6;
-    font-family: 'Jeju Gothic', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 `;
 
 export const ThirdPageHeadCopy = styled.section`
@@ -239,19 +287,8 @@ export const ThirdPageContentContainer = styled.section`
     margin-bottom: 5%;
 `;
 export const ThirdPageImgContainer = styled.a`
-    width: 528px;
-    height: 295px;
-    cursor: pointer;
-
-    &:hover {
-        content: '';
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        opacity: 0.6;
-    }
+    width: 34rem;
+    height: 20rem;
 `;
 
 export const ThirdPageContentWrapper = styled.div`
@@ -264,10 +301,16 @@ export const ThirdPageContentWrapper = styled.div`
 `;
 export const ThirdPageContentDescription = styled.div`
     width: 525px;
-    font-size: 1.4rem;
+    font-size: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    /* 
+    display: flex;
+    align-items: center;
+    justify-content: center; */
 
     color: #373737;
-    line-height: 80px;
+    line-height: 20px;
     font-weight: bold;
 `;
 export const ThirdPageContentDescription2 = styled.div`
@@ -288,7 +331,7 @@ export const ThirdPageContentUserInfo = styled.div`
     font-size: 0.8rem;
     font-weight: bold;
 
-    color: #373737;
+    color: white;
 
     margin-bottom: 5%;
 
