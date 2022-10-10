@@ -157,35 +157,40 @@ Seoul Mate의 메인 페이지에서는 서울에 어떤 랜드마크가 있는�
 ex) 제거한 데이터셋
 
 -   라온
-    <img src="uploads/cf6a42015f8acdfdff7a53fde3764651/image.png" width="300">
-    <img src="uploads/811e4472425895b2c9fc73d90d74a49a/image.png" width="300">
+
+    ![image](https://user-images.githubusercontent.com/55024771/194926625-fbc5b77e-27bb-4d63-bca3-fff9a3a9cf7f.png)
+
 
 <br>
 
 -   메트로팜
-    <img src="uploads/1a7b8c11385173222d9238560569e6a5/image.png" width="300">
-    <img src="uploads/5b5573968cfd8ceb03eeb702060f5667/image.png" width="300">
+
+    ![image](https://user-images.githubusercontent.com/55024771/194926768-559f5e64-ea29-4c6e-bca0-6c94c13a9283.png)
+
 
 <br>
 
 -   카이스트 서울캠퍼스
-    <img src="uploads/42ba42ad1b9df5c2fc5bbc281b7d1252/image.png" width="300">
-    <img src="uploads/698e9e303ac3419328dcc09757f152bf/image.png" width="300">
+
+    ![image](https://user-images.githubusercontent.com/55024771/194926849-c088f76a-aa5b-486a-b503-ca1a6e968b44.png)
+
 
 ### 노이즈 제거
 
 ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에서 간판 이미지는 노이즈라 판단하여 제거했습니다.
 
 -   정상 이미지
-    <img src="uploads/cb274e10b8155a4f851272df8883760f/image.png" width="300">
-    <img src="uploads/8e0e12657794ce666f8d5ab3cd9cde63/image.png" width="300">
+
+    ![image](https://user-images.githubusercontent.com/55024771/194926902-2d61f793-0cac-42ed-bc59-3b05a325c5b3.png)
+
 
 <br>
 
 <br>
 
 -   노이즈
-    <img src="uploads/45bd792e30e1d26e685fc02373a779f2/image.png" width="300">
+
+    ![image](https://user-images.githubusercontent.com/55024771/194926986-132ac773-e1d0-4b7d-b773-7cbceb82330e.png)
 
 ### EDA
 
@@ -195,7 +200,7 @@ ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에�
 
     Min: 69, Max: 263, Mean: 147
 
-<img src="uploads/7975fcbd29ae29a04ca105561fccbf77/image.png">
+    ![image](https://user-images.githubusercontent.com/55024771/194927103-42437e8b-4161-4038-9355-bafc37d82330.png)
 
 ## 인공지능 모델
 
