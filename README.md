@@ -202,6 +202,19 @@ ex) 돌담 위주의 이미지로 구성된 `서울 한양 도성` 클래스에�
 
     ![image](https://user-images.githubusercontent.com/55024771/194927103-42437e8b-4161-4038-9355-bafc37d82330.png)
 
+- 장소 별 클래스 개수
+
+    ![image](https://user-images.githubusercontent.com/55024771/194927966-cc7ae8c7-35f4-4d07-850c-9d4a98e0ccd1.png)
+
+- subcategory 별 클래스 개수
+
+    ![image](https://user-images.githubusercontent.com/55024771/194928057-4cea3bc0-5451-403c-a482-671b38046e10.png)
+
+- supercategory 별 클래스 개수
+
+    ![image](https://user-images.githubusercontent.com/55024771/194928112-ee7db4f8-376a-4334-b542-4155851007ca.png)
+
+
 ## 인공지능 모델
 
 ### YOLO: object detection
